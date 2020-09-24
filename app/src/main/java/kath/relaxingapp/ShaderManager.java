@@ -21,8 +21,12 @@ public class ShaderManager {
     private int positionHandle;
     private int colorHandle;
 
-    // Allocate storage for the matrix
+    // Allocate storage for the matrices
     private float[] mvpMatrix = new float[16];
+
+    private float[] modelMatrix = new float[16];
+    private float[] viewMatrix = new float[16];
+    private float[] projectionMatrix = new float[16];
 
 
     public int getPositionHandle()
@@ -38,10 +42,44 @@ public class ShaderManager {
     /**
      * Set matrix and send to shader
      */
-    public void updateMatrix(float x, float y)
+    public void updateMatrix(float x, float y, boolean is3D)
     {
-        Matrix.setIdentityM(mvpMatrix, 0);
-        Matrix.translateM(mvpMatrix,0, x, y, 0.f);
+        // Set model matrix
+        Matrix.setIdentityM(modelMatrix, 0);
+        Matrix.translateM(modelMatrix,0, x, y, 0.f);
+
+        // Set view matrix
+        Matrix.setIdentityM(viewMatrix, 0);
+
+        if (is3D)
+        {
+            // Set projection matrix for 3D stuff
+            final float ratio = (float) GlobalsManager.Inst().getScreenResWidth() / GlobalsManager.Inst().getScreenResHeight();
+            final float near = 0.1f;
+            final float far = 1000.f;
+            Matrix.perspectiveM(projectionMatrix, 0, 30, ratio, near, far);
+        }
+        else
+        {
+            // Set projection matrix for 2D stuff
+            final float ratio = (float) GlobalsManager.Inst().getScreenResWidth() / GlobalsManager.Inst().getScreenResHeight();
+            final float left = 0.f;
+            final float right = GlobalsManager.Inst().getScreenResWidth();
+            final float bottom = GlobalsManager.Inst().getScreenResHeight();
+            final float top = 0.f;
+            final float near = -10.f;
+            final float far = 10.0f;
+
+            Matrix.orthoM(projectionMatrix, 0, left, right, bottom, top, near, far);
+        }
+
+
+        // Multiply view matrix by the model matrix and store result in mvp matrix
+        Matrix.multiplyMM(mvpMatrix, 0, viewMatrix, 0, modelMatrix, 0);
+
+        // Multiply model and view matrix by the projection matrix and store result in mvp matrix
+        Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvpMatrix, 0);
+
         GLES20.glUniformMatrix4fv(mvpMatrixHandle, 1, false, mvpMatrix, 0);
     }
 

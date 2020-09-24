@@ -35,15 +35,21 @@ public class MyRenderer implements GLSurfaceView.Renderer{
     public void onDrawFrame(GL10 glUnused) {
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
 
-        drawRenderMesh(blueTriangleMesh, -0.5f, -0.25f);
-        drawRenderMesh(blueTriangleMesh, 0.5f, -0.25f);
-        drawRenderMesh(yellowSquareMesh, 0f, 0.5f);
+        boolean isPointerDown = InputManager.Inst().getIsPointerDown();
+        if (isPointerDown)
+        {
+            drawRenderMesh(yellowSquareMesh, InputManager.Inst().getPointerX(), InputManager.Inst().getPointerY());
+        }
+        //drawRenderMesh(blueTriangleMesh, -0.5f, -0.25f);
+        //drawRenderMesh(blueTriangleMesh, 0.5f, -0.25f);
+        //drawRenderMesh(yellowSquareMesh, 0f, 0.5f);
     }
 
 
-    private void drawRenderMesh(RenderMesh renderMesh, float px, float py)
+
+    public void drawRenderMesh(RenderMesh renderMesh, float px, float py)
     {
-        ShaderManager.Inst().updateMatrix(px, py);
+        ShaderManager.Inst().updateMatrix(px, py, false);
         renderMesh.drawMesh();
     }
 }
