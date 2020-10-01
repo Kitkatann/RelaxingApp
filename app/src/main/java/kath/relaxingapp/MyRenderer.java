@@ -35,10 +35,12 @@ public class MyRenderer implements GLSurfaceView.Renderer{
     public void onDrawFrame(GL10 glUnused) {
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
 
-        boolean isPointerDown = InputManager.Inst().getIsPointerDown();
-        if (isPointerDown)
+        for (int i = 0; i < InputManager.Inst().getMaxPointerCount(); i++)
         {
-            drawRenderMesh(yellowSquareMesh, InputManager.Inst().getPointerX(), InputManager.Inst().getPointerY());
+            if (InputManager.Inst().getPointerValid(i))
+            {
+                drawRenderMesh(yellowSquareMesh, InputManager.Inst().getPointerX(i), InputManager.Inst().getPointerY(i));
+            }
         }
         //drawRenderMesh(blueTriangleMesh, -0.5f, -0.25f);
         //drawRenderMesh(blueTriangleMesh, 0.5f, -0.25f);

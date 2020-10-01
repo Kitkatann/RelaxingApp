@@ -9,9 +9,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
-    /**
-     * Hold a reference to our GLSurfaceView
-     */
+    // Hold a reference to our GLSurfaceView
     private MyGLSurfaceView glSurfaceView;
 
     public static Context appContext;

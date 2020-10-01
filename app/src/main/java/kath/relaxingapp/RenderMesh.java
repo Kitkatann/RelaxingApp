@@ -13,10 +13,10 @@ public class RenderMesh {
     private int vertexCount;
 
     /** How many bytes per float. */
-    private final int mBytesPerFloat = 4;
+    private final int bytesPerFloat = 4;
 
     // How many bytes between vertices in the buffer
-    private final int mStrideBytes = 7 * mBytesPerFloat;
+    private final int strideBytes = 7 * bytesPerFloat;
 
     // These triangles are yellow
     final float[] verticesData = {
@@ -61,7 +61,7 @@ public class RenderMesh {
     {
         float[] vData = whichShape ? verticesData : verticesData2;
         // Initialize the buffers
-        vertexBuffer = ByteBuffer.allocateDirect(vData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
+        vertexBuffer = ByteBuffer.allocateDirect(vData.length * bytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 
         vertexBuffer.put(vData).position(0);
 
@@ -72,13 +72,13 @@ public class RenderMesh {
     public void drawMesh() {
         // Pass in the position info
         vertexBuffer.position(0);
-        GLES20.glVertexAttribPointer(ShaderManager.Inst().getPositionHandle(), 3, GLES20.GL_FLOAT, false, mStrideBytes, vertexBuffer);
+        GLES20.glVertexAttribPointer(ShaderManager.Inst().getPositionHandle(), 3, GLES20.GL_FLOAT, false, strideBytes, vertexBuffer);
 
         GLES20.glEnableVertexAttribArray(ShaderManager.Inst().getPositionHandle());
 
         // Pass in the colour info
         vertexBuffer.position(3);
-        GLES20.glVertexAttribPointer(ShaderManager.Inst().getColorHandle(), 4, GLES20.GL_FLOAT, false, mStrideBytes, vertexBuffer);
+        GLES20.glVertexAttribPointer(ShaderManager.Inst().getColorHandle(), 4, GLES20.GL_FLOAT, false, strideBytes, vertexBuffer);
 
         GLES20.glEnableVertexAttribArray(ShaderManager.Inst().getColorHandle());
 

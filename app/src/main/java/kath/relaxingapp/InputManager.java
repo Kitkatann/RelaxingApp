@@ -1,10 +1,25 @@
 package kath.relaxingapp;
 
+import android.util.Log;
+
 public class InputManager {
 
-    private float pointerX = 0.f;
-    private float pointerY = 0.f;
-    private boolean isPointerDown = false;
+    private final int maxPointerCount = 10;
+    private float[] pointerXList = new float[maxPointerCount];
+    private float[] pointerYList = new float[maxPointerCount];
+    private int[] pointerIdList = new int[maxPointerCount];
+    private boolean[] pointerValidList = new boolean[maxPointerCount];
+
+    public InputManager()
+    {
+        for (int i = 0; i < maxPointerCount; i++)
+        {
+            pointerValidList[i] = false;
+            pointerIdList[i] = -1;
+            pointerXList[i] = 0;
+            pointerYList[i] = 0;
+        }
+    }
 
     // Create singleton InputManager instance
     private static InputManager inst = null;
@@ -16,35 +31,66 @@ public class InputManager {
         return inst;
     }
 
-    public float getPointerX()
+    public float getPointerX(int index)
     {
-        return pointerX;
+        return pointerXList[index];
     }
 
-    public float getPointerY()
+    public float getPointerY(int index)
     {
-        return pointerY;
+        return pointerYList[index];
     }
 
-    public boolean getIsPointerDown()
+    public boolean getPointerValid(int index)
     {
-        return isPointerDown;
+        return pointerValidList[index];
     }
 
-    public void setPointerX(float x)
+    public int getMaxPointerCount()
     {
-        pointerX = x;
+        return maxPointerCount;
     }
 
-    public void setPointerY(float y)
+    public void setPointerPosition(float x, float y, int index)
     {
-        pointerY = y;
+        pointerXList[index] = x;
+        pointerYList[index] = y;
+
     }
 
-    public void setIsPointerDown(boolean isPDown)
+    public void setValidPointer(int index, int id)
     {
-        isPointerDown = isPDown;
+        pointerIdList[index] = id;
+        pointerValidList[index] = true;
     }
 
+    public void setInvalidPointer(int index)
+    {
+        pointerIdList[index] = -1;
+        pointerValidList[index] = false;
+    }
 
+    public int findPointerIDIndex(int id)
+    {
+        for (int i = 0; i < maxPointerCount; i++)
+        {
+            if (pointerIdList[i] == id)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int findUnusedPointerIDIndex()
+    {
+        for (int i = 0; i < maxPointerCount; i++)
+        {
+            if (!pointerValidList[i])
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
 }
