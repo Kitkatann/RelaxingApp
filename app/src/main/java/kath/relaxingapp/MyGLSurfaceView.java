@@ -21,10 +21,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
         // Get pointer ID
         int pointerId = event.getPointerId(pointerIndex);
 
-        // Get x and y coords of pointer
-        float px = event.getX();
-        float py = event.getY();
-
         // Get pointer count
         int pointerCount = event.getPointerCount();
 
@@ -43,14 +39,13 @@ public class MyGLSurfaceView extends GLSurfaceView {
                     // Store pointer's ID and valid for this index
                     InputManager.Inst().setValidPointer(index, pointerId);
                 }
-                return true;
             }
             case MotionEvent.ACTION_MOVE:
             {
                 for (int i = 0; i < pointerCount; i++)
                 {
-                    px = event.getX(i);
-                    py = event.getY(i);
+                    float px = event.getX(i);
+                    float py = GlobalsManager.Inst().getScreenResHeight() - event.getY(i);
                     pointerId = event.getPointerId(i);
                     // Find index in pointerIdList with same ID
                     int index = InputManager.Inst().findPointerIDIndex(pointerId);

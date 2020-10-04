@@ -19,7 +19,7 @@ public class RenderMesh {
     private final int strideBytes = 7 * bytesPerFloat;
 
     // These triangles are yellow
-    final float[] verticesData = {
+    final float[] smallYellowSquareData = {
             // X, Y, Z,
             // R, G, B, A
             -50.f, -50.f, 0.0f,
@@ -42,24 +42,67 @@ public class RenderMesh {
             50.f, -50.f, 0.0f,
             1.0f, 1.0f, 0.0f, 1.0f};
 
-    final float[] verticesData2 = {
+
+    final float[] bigRedSquareData = {
             // X, Y, Z,
             // R, G, B, A
-            0.5f, 0.25f, 0.0f,
-            0.0f, 0.0f, 1.0f, 1.0f,
+            -200.f, -200.f, 0.0f,
+            1.0f, 0.0f, 0.0f, 1.0f,
 
-            -0.5f, 0.25f, 0.0f,
-            0.0f, 0.0f, 1.0f, 1.0f,
+            200.f, -200.f, 0.0f,
+            1.0f, 0.0f, 0.0f, 1.0f,
 
-            0.5f, -0.25f, 0.0f,
-            0.0f, 0.0f, 1.0f, 1.0f};
+            -200.f, 200.f, 0.0f,
+            1.0f, 0.0f, 0.0f, 1.0f,
+
+
+
+            200.f, 200.f, 0.0f,
+            1.0f, 0.0f, 0.0f, 1.0f,
+
+            -200.f, 200.f, 0.0f,
+            1.0f, 0.0f, 0.0f, 1.0f,
+
+            200.f, -200.f, 0.0f,
+            1.0f, 0.0f, 0.0f, 1.0f};
+
+    final float[] tempBoxData = {
+            // X, Y, Z,
+            // R, G, B, A
+            -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+            1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+            -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+
+            1.0f, -1.0f, 1.0f, 0.0f, 0.3f, 1.0f, 1.0f,
+            1.0f, -1.0f, -1.0f, 0.0f, 0.3f, 1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f, 0.0f, 0.3f, 1.0f, 1.0f,
+
+            1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+            -1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, -1.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+
+            -1.0f, -1.0f, -1.0f, 0.0f, 0.6f, 1.0f, 1.0f,
+            -1.0f, -1.0f, 1.0f, 0.0f, 0.6f, 1.0f, 1.0f,
+            -1.0f, 1.0f, -1.0f, 0.0f, 0.6f, 1.0f, 1.0f};
 
     /**
      * Initialize the model data.
      */
-    public RenderMesh(boolean whichShape)
+    public RenderMesh(int whichShape)
     {
-        float[] vData = whichShape ? verticesData : verticesData2;
+        float[] vData = smallYellowSquareData;
+        if (whichShape == 1)
+        {
+            vData = smallYellowSquareData;
+        }
+        if (whichShape == 2)
+        {
+            vData = bigRedSquareData;
+        }
+        if (whichShape == 3)
+        {
+            vData = tempBoxData;
+        }
         // Initialize the buffers
         vertexBuffer = ByteBuffer.allocateDirect(vData.length * bytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 

@@ -2,6 +2,7 @@ package kath.relaxingapp;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.renderscript.ScriptGroup;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -9,12 +10,14 @@ import javax.microedition.khronos.opengles.GL10;
 public class MyRenderer implements GLSurfaceView.Renderer{
 
     private RenderMesh yellowSquareMesh;
-    private RenderMesh blueTriangleMesh;
+    private RenderMesh joystickBox;
+    private RenderMesh tempCube;
 
     public MyRenderer()
     {
-        yellowSquareMesh = new RenderMesh(true);
-        blueTriangleMesh = new RenderMesh(false);
+        yellowSquareMesh = new RenderMesh(1);
+        joystickBox = new RenderMesh(2);
+        tempCube = new RenderMesh(3);
     }
 
     @Override
@@ -33,25 +36,55 @@ public class MyRenderer implements GLSurfaceView.Renderer{
 
     @Override
     public void onDrawFrame(GL10 glUnused) {
+        frameUpdate();
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
 
-        for (int i = 0; i < InputManager.Inst().getMaxPointerCount(); i++)
-        {
-            if (InputManager.Inst().getPointerValid(i))
-            {
-                drawRenderMesh(yellowSquareMesh, InputManager.Inst().getPointerX(i), InputManager.Inst().getPointerY(i));
-            }
-        }
-        //drawRenderMesh(blueTriangleMesh, -0.5f, -0.25f);
-        //drawRenderMesh(blueTriangleMesh, 0.5f, -0.25f);
-        //drawRenderMesh(yellowSquareMesh, 0f, 0.5f);
+        drawRenderMesh3D(tempCube, 0, 0, -5);
+
+        drawJoystick(InputManager.Inst().getJoystickA());
+        drawJoystick(InputManager.Inst().getJoystickB());
+
+        // Draw pointers for debugging purposes
+        //for (int i = 0; i < InputManager.Inst().getMaxPointerCount(); i++)
+        //{
+        //    if (InputManager.Inst().getPointerValid(i))
+        //    {
+        //        drawRenderMesh(yellowSquareMesh, InputManager.Inst().getPointerX(i), InputManager.Inst().getPointerY(i));
+        //    }
+        //}
+
+    }
+
+    public void frameUpdate()
+    {
+        InputManager.Inst().getJoystickA().updateInput();
+        InputManager.Inst().getJoystickB().updateInput();
+        GlobalsManager.Inst().getCamera().updateCamera();
     }
 
 
-
-    public void drawRenderMesh(RenderMesh renderMesh, float px, float py)
+    private void drawJoystick(Joystick joystick)
     {
-        ShaderManager.Inst().updateMatrix(px, py, false);
+        drawRenderMesh2D(joystickBox, joystick.getPx(), joystick.getPy());
+        float inputX = joystick.getInputX();
+        float inputY = joystick.getInputY();
+        float px = joystick.getPx();
+        float py = joystick.getPy();
+        float height = joystick.getHeight();
+        float width = joystick.getWidth();
+
+        drawRenderMesh2D(yellowSquareMesh, px + inputX * width / 2, py + inputY * height / 2);
+    }
+
+    private void drawRenderMesh2D(RenderMesh renderMesh, float px, float py)
+    {
+        ShaderManager.Inst().updateMatrix(px, py, 0, false);
+        renderMesh.drawMesh();
+    }
+
+    private void drawRenderMesh3D(RenderMesh renderMesh, float px, float py, float pz)
+    {
+        ShaderManager.Inst().updateMatrix(px, py, pz, true);
         renderMesh.drawMesh();
     }
 }

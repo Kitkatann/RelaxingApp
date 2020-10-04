@@ -26,7 +26,9 @@ public class ShaderManager {
 
     private float[] modelMatrix = new float[16];
     private float[] viewMatrix = new float[16];
+    private float[] cameraMatrix = new float[16];
     private float[] projectionMatrix = new float[16];
+    private float[] tempEulerMatrix = new float[16];
 
 
     public int getPositionHandle()
@@ -42,17 +44,21 @@ public class ShaderManager {
     /**
      * Set matrix and send to shader
      */
-    public void updateMatrix(float x, float y, boolean is3D)
+    public void updateMatrix(float x, float y, float z, boolean is3D)
     {
         // Set model matrix
         Matrix.setIdentityM(modelMatrix, 0);
-        Matrix.translateM(modelMatrix,0, x, y, 0.f);
-
-        // Set view matrix
-        Matrix.setIdentityM(viewMatrix, 0);
+        Matrix.translateM(modelMatrix,0, x, y, z);
 
         if (is3D)
         {
+            // Set camera matrix for 3D stuff (using camera position)
+            Matrix.setIdentityM(cameraMatrix, 0);
+            Matrix.translateM(cameraMatrix, 0, GlobalsManager.Inst().getCamera().px, GlobalsManager.Inst().getCamera().py, GlobalsManager.Inst().getCamera().pz);
+            Matrix.setRotateEulerM(tempEulerMatrix, 0, GlobalsManager.Inst().getCamera().rotX, GlobalsManager.Inst().getCamera().rotY, GlobalsManager.Inst().getCamera().rotZ);
+            Matrix.multiplyMM(cameraMatrix, 0, cameraMatrix, 0, tempEulerMatrix, 0);
+            // Invert camera matrix and put the inverted matrix into view matrix
+            Matrix.invertM(viewMatrix, 0, cameraMatrix, 0);
             // Set projection matrix for 3D stuff
             final float ratio = (float) GlobalsManager.Inst().getScreenResWidth() / GlobalsManager.Inst().getScreenResHeight();
             final float near = 0.1f;
@@ -61,12 +67,15 @@ public class ShaderManager {
         }
         else
         {
+            // Set view matrix for 2D stuff
+            Matrix.setIdentityM(viewMatrix, 0);
+
             // Set projection matrix for 2D stuff
             final float ratio = (float) GlobalsManager.Inst().getScreenResWidth() / GlobalsManager.Inst().getScreenResHeight();
             final float left = 0.f;
             final float right = GlobalsManager.Inst().getScreenResWidth();
-            final float bottom = GlobalsManager.Inst().getScreenResHeight();
-            final float top = 0.f;
+            final float top = GlobalsManager.Inst().getScreenResHeight();
+            final float bottom = 0.f;
             final float near = -10.f;
             final float far = 10.0f;
 

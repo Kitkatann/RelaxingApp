@@ -5,6 +5,8 @@ public class GlobalsManager {
     private int screenResHeight = 1080;
     private int screenResWidth = 2220;
 
+    private Camera camera = new Camera();
+
     // Create singleton GlobalsManager instance
     private static GlobalsManager inst = null;
 
@@ -23,6 +25,11 @@ public class GlobalsManager {
     public int getScreenResWidth()
     {
         return screenResWidth;
+    }
+
+    public Camera getCamera()
+    {
+        return camera;
     }
 
 }

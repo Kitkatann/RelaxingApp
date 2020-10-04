@@ -10,6 +10,9 @@ public class InputManager {
     private int[] pointerIdList = new int[maxPointerCount];
     private boolean[] pointerValidList = new boolean[maxPointerCount];
 
+    private Joystick joystickA = new Joystick(250, 250, 400, 400);
+    private Joystick joystickB = new Joystick(GlobalsManager.Inst().getScreenResWidth() - 250, 250, 400, 400);
+
     public InputManager()
     {
         for (int i = 0; i < maxPointerCount; i++)
@@ -49,6 +52,16 @@ public class InputManager {
     public int getMaxPointerCount()
     {
         return maxPointerCount;
+    }
+
+    public Joystick getJoystickA()
+    {
+        return joystickA;
+    }
+
+    public Joystick getJoystickB()
+    {
+        return joystickB;
     }
 
     public void setPointerPosition(float x, float y, int index)
