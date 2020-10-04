@@ -18,8 +18,8 @@ public class Camera {
 
         px += ax * 0.05;
         pz -= ay * 0.05;
-        rotX -= by * 0.05;
-        rotY += bx * 0.05;
+        rotX -= by * 0.5;
+        rotY += bx * 0.5;
     }
 
 }

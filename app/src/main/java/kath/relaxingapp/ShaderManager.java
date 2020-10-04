@@ -28,7 +28,6 @@ public class ShaderManager {
     private float[] viewMatrix = new float[16];
     private float[] cameraMatrix = new float[16];
     private float[] projectionMatrix = new float[16];
-    private float[] tempEulerMatrix = new float[16];
 
 
     public int getPositionHandle()
@@ -55,8 +54,9 @@ public class ShaderManager {
             // Set camera matrix for 3D stuff (using camera position)
             Matrix.setIdentityM(cameraMatrix, 0);
             Matrix.translateM(cameraMatrix, 0, GlobalsManager.Inst().getCamera().px, GlobalsManager.Inst().getCamera().py, GlobalsManager.Inst().getCamera().pz);
-            Matrix.setRotateEulerM(tempEulerMatrix, 0, GlobalsManager.Inst().getCamera().rotX, GlobalsManager.Inst().getCamera().rotY, GlobalsManager.Inst().getCamera().rotZ);
-            Matrix.multiplyMM(cameraMatrix, 0, cameraMatrix, 0, tempEulerMatrix, 0);
+            Matrix.rotateM(cameraMatrix, 0, GlobalsManager.Inst().getCamera().rotY, 0, -1, 0);
+            Matrix.rotateM(cameraMatrix, 0, GlobalsManager.Inst().getCamera().rotX, -1, 0, 0);
+            Matrix.rotateM(cameraMatrix, 0, GlobalsManager.Inst().getCamera().rotZ, 0, 0, -1);
             // Invert camera matrix and put the inverted matrix into view matrix
             Matrix.invertM(viewMatrix, 0, cameraMatrix, 0);
             // Set projection matrix for 3D stuff
