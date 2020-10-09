@@ -16,10 +16,12 @@ public class Camera {
         float bx = InputManager.Inst().getJoystickB().getInputX();
         float by = InputManager.Inst().getJoystickB().getInputY();
 
-        px += ax * 0.05;
-        pz -= ay * 0.05;
-        rotX -= by * 0.5;
-        rotY += bx * 0.5;
+        float theta = rotY * (float)Math.PI / 180.0f;
+
+        px += (-Math.sin(theta) * ay + Math.cos(theta) * ax) * 0.05;
+        pz += (-Math.cos(theta) * ay + -Math.sin(theta) * ax) * 0.05;
+        rotX += by * 0.5;
+        rotY -= bx * 0.5;
     }
 
 }
