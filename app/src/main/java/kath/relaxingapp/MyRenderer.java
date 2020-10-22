@@ -13,11 +13,37 @@ public class MyRenderer implements GLSurfaceView.Renderer{
     private RenderMesh joystickBox;
     private RenderMesh tempCube;
 
+    private MeshBuilder yellowSquareMeshBuilder;
+    private MeshBuilder redSquareMeshBuilder;
+    private MeshBuilder tempCubeMeshBuilder;
+
+
+
     public MyRenderer()
     {
-        yellowSquareMesh = new RenderMesh(1);
-        joystickBox = new RenderMesh(2);
-        tempCube = new RenderMesh(3);
+        yellowSquareMeshBuilder = new MeshBuilder();
+        yellowSquareMeshBuilder.setColour(1.0f, 1.0f, 0.0f, 0.5f);
+        yellowSquareMeshBuilder.addTriangle(-50.f, -50.f, 0.0f, 50.f, -50.f, 0.0f,-50.f, 50.f, 0.0f);
+        yellowSquareMeshBuilder.addTriangle(50.f, 50.f, 0.0f, -50.f, 50.f, 0.0f,50.f, -50.f, 0.0f);
+
+        redSquareMeshBuilder = new MeshBuilder();
+        redSquareMeshBuilder.setColour(1.0f, 0.0f, 0.0f, 0.5f);
+        redSquareMeshBuilder.addTriangle(-200.f, -200.f, 0.0f, 200.f, -200.f, 0.0f, -200.f, 200.f, 0.0f);
+        redSquareMeshBuilder.addTriangle(200.f, 200.f, 0.0f, -200.f, 200.f, 0.0f, 200.f, -200.f, 0.0f);
+
+        tempCubeMeshBuilder = new MeshBuilder();
+        tempCubeMeshBuilder.setColour(0.0f, 0.0f, 1.0f, 1.0f);
+        tempCubeMeshBuilder.addTriangle(-1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f);
+        tempCubeMeshBuilder.setColour(0.0f, 0.3f, 1.0f, 1.0f);
+        tempCubeMeshBuilder.addTriangle(1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f);
+        tempCubeMeshBuilder.setColour(0.0f, 1.0f, 1.0f, 1.0f);
+        tempCubeMeshBuilder.addTriangle(1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, 1.0f, -1.0f);
+        tempCubeMeshBuilder.setColour(0.0f, 0.6f, 1.0f, 1.0f);
+        tempCubeMeshBuilder.addTriangle(-1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f);
+
+        yellowSquareMesh = new RenderMesh(yellowSquareMeshBuilder);
+        joystickBox = new RenderMesh(redSquareMeshBuilder);
+        tempCube = new RenderMesh(tempCubeMeshBuilder);
     }
 
     @Override
@@ -38,8 +64,22 @@ public class MyRenderer implements GLSurfaceView.Renderer{
     public void onDrawFrame(GL10 glUnused) {
         frameUpdate();
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
+        // Enable depth testing for 3D elements
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+        // Enable culling for 3D elements
+        GLES20.glEnable(GLES20.GL_CULL_FACE);
+        // Disable blending for 3D elements
+        GLES20.glDisable(GLES20.GL_BLEND);
 
         drawRenderMesh3D(tempCube, 0, 0, -5);
+
+        // Disable depth testing for UI elements
+        GLES20.glDisable(GLES20.GL_DEPTH_TEST);
+        // Disable culling for UI elements
+        GLES20.glDisable(GLES20.GL_CULL_FACE);
+        // Enable blending for UI elements
+        GLES20.glEnable(GLES20.GL_BLEND);
+        GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 
         drawJoystick(InputManager.Inst().getJoystickA());
         drawJoystick(InputManager.Inst().getJoystickB());

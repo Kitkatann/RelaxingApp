@@ -3,7 +3,7 @@ package kath.relaxingapp;
 public class GlobalsManager {
 
     private int screenResHeight = 1080;
-    private int screenResWidth = 2220;
+    private int screenResWidth = 2100;
 
     private Camera camera = new Camera();
 
