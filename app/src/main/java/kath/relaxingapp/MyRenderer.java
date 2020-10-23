@@ -2,10 +2,11 @@ package kath.relaxingapp;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-import android.renderscript.ScriptGroup;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import kath.relaxingapp.geometry.AddGeometry;
 
 public class MyRenderer implements GLSurfaceView.Renderer{
 
@@ -16,8 +17,6 @@ public class MyRenderer implements GLSurfaceView.Renderer{
     private MeshBuilder yellowSquareMeshBuilder;
     private MeshBuilder redSquareMeshBuilder;
     private MeshBuilder tempCubeMeshBuilder;
-
-
 
     public MyRenderer()
     {
@@ -33,13 +32,7 @@ public class MyRenderer implements GLSurfaceView.Renderer{
 
         tempCubeMeshBuilder = new MeshBuilder();
         tempCubeMeshBuilder.setColour(0.0f, 0.0f, 1.0f, 1.0f);
-        tempCubeMeshBuilder.addTriangle(-1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f);
-        tempCubeMeshBuilder.setColour(0.0f, 0.3f, 1.0f, 1.0f);
-        tempCubeMeshBuilder.addTriangle(1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f);
-        tempCubeMeshBuilder.setColour(0.0f, 1.0f, 1.0f, 1.0f);
-        tempCubeMeshBuilder.addTriangle(1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, 1.0f, -1.0f);
-        tempCubeMeshBuilder.setColour(0.0f, 0.6f, 1.0f, 1.0f);
-        tempCubeMeshBuilder.addTriangle(-1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f);
+        AddGeometry.addCube(1.0f, tempCubeMeshBuilder);
 
         yellowSquareMesh = new RenderMesh(yellowSquareMeshBuilder);
         joystickBox = new RenderMesh(redSquareMeshBuilder);

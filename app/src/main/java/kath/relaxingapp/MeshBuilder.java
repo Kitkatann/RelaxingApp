@@ -12,7 +12,7 @@ public class MeshBuilder {
         return triangles;
     }
 
-    void addTriangle(float p1x, float p1y, float p1z, float p2x, float p2y, float p2z, float p3x, float p3y, float p3z)
+    public void addTriangle(float p1x, float p1y, float p1z, float p2x, float p2y, float p2z, float p3x, float p3y, float p3z)
     {
         // X, Y, Z,
         // R, G, B, A
@@ -40,7 +40,7 @@ public class MeshBuilder {
 
     }
 
-    void setColour(float r, float g, float b, float a)
+    public void setColour(float r, float g, float b, float a)
     {
         colour[0] = r;
         colour[1] = g;
