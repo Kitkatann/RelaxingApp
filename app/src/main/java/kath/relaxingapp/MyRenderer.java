@@ -13,10 +13,14 @@ public class MyRenderer implements GLSurfaceView.Renderer{
     private RenderMesh yellowSquareMesh;
     private RenderMesh joystickBox;
     private RenderMesh tempCube;
+    private RenderMesh tempCuboid;
+    private RenderMesh tempCircle;
 
     private MeshBuilder yellowSquareMeshBuilder;
     private MeshBuilder redSquareMeshBuilder;
     private MeshBuilder tempCubeMeshBuilder;
+    private MeshBuilder tempCuboidMeshBuilder;
+    private MeshBuilder tempCircleMeshBuilder;
 
     public MyRenderer()
     {
@@ -32,11 +36,21 @@ public class MyRenderer implements GLSurfaceView.Renderer{
 
         tempCubeMeshBuilder = new MeshBuilder();
         tempCubeMeshBuilder.setColour(0.0f, 0.0f, 1.0f, 1.0f);
-        AddGeometry.addCube(1.0f, tempCubeMeshBuilder);
+        AddGeometry.addCube(1.f, tempCubeMeshBuilder);
+
+        tempCuboidMeshBuilder = new MeshBuilder();
+        tempCuboidMeshBuilder.setColour(1.0f, 0.0f, 1.0f, 1.0f);
+        AddGeometry.addCuboid(0.5f, 2.f, 2.f,  tempCuboidMeshBuilder);
+
+        tempCircleMeshBuilder = new MeshBuilder();
+        tempCircleMeshBuilder.setColour(0.f, 1.f, 0.f, 1.0f);
+        AddGeometry.addCircle(1.f, 5,  tempCircleMeshBuilder);
 
         yellowSquareMesh = new RenderMesh(yellowSquareMeshBuilder);
         joystickBox = new RenderMesh(redSquareMeshBuilder);
         tempCube = new RenderMesh(tempCubeMeshBuilder);
+        tempCuboid = new RenderMesh(tempCuboidMeshBuilder);
+        tempCircle = new RenderMesh(tempCircleMeshBuilder);
     }
 
     @Override
@@ -65,6 +79,8 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         GLES20.glDisable(GLES20.GL_BLEND);
 
         drawRenderMesh3D(tempCube, 0, 0, -5);
+        drawRenderMesh3D(tempCuboid, 5, 0, -5);
+        drawRenderMesh3D(tempCircle, -5, 0, -5);
 
         // Disable depth testing for UI elements
         GLES20.glDisable(GLES20.GL_DEPTH_TEST);

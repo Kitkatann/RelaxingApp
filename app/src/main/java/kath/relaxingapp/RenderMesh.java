@@ -7,6 +7,8 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
+// Contains a single mesh's vertex data in the correct data structure (FloatBuffer) and format to be rendered by GL.
+// Also has the method to invoke that rendering (draw it to the screen)
 public class RenderMesh {
     /** Store our model data in a float buffer. */
     private FloatBuffer vertexBuffer;

@@ -2,6 +2,8 @@ package kath.relaxingapp;
 
 import java.util.ArrayList;
 
+//A temporary class used in constructing a mesh (nice API to add colourful triangles to a list).
+// Used to initialize a RenderMesh (the MeshBuilder can then be discarded)
 public class MeshBuilder {
 
     private float[] colour = new float[4];
