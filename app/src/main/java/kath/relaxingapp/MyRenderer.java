@@ -44,7 +44,7 @@ public class MyRenderer implements GLSurfaceView.Renderer{
 
         tempCircleMeshBuilder = new MeshBuilder();
         tempCircleMeshBuilder.setColour(0.f, 1.f, 0.f, 1.0f);
-        AddGeometry.addCircle(1.f, 5,  tempCircleMeshBuilder);
+        AddGeometry.addCircle(1.f, 32,  tempCircleMeshBuilder);
 
         yellowSquareMesh = new RenderMesh(yellowSquareMeshBuilder);
         joystickBox = new RenderMesh(redSquareMeshBuilder);
@@ -78,6 +78,7 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         // Disable blending for 3D elements
         GLES20.glDisable(GLES20.GL_BLEND);
 
+        SceneManager.Inst().drawSceneObjects();
         drawRenderMesh3D(tempCube, 0, 0, -5);
         drawRenderMesh3D(tempCuboid, 5, 0, -5);
         drawRenderMesh3D(tempCircle, -5, 0, -5);
