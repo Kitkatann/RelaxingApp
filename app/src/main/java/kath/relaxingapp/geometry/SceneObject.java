@@ -7,12 +7,11 @@ import kath.relaxingapp.RenderMesh;
 public class SceneObject {
     private float[] position;
     private RenderMesh renderMesh;
-    private MeshBuilder meshBuilder;
 
-    public SceneObject(float px, float py, float pz)
+
+    public SceneObject(float px, float py, float pz, RenderMesh renderMesh)
     {
-        meshBuilder = new MeshBuilder();
-        renderMesh = new RenderMesh(meshBuilder);
+        this.renderMesh = renderMesh;
 
         position[0] = px;
         position[1] = py;

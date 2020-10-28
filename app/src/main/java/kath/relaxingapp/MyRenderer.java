@@ -15,12 +15,18 @@ public class MyRenderer implements GLSurfaceView.Renderer{
     private RenderMesh tempCube;
     private RenderMesh tempCuboid;
     private RenderMesh tempCircle;
+    private RenderMesh tempPlane;
+    private RenderMesh tempPrism;
+    private RenderMesh tempSphere;
 
     private MeshBuilder yellowSquareMeshBuilder;
     private MeshBuilder redSquareMeshBuilder;
     private MeshBuilder tempCubeMeshBuilder;
     private MeshBuilder tempCuboidMeshBuilder;
     private MeshBuilder tempCircleMeshBuilder;
+    private MeshBuilder tempPlaneMeshBuilder;
+    private MeshBuilder tempPrismMeshBuilder;
+    private MeshBuilder tempSphereMeshBuilder;
 
     public MyRenderer()
     {
@@ -46,11 +52,27 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         tempCircleMeshBuilder.setColour(0.f, 1.f, 0.f, 1.0f);
         AddGeometry.addCircle(1.f, 32,  tempCircleMeshBuilder);
 
+        tempPlaneMeshBuilder = new MeshBuilder();
+        tempPlaneMeshBuilder.setColour(1.f, 0.f, 0.f, 1.0f);
+        AddGeometry.addPlane(1.f, 1.f,  tempPlaneMeshBuilder);
+
+        tempPrismMeshBuilder = new MeshBuilder();
+        tempPrismMeshBuilder.setColour(1.f, 0.f, 0.f, 1.0f);
+        AddGeometry.addPrism(1.f, 1.f, 5,  tempPrismMeshBuilder);
+
+        tempSphereMeshBuilder = new MeshBuilder();
+        tempSphereMeshBuilder.setColour(0.f, 1.f, 1.f, 1.0f);
+        tempSphereMeshBuilder.setRandomColourMode(true);
+        AddGeometry.addSphere(1.f, 32, 32,  tempSphereMeshBuilder);
+
         yellowSquareMesh = new RenderMesh(yellowSquareMeshBuilder);
         joystickBox = new RenderMesh(redSquareMeshBuilder);
         tempCube = new RenderMesh(tempCubeMeshBuilder);
         tempCuboid = new RenderMesh(tempCuboidMeshBuilder);
         tempCircle = new RenderMesh(tempCircleMeshBuilder);
+        tempPlane = new RenderMesh(tempPlaneMeshBuilder);
+        tempPrism = new RenderMesh(tempPrismMeshBuilder);
+        tempSphere = new RenderMesh(tempSphereMeshBuilder);
     }
 
     @Override
@@ -78,10 +100,13 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         // Disable blending for 3D elements
         GLES20.glDisable(GLES20.GL_BLEND);
 
-        SceneManager.Inst().drawSceneObjects();
+        // SceneManager.Inst().drawSceneObjects();
         drawRenderMesh3D(tempCube, 0, 0, -5);
-        drawRenderMesh3D(tempCuboid, 5, 0, -5);
-        drawRenderMesh3D(tempCircle, -5, 0, -5);
+        drawRenderMesh3D(tempCuboid, 3, 0, -5);
+        drawRenderMesh3D(tempCircle, -3, 0, -5);
+        drawRenderMesh3D(tempPlane, 0, -3, -5);
+        drawRenderMesh3D(tempPrism, -6, 0, -5);
+        drawRenderMesh3D(tempSphere, 6, 0, -5);
 
         // Disable depth testing for UI elements
         GLES20.glDisable(GLES20.GL_DEPTH_TEST);
