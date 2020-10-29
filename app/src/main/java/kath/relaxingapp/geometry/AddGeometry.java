@@ -157,7 +157,7 @@ public class AddGeometry {
         }
         else
         {
-            Log.v("myErrors", "Invalid number of segments");
+            Log.v("myErrors", "Invalid number of segments or rings");
         }
     }
 

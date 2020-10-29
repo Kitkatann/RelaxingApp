@@ -1,11 +1,7 @@
-package kath.relaxingapp.geometry;
-
-
-import kath.relaxingapp.MeshBuilder;
-import kath.relaxingapp.RenderMesh;
+package kath.relaxingapp;
 
 public class SceneObject {
-    private float[] position;
+    private float[] position = new float[3];
     private RenderMesh renderMesh;
 
 
@@ -16,6 +12,11 @@ public class SceneObject {
         position[0] = px;
         position[1] = py;
         position[2] = pz;
+    }
+
+    public RenderMesh getRenderMesh()
+    {
+        return renderMesh;
     }
 
     public float[] getPosition()
