@@ -1,8 +1,12 @@
-package kath.relaxingapp;
+package kath.relaxingapp.world;
 
 import android.util.Log;
 
 import java.util.ArrayList;
+
+import kath.relaxingapp.graphics.RenderMesh;
+import kath.relaxingapp.graphics.RenderMeshManager;
+import kath.relaxingapp.graphics.TestRenderMeshes;
 
 public class SceneManager {
     private ArrayList<SceneObject> sceneObjects = new ArrayList<>();
@@ -32,16 +36,13 @@ public class SceneManager {
         TestRenderMeshes testRenderMeshes = RenderMeshManager.Inst().getTestRenderMeshes();
         if (testRenderMeshes != null)
         {
-            for (int i = 0; i < 10; i++)
-            {
-                addSceneObject(0, i * 3, -5, testRenderMeshes.tempCube);
-            }
             addSceneObject(0, 0, -5, testRenderMeshes.tempCube);
             addSceneObject(3, 0, -5, testRenderMeshes.tempCuboid);
             addSceneObject(-3, 0, -5, testRenderMeshes.tempCircle);
             addSceneObject(0, -3, -5, testRenderMeshes.tempPlane);
             addSceneObject(-6, 0, -5, testRenderMeshes.tempPrism);
             addSceneObject(6, 0, -5, testRenderMeshes.tempSphere);
+            addSceneObject(0, 0, 0, RenderMeshManager.Inst().getTerrain());
         }
         else
         {

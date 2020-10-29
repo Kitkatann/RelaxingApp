@@ -1,4 +1,4 @@
-package kath.relaxingapp;
+package kath.relaxingapp.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -1,9 +1,11 @@
-package kath.relaxingapp;
+package kath.relaxingapp.app;
+
+import kath.relaxingapp.input.InputManager;
 
 public class Camera {
 
     public float px = 0;
-    public float py = 0;
+    public float py = 1.7f;
     public float pz = 0;
     public float rotX = 0;
     public float rotY = 0;

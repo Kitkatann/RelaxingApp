@@ -1,4 +1,4 @@
-package kath.relaxingapp;
+package kath.relaxingapp.input;
 
 public class Joystick {
 

@@ -1,6 +1,6 @@
-package kath.relaxingapp;
+package kath.relaxingapp.input;
 
-import android.util.Log;
+import kath.relaxingapp.app.GlobalsManager;
 
 public class InputManager {
 

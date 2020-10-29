@@ -2,7 +2,8 @@ package kath.relaxingapp.geometry;
 
 import android.util.Log;
 
-import kath.relaxingapp.MeshBuilder;
+import kath.relaxingapp.graphics.MeshBuilder;
+import kath.relaxingapp.terrain.HeightMap;
 
 public class AddGeometry {
 
@@ -158,6 +159,29 @@ public class AddGeometry {
         else
         {
             Log.v("myErrors", "Invalid number of segments or rings");
+        }
+    }
+
+    public static void addTerrain(float cellSize, HeightMap heightMap, MeshBuilder terrainMeshBuilder)
+    {
+        int width = heightMap.getWidth();
+        int height = heightMap.getHeight();
+        float x = 0;
+        float z = 0;
+        for (int i = 0; i < height; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                terrainMeshBuilder.addQuad(
+                        x, heightMap.getValue(j, i + 1), z - cellSize,
+                        x, heightMap.getValue(j, i), z,
+                        x + cellSize, heightMap.getValue(j + 1, i), z,
+                        x + cellSize, heightMap.getValue(j + 1, i + 1), z - cellSize
+                );
+                x += cellSize;
+            }
+            x = 0;
+            z -= cellSize;
         }
     }
 

@@ -1,4 +1,4 @@
-package kath.relaxingapp;
+package kath.relaxingapp.app;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -9,14 +9,26 @@ import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class MyRenderer implements GLSurfaceView.Renderer{
+import kath.relaxingapp.R;
+import kath.relaxingapp.geometry.AddGeometry;
+import kath.relaxingapp.graphics.RenderMeshManager;
+import kath.relaxingapp.terrain.HeightMap;
+import kath.relaxingapp.world.SceneManager;
+import kath.relaxingapp.world.SceneObject;
+import kath.relaxingapp.graphics.MeshBuilder;
+import kath.relaxingapp.graphics.RenderMesh;
+import kath.relaxingapp.graphics.ShaderManager;
+import kath.relaxingapp.input.InputManager;
+import kath.relaxingapp.input.Joystick;
 
+public class MyRenderer implements GLSurfaceView.Renderer{
 
     private RenderMesh yellowSquareMesh;
     private RenderMesh joystickBox;
 
     private MeshBuilder yellowSquareMeshBuilder;
     private MeshBuilder redSquareMeshBuilder;
+    private MeshBuilder terrainMeshBuilder;
 
     public MyRenderer()
     {
@@ -29,6 +41,18 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         redSquareMeshBuilder.setColour(1.0f, 0.0f, 0.0f, 0.5f);
         redSquareMeshBuilder.addTriangle(-200.f, -200.f, 0.0f, 200.f, -200.f, 0.0f, -200.f, 200.f, 0.0f);
         redSquareMeshBuilder.addTriangle(200.f, 200.f, 0.0f, -200.f, 200.f, 0.0f, 200.f, -200.f, 0.0f);
+
+        HeightMap testHeightMap = new HeightMap(10, 10);
+        testHeightMap.setValue(3, 3, 5);
+        testHeightMap.setValue(7, 5, 10);
+        testHeightMap.setValue(0, 3, 7);
+        testHeightMap.setValue(6, 0, 3);
+
+        terrainMeshBuilder = new MeshBuilder();
+        terrainMeshBuilder.setColour(0.6f, 0.6f, 0.6f, 1.f);
+        terrainMeshBuilder.setRandomColourMode(true);
+        AddGeometry.addTerrain(5.f, testHeightMap, terrainMeshBuilder);
+        RenderMeshManager.Inst().getTerrain().setData(terrainMeshBuilder);
 
         yellowSquareMesh = new RenderMesh(yellowSquareMeshBuilder);
         joystickBox = new RenderMesh(redSquareMeshBuilder);

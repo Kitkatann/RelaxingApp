@@ -1,9 +1,11 @@
-package kath.relaxingapp;
+package kath.relaxingapp.utilities;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import kath.relaxingapp.app.MainActivity;
 
 public class FileUtil {
 

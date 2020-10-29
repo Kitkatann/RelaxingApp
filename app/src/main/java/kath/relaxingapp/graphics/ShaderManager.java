@@ -1,8 +1,11 @@
-package kath.relaxingapp;
+package kath.relaxingapp.graphics;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
+
+import kath.relaxingapp.utilities.FileUtil;
+import kath.relaxingapp.app.GlobalsManager;
 
 public class ShaderManager {
 

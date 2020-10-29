@@ -1,10 +1,10 @@
-package kath.relaxingapp;
+package kath.relaxingapp.app;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
-import android.renderscript.ScriptGroup;
-import android.util.Log;
 import android.view.MotionEvent;
+
+import kath.relaxingapp.input.InputManager;
 
 public class MyGLSurfaceView extends GLSurfaceView {
 

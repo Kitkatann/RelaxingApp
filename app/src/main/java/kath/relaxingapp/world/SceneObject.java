@@ -1,4 +1,6 @@
-package kath.relaxingapp;
+package kath.relaxingapp.world;
+
+import kath.relaxingapp.graphics.RenderMesh;
 
 public class SceneObject {
     private float[] position = new float[3];

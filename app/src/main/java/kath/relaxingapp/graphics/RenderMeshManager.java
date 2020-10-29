@@ -1,8 +1,9 @@
-package kath.relaxingapp;
+package kath.relaxingapp.graphics;
 
 public class RenderMeshManager {
 
     private TestRenderMeshes testRenderMeshes;
+    private RenderMesh terrain;
 
     // Create singleton GlobalsManager instance
     private static RenderMeshManager inst = null;
@@ -17,11 +18,17 @@ public class RenderMeshManager {
     public RenderMeshManager()
     {
         testRenderMeshes = new TestRenderMeshes();
+        terrain = new RenderMesh();
     }
 
     public TestRenderMeshes getTestRenderMeshes()
     {
         return testRenderMeshes;
+    }
+
+    public RenderMesh getTerrain()
+    {
+        return terrain;
     }
 
 }
