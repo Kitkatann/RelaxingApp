@@ -23,24 +23,22 @@ import kath.relaxingapp.input.Joystick;
 
 public class MyRenderer implements GLSurfaceView.Renderer{
 
-    private RenderMesh yellowSquareMesh;
+    private RenderMesh joystickPointer;
     private RenderMesh joystickBox;
 
-    private MeshBuilder yellowSquareMeshBuilder;
-    private MeshBuilder redSquareMeshBuilder;
+    private MeshBuilder joystickPointerMeshBuilder;
+    private MeshBuilder joystickBoxMeshBuilder;
     private MeshBuilder terrainMeshBuilder;
 
     public MyRenderer()
     {
-        yellowSquareMeshBuilder = new MeshBuilder();
-        yellowSquareMeshBuilder.setColour(1.0f, 1.0f, 0.0f, 0.5f);
-        yellowSquareMeshBuilder.addTriangle(-50.f, -50.f, 0.0f, 50.f, -50.f, 0.0f,-50.f, 50.f, 0.0f);
-        yellowSquareMeshBuilder.addTriangle(50.f, 50.f, 0.0f, -50.f, 50.f, 0.0f,50.f, -50.f, 0.0f);
+        joystickPointerMeshBuilder = new MeshBuilder();
+        joystickPointerMeshBuilder.setColour(0.4f, 0.4f, 0.4f, 0.5f);
+        AddGeometry.addCircle(50, 32, joystickPointerMeshBuilder);
 
-        redSquareMeshBuilder = new MeshBuilder();
-        redSquareMeshBuilder.setColour(1.0f, 0.0f, 0.0f, 0.5f);
-        redSquareMeshBuilder.addTriangle(-200.f, -200.f, 0.0f, 200.f, -200.f, 0.0f, -200.f, 200.f, 0.0f);
-        redSquareMeshBuilder.addTriangle(200.f, 200.f, 0.0f, -200.f, 200.f, 0.0f, 200.f, -200.f, 0.0f);
+        joystickBoxMeshBuilder = new MeshBuilder();
+        joystickBoxMeshBuilder.setColour(0.4f, 0.4f, 0.4f, 0.5f);
+        AddGeometry.addCircle(200, 32, joystickBoxMeshBuilder);
 
         HeightMap testHeightMap = new HeightMap(10, 10);
         testHeightMap.setValue(3, 3, 5);
@@ -54,8 +52,8 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         AddGeometry.addTerrain(5.f, testHeightMap, terrainMeshBuilder);
         RenderMeshManager.Inst().getTerrain().setData(terrainMeshBuilder);
 
-        yellowSquareMesh = new RenderMesh(yellowSquareMeshBuilder);
-        joystickBox = new RenderMesh(redSquareMeshBuilder);
+        joystickPointer = new RenderMesh(joystickPointerMeshBuilder);
+        joystickBox = new RenderMesh(joystickBoxMeshBuilder);
 
         SceneManager.Inst().createTestScene();
     }
@@ -127,7 +125,7 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         float height = joystick.getHeight();
         float width = joystick.getWidth();
 
-        drawRenderMesh2D(yellowSquareMesh, px + inputX * width / 2, py + inputY * height / 2);
+        drawRenderMesh2D(joystickPointer, px + inputX * width / 2, py + inputY * height / 2);
     }
 
     private void drawRenderMesh2D(RenderMesh renderMesh, float px, float py)
