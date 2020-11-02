@@ -36,13 +36,13 @@ public class SceneManager {
         TestRenderMeshes testRenderMeshes = RenderMeshManager.Inst().getTestRenderMeshes();
         if (testRenderMeshes != null)
         {
-            addSceneObject(0, 0, -5, testRenderMeshes.tempCube);
-            addSceneObject(3, 0, -5, testRenderMeshes.tempCuboid);
-            addSceneObject(-3, 0, -5, testRenderMeshes.tempCircle);
-            addSceneObject(0, -3, -5, testRenderMeshes.tempPlane);
-            addSceneObject(-6, 0, -5, testRenderMeshes.tempPrism);
-            addSceneObject(6, 0, -5, testRenderMeshes.tempSphere);
-            addSceneObject(0, 0, 0, RenderMeshManager.Inst().getTerrain());
+            addSceneObject(0, 4, -5, testRenderMeshes.tempCube);
+            addSceneObject(3, 1, -5, testRenderMeshes.tempCuboid);
+            addSceneObject(-3, 1, -5, testRenderMeshes.tempCircle);
+            addSceneObject(0, 1, -7, testRenderMeshes.tempPlane);
+            addSceneObject(-6, 1, -5, testRenderMeshes.tempPrism);
+            addSceneObject(6, 1, -5, testRenderMeshes.tempSphere);
+            addSceneObject(-5, 0, 5, RenderMeshManager.Inst().getTerrain());
         }
         else
         {
@@ -52,7 +52,7 @@ public class SceneManager {
 
     public void addSceneObject(float px, float py, float pz, RenderMesh renderMesh)
     {
-        SceneObject mySceneObject = new SceneObject(px, py, pz, renderMesh);
+        SceneObject mySceneObject = new SceneObject(px, py, pz, renderMesh, true);
         sceneObjects.add(mySceneObject);
     }
 

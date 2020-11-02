@@ -13,6 +13,7 @@ import kath.relaxingapp.R;
 import kath.relaxingapp.geometry.AddGeometry;
 import kath.relaxingapp.graphics.RenderMeshManager;
 import kath.relaxingapp.terrain.HeightMap;
+import kath.relaxingapp.world.GameManager;
 import kath.relaxingapp.world.SceneManager;
 import kath.relaxingapp.world.SceneObject;
 import kath.relaxingapp.graphics.MeshBuilder;
@@ -111,6 +112,7 @@ public class MyRenderer implements GLSurfaceView.Renderer{
     {
         InputManager.Inst().getJoystickA().updateInput();
         InputManager.Inst().getJoystickB().updateInput();
+        GameManager.Inst().getPlayer().updateMovement();
         GlobalsManager.Inst().getCamera().updateCamera();
     }
 
