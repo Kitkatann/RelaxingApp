@@ -1,5 +1,7 @@
 package kath.relaxingapp.terrain;
 
+import kath.relaxingapp.utilities.MathUtil;
+
 // Greyscale image as a 2D array of float values
 public class HeightMap {
 
@@ -39,6 +41,17 @@ public class HeightMap {
         {
             return 0;
         }
+    }
+
+    public float getValueBilinear(float x, float y)
+    {
+        float a = getValue((int)Math.floor(x), (int)Math.floor(y));
+        float b = getValue((int)Math.floor(x) + 1, (int)Math.floor(y));
+        float c = getValue((int)Math.floor(x), (int)Math.floor(y) + 1);
+        float d = getValue((int)Math.floor(x) + 1, (int)Math.floor(y) + 1);
+        float tx = x - (int)Math.floor(x);
+        float ty = y - (int)Math.floor(y);
+        return MathUtil.bilinearInterpolation(a, b, c, d, tx, ty);
     }
 
     public void setValue(int x, int y, float value)

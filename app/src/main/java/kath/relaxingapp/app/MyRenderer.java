@@ -29,7 +29,6 @@ public class MyRenderer implements GLSurfaceView.Renderer{
 
     private MeshBuilder joystickPointerMeshBuilder;
     private MeshBuilder joystickBoxMeshBuilder;
-    private MeshBuilder terrainMeshBuilder;
 
     public MyRenderer()
     {
@@ -41,22 +40,10 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         joystickBoxMeshBuilder.setColour(0.4f, 0.4f, 0.4f, 0.5f);
         AddGeometry.addCircle(200, 32, joystickBoxMeshBuilder);
 
-        HeightMap testHeightMap = new HeightMap(10, 10);
-        testHeightMap.setValue(3, 3, 5);
-        testHeightMap.setValue(7, 5, 10);
-        testHeightMap.setValue(0, 3, 7);
-        testHeightMap.setValue(6, 0, 3);
-
-        terrainMeshBuilder = new MeshBuilder();
-        terrainMeshBuilder.setColour(0.6f, 0.6f, 0.6f, 1.f);
-        terrainMeshBuilder.setRandomColourMode(true);
-        AddGeometry.addTerrain(5.f, testHeightMap, terrainMeshBuilder);
-        RenderMeshManager.Inst().getTerrain().setData(terrainMeshBuilder);
+        GameManager.Inst().startGame();
 
         joystickPointer = new RenderMesh(joystickPointerMeshBuilder);
         joystickBox = new RenderMesh(joystickBoxMeshBuilder);
-
-        SceneManager.Inst().createTestScene();
     }
 
     @Override

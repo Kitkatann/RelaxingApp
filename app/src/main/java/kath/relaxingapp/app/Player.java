@@ -1,14 +1,17 @@
 package kath.relaxingapp.app;
 
+import android.transition.Scene;
+import android.util.Log;
+
 import kath.relaxingapp.input.InputManager;
 import kath.relaxingapp.world.SceneManager;
 import kath.relaxingapp.world.SceneObject;
 
 public class Player {
 
-    public float px = 0;
+    public float px = 25;
     public float py = 1.7f;
-    public float pz = 0;
+    public float pz = -25;
     public float rotX = 0;
     public float rotY = 0;
     public float rotZ = 0;
@@ -31,6 +34,7 @@ public class Player {
         rotY -= bx * 0.5;
         // Update collision
         updateCollision();
+        updateTerrainCollision();
     }
 
     public void updateCollision()
@@ -59,5 +63,12 @@ public class Player {
             px = px + dx;
             pz = pz + dz;
         }
+    }
+
+    private void updateTerrainCollision()
+    {
+        float ty = SceneManager.Inst().getTerrain().getY(px, pz);
+        py = ty + collHeight / 2;
+
     }
 }

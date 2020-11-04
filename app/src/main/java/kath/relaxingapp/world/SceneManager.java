@@ -7,13 +7,15 @@ import java.util.ArrayList;
 import kath.relaxingapp.graphics.RenderMesh;
 import kath.relaxingapp.graphics.RenderMeshManager;
 import kath.relaxingapp.graphics.TestRenderMeshes;
+import kath.relaxingapp.terrain.Terrain;
 
 public class SceneManager {
     private ArrayList<SceneObject> sceneObjects = new ArrayList<>();
+    private Terrain terrain;
 
     public SceneManager()
     {
-
+        terrain = new Terrain();
     }
 
     // Create singleton GlobalsManager instance
@@ -36,13 +38,13 @@ public class SceneManager {
         TestRenderMeshes testRenderMeshes = RenderMeshManager.Inst().getTestRenderMeshes();
         if (testRenderMeshes != null)
         {
-            addSceneObject(0, 4, -5, testRenderMeshes.tempCube);
-            addSceneObject(3, 1, -5, testRenderMeshes.tempCuboid);
-            addSceneObject(-3, 1, -5, testRenderMeshes.tempCircle);
-            addSceneObject(0, 1, -7, testRenderMeshes.tempPlane);
-            addSceneObject(-6, 1, -5, testRenderMeshes.tempPrism);
-            addSceneObject(6, 1, -5, testRenderMeshes.tempSphere);
-            addSceneObject(-5, 0, 5, RenderMeshManager.Inst().getTerrain());
+            addSceneObject(3, terrain.getY(3, -3), -3, testRenderMeshes.tempCube);
+            addSceneObject(6, terrain.getY(6, -6), -6, testRenderMeshes.tempCuboid);
+            addSceneObject(9, terrain.getY(9, -9), -9, testRenderMeshes.tempCircle);
+            addSceneObject(12, terrain.getY(12, -12), -12, testRenderMeshes.tempPlane);
+            addSceneObject(15, terrain.getY(15, -15), -15, testRenderMeshes.tempPrism);
+            addSceneObject(18, terrain.getY(18, -18), -18, testRenderMeshes.tempSphere);
+            addSceneObject(0, 0, 0, RenderMeshManager.Inst().getTerrain());
         }
         else
         {
@@ -59,6 +61,11 @@ public class SceneManager {
     public void clearScene()
     {
         sceneObjects.clear();
+    }
+
+    public Terrain getTerrain()
+    {
+        return terrain;
     }
 
 }

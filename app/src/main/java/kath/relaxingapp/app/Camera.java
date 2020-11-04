@@ -15,7 +15,7 @@ public class Camera {
     {
         Player player = GameManager.Inst().getPlayer();
         px = player.px;
-        py = player.py;
+        py = player.py + 0.8f;
         pz = player.pz;
         rotX = player.rotX;
         rotY = player.rotY;
