@@ -10,7 +10,7 @@ public class GameManager {
     private Player player;
 
 
-    // Create singleton ShaderManager instance
+    // Create singleton GameManager instance
     private static GameManager inst = null;
 
     public static GameManager Inst() {
@@ -22,6 +22,8 @@ public class GameManager {
     public GameManager()
     {
         player = new Player();
+
+
     }
 
     public Player getPlayer()

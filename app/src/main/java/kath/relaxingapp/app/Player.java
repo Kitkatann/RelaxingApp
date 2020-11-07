@@ -4,8 +4,10 @@ import android.transition.Scene;
 import android.util.Log;
 
 import kath.relaxingapp.input.InputManager;
+import kath.relaxingapp.world.GameManager;
 import kath.relaxingapp.world.SceneManager;
 import kath.relaxingapp.world.SceneObject;
+import kath.relaxingapp.audio.AudioManager;
 
 public class Player {
 
@@ -35,6 +37,7 @@ public class Player {
         // Update collision
         updateCollision();
         updateTerrainCollision();
+
     }
 
     public void updateCollision()
@@ -62,6 +65,8 @@ public class Player {
             float dz = -(az * (dLen / aLen));
             px = px + dx;
             pz = pz + dz;
+            // TEMPORARY - REMOVE THIS LINE
+            Log.v("MyErrors", "" + AudioManager.Inst().playSound(AudioManager.wind_chimes));
         }
     }
 

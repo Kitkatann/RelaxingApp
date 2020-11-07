@@ -8,6 +8,8 @@ public class SceneObject {
     private boolean isSolid = false;
     private float collRadius;
     private float collHeight;
+    private int soundStreamID;
+    private int soundEnum;
 
 
     public SceneObject(float px, float py, float pz, RenderMesh renderMesh, boolean isSolid)
@@ -19,6 +21,19 @@ public class SceneObject {
         position[2] = pz;
 
         this.isSolid = isSolid;
+    }
+
+    public SceneObject(float px, float py, float pz, RenderMesh renderMesh, boolean isSolid, int soundEnum)
+    {
+        this.renderMesh = renderMesh;
+
+        position[0] = px;
+        position[1] = py;
+        position[2] = pz;
+
+        this.isSolid = isSolid;
+
+        this.soundEnum = soundEnum;
     }
 
     public RenderMesh getRenderMesh()

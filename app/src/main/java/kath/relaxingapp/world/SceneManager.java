@@ -18,7 +18,7 @@ public class SceneManager {
         terrain = new Terrain();
     }
 
-    // Create singleton GlobalsManager instance
+    // Create singleton SceneManager instance
     private static SceneManager inst = null;
 
     public static SceneManager Inst() {
