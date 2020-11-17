@@ -61,4 +61,9 @@ public class HeightMap {
             values[x + width * y] = value;
         }
     }
+
+    public void setValues(float[] values)
+    {
+        this.values = values;
+    }
 }

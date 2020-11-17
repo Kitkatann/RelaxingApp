@@ -19,6 +19,8 @@ public class Player {
     public float rotZ = 0;
     public float collRad = 0.3f;
     public float collHeight = 1.7f;
+    public static final float movementSpeed = 0.1f;
+    public static final float lookSpeed = 0.7f;
 
     public void updateMovement()
     {
@@ -29,11 +31,11 @@ public class Player {
 
         float theta = rotY * (float)Math.PI / 180.0f;
         // Update position
-        px += (-Math.sin(theta) * ay + Math.cos(theta) * ax) * 0.05;
-        pz += (-Math.cos(theta) * ay + -Math.sin(theta) * ax) * 0.05;
+        px += (-Math.sin(theta) * ay + Math.cos(theta) * ax) * movementSpeed;
+        pz += (-Math.cos(theta) * ay + -Math.sin(theta) * ax) * movementSpeed;
         // Update rotation
-        rotX += by * 0.5;
-        rotY -= bx * 0.5;
+        rotX += by * lookSpeed;
+        rotY -= bx * lookSpeed;
         // Update collision
         updateCollision();
         updateTerrainCollision();

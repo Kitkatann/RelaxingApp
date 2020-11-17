@@ -5,9 +5,11 @@ import kath.relaxingapp.geometry.AddGeometry;
 import kath.relaxingapp.graphics.MeshBuilder;
 import kath.relaxingapp.graphics.RenderMeshManager;
 import kath.relaxingapp.terrain.HeightMap;
+import kath.relaxingapp.terrain.TempHeightmapGenerator;
 
 public class GameManager {
     private Player player;
+    public static final float terrainCellSize = 10.f;
 
 
     // Create singleton GameManager instance
@@ -33,21 +35,16 @@ public class GameManager {
 
     public void startGame()
     {
-        HeightMap testHeightMap = new HeightMap(10, 10);
-        for (int y = 0; y < 10; ++y)
-        {
-            for (int x = 0; x < 10; ++x)
-            {
-                testHeightMap.setValue(x, y, (float) Math.sin((float) x) * 5);
-            }
-        }
+        HeightMap testHeightMap = new HeightMap(50, 50);
+        TempHeightmapGenerator tempHeightmapGenerator = new TempHeightmapGenerator(50, 50);
+        testHeightMap.setValues(tempHeightmapGenerator.values);
 
-        SceneManager.Inst().getTerrain().init(5, testHeightMap);
+        SceneManager.Inst().getTerrain().init(terrainCellSize, testHeightMap);
 
         MeshBuilder terrainMeshBuilder = new MeshBuilder();
         terrainMeshBuilder.setColour(0.6f, 0.6f, 0.6f, 1.f);
         terrainMeshBuilder.setRandomColourMode(true);
-        AddGeometry.addTerrain(5.f, testHeightMap, terrainMeshBuilder);
+        AddGeometry.addTerrain(terrainCellSize, testHeightMap, terrainMeshBuilder);
         RenderMeshManager.Inst().getTerrain().setData(terrainMeshBuilder);
 
         SceneManager.Inst().createTestScene();
