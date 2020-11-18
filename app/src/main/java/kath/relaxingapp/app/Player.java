@@ -19,8 +19,8 @@ public class Player {
     public float rotZ = 0;
     public float collRad = 0.3f;
     public float collHeight = 1.7f;
-    public static final float movementSpeed = 0.1f;
-    public static final float lookSpeed = 0.7f;
+    public static final float movementSpeed = 0.3f;
+    public static final float lookSpeed = 0.9f;
 
     public void updateMovement()
     {

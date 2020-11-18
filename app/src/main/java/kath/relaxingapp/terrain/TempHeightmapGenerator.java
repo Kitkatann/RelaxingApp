@@ -1,18 +1,30 @@
 package kath.relaxingapp.terrain;
 
+import java.util.Random;
+
 public class TempHeightmapGenerator {
     public int width;
     public int height;
     public float[] values;
+    public int numHills = 50;
 
     public TempHeightmapGenerator(int width, int height)
     {
         this.width = width;
         this.height = height;
         values = new float[width * height];
-        plotHill(15, 15, 60, 5);
-        plotHill(40, 30, 30, 5);
-        plotHill(25, 45, 50, 8);
+//        plotHill(15, 15, 60, 5);
+//        plotHill(40, 30, 30, 5);
+//        plotHill(25, 45, 50, 8);
+
+        for (int i = 0; i < numHills; i++)
+        {
+            int randX = new Random().nextInt(width);
+            int randZ = new Random().nextInt(width);
+            int randY = new Random().nextInt(50);
+            int randRad = new Random().nextInt(10);
+            plotHill(randX, randZ, randY, randRad + 5);
+        }
     }
 
     public void plotHill(int peakX, int peakZ, float peakY, float radius)

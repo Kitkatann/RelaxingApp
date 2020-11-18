@@ -35,8 +35,8 @@ public class GameManager {
 
     public void startGame()
     {
-        HeightMap testHeightMap = new HeightMap(50, 50);
-        TempHeightmapGenerator tempHeightmapGenerator = new TempHeightmapGenerator(50, 50);
+        HeightMap testHeightMap = new HeightMap(75, 75);
+        TempHeightmapGenerator tempHeightmapGenerator = new TempHeightmapGenerator(75, 75);
         testHeightMap.setValues(tempHeightmapGenerator.values);
 
         SceneManager.Inst().getTerrain().init(terrainCellSize, testHeightMap);
