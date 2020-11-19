@@ -8,7 +8,7 @@ public class MeshBuilder {
 
     private float[] colour = new float[4];
     private ArrayList<Float> triangles = new ArrayList<>();
-    private boolean randomColourMode = false;
+    private String randomColourMode = "";
 
     public ArrayList<Float> getTriangles()
     {
@@ -17,9 +17,13 @@ public class MeshBuilder {
 
     public void addTriangle(float p1x, float p1y, float p1z, float p2x, float p2y, float p2z, float p3x, float p3y, float p3z)
     {
-        if (randomColourMode)
+        if (randomColourMode.equals("green"))
         {
-            setColour((float)Math.random(), (float)Math.random(), (float)Math.random(), 1);
+            setColour(0.1f, (float) (Math.random() * 0.1f) + 0.5f, 0.1f, 1);
+        }
+        if (randomColourMode.equals("blue"))
+        {
+            setColour((float) (Math.random() * 0.1f) + 0.1f, (float) (Math.random() * 0.1f) + 0.6f, (float) (Math.random() * 0.1f) + 0.9f, 1);
         }
         // X, Y, Z,
         // R, G, B, A
@@ -62,9 +66,9 @@ public class MeshBuilder {
         colour[3] = a;
     }
 
-    public void setRandomColourMode(boolean value)
+    public void setRandomColourMode(String colour)
     {
-        randomColourMode = value;
+        randomColourMode = colour;
     }
 
 }

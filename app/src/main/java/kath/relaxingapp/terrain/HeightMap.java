@@ -64,6 +64,9 @@ public class HeightMap {
 
     public void setValues(float[] values)
     {
-        this.values = values;
+        for (int i = 0; i < width * height; i++)
+        {
+            this.values[i] = values[i];
+        }
     }
 }

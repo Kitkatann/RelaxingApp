@@ -4,6 +4,7 @@ public class RenderMeshManager {
 
     private TestRenderMeshes testRenderMeshes;
     private RenderMesh terrain;
+    private RenderMesh waterTerrain;
 
     // Create singleton GlobalsManager instance
     private static RenderMeshManager inst = null;
@@ -19,6 +20,7 @@ public class RenderMeshManager {
     {
         testRenderMeshes = new TestRenderMeshes();
         terrain = new RenderMesh();
+        waterTerrain = new RenderMesh();
     }
 
     public TestRenderMeshes getTestRenderMeshes()
@@ -29,6 +31,11 @@ public class RenderMeshManager {
     public RenderMesh getTerrain()
     {
         return terrain;
+    }
+
+    public RenderMesh getWaterTerrain()
+    {
+        return waterTerrain;
     }
 
 }

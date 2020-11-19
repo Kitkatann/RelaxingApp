@@ -35,17 +35,26 @@ public class GameManager {
 
     public void startGame()
     {
-        HeightMap testHeightMap = new HeightMap(75, 75);
+        HeightMap terrainHeightMap = new HeightMap(75, 75);
+        HeightMap waterTerrainHeightMap = new HeightMap(75, 75);
         TempHeightmapGenerator tempHeightmapGenerator = new TempHeightmapGenerator(75, 75);
-        testHeightMap.setValues(tempHeightmapGenerator.values);
+        waterTerrainHeightMap.setValues(tempHeightmapGenerator.values);
+        tempHeightmapGenerator.applyRivers();
+        terrainHeightMap.setValues(tempHeightmapGenerator.values);
 
-        SceneManager.Inst().getTerrain().init(terrainCellSize, testHeightMap);
+        SceneManager.Inst().getTerrain().init(terrainCellSize, terrainHeightMap);
 
         MeshBuilder terrainMeshBuilder = new MeshBuilder();
         terrainMeshBuilder.setColour(0.6f, 0.6f, 0.6f, 1.f);
-        terrainMeshBuilder.setRandomColourMode(true);
-        AddGeometry.addTerrain(terrainCellSize, testHeightMap, terrainMeshBuilder);
+        terrainMeshBuilder.setRandomColourMode("green");
+        AddGeometry.addTerrain(terrainCellSize, terrainHeightMap, terrainMeshBuilder);
         RenderMeshManager.Inst().getTerrain().setData(terrainMeshBuilder);
+
+        MeshBuilder waterTerrainMeshBuilder = new MeshBuilder();
+        waterTerrainMeshBuilder.setColour(0.6f, 0.6f, 0.6f, 1.f);
+        waterTerrainMeshBuilder.setRandomColourMode("blue");
+        AddGeometry.addTerrain(terrainCellSize, waterTerrainHeightMap, waterTerrainMeshBuilder);
+        RenderMeshManager.Inst().getWaterTerrain().setData(waterTerrainMeshBuilder);
 
         SceneManager.Inst().createTestScene();
     }

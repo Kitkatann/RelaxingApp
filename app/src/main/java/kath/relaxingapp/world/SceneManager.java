@@ -45,6 +45,7 @@ public class SceneManager {
             addSceneObject(15, terrain.getY(15, -15), -15, testRenderMeshes.tempPrism);
             addSceneObject(18, terrain.getY(18, -18), -18, testRenderMeshes.tempSphere);
             addSceneObject(0, 0, 0, RenderMeshManager.Inst().getTerrain());
+            addSceneObject(0, -6, 0, RenderMeshManager.Inst().getWaterTerrain());
         }
         else
         {

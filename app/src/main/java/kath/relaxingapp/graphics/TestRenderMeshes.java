@@ -43,7 +43,6 @@ public class TestRenderMeshes {
 
         tempSphereMeshBuilder = new MeshBuilder();
         tempSphereMeshBuilder.setColour(0.f, 1.f, 1.f, 1.0f);
-        tempSphereMeshBuilder.setRandomColourMode(true);
         AddGeometry.addSphere(1.f, 32, 32,  tempSphereMeshBuilder);
 
         tempCube = new RenderMesh(tempCubeMeshBuilder);
