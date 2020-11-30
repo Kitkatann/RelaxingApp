@@ -19,15 +19,15 @@ public class TempHeightmapGenerator {
         values = new float[width * height];
         riverValues = new float[width * height];
 
-        // Temporary loop to place a set number of hills at random heights of random radius'
-        for (int i = 0; i < numHills; i++)
-        {
-            int randX = new Random().nextInt(width);
-            int randZ = new Random().nextInt(width);
-            int randY = new Random().nextInt(50);
-            int randRad = new Random().nextInt(10);
-            plotHill(randX, randZ, randY, randRad + 5);
-        }
+//        // Temporary loop to place a set number of hills at random heights of random radius'
+//        for (int i = 0; i < numHills; i++)
+//        {
+//            int randX = new Random().nextInt(width);
+//            int randZ = new Random().nextInt(width);
+//            int randY = new Random().nextInt(50);
+//            int randRad = new Random().nextInt(10);
+//            plotHill(randX, randZ, randY, randRad + 5);
+//        }
         generateRiver(numRiverSource);
     }
 
@@ -80,6 +80,28 @@ public class TempHeightmapGenerator {
         {
             values[x + gridWidth * y] = value;
         }
+    }
+
+    public HeightMap generatePerlinTerrain(int width, int height, int lod, int startSize)
+    {
+        HeightMap[] terrainHeightMaps = new HeightMap[lod];
+        int size = startSize;
+        for (int i = 0; i < lod; i++)
+        {
+            terrainHeightMaps[i] = new HeightMap(size, size);
+            terrainHeightMaps[i].fillNoise(-1, 1);
+            terrainHeightMaps[i].resizeBilinear(width, height);
+            size *= 2;
+        }
+        float factor = 0.5f;
+        for (int i = 1; i < lod; i++)
+        {
+            terrainHeightMaps[0].addHeightMap(terrainHeightMaps[i], factor);
+            factor /= 2;
+        }
+        // Normalize height map
+        terrainHeightMaps[0].normalizeHeightMap();
+        return terrainHeightMaps[0];
     }
 
     public void plotHill(int peakX, int peakZ, float peakY, float radius)
