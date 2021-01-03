@@ -79,6 +79,26 @@ public class HeightMap {
         values = tempValues;
     }
 
+    public void addValueBilinear(float x, float y, float value)
+    {
+        float tx = x - (int)Math.floor(x);
+        float ty = y - (int)Math.floor(y);
+        float weightA = (1 - tx) * (1 - ty);
+        float weightB = tx * (1 - ty);
+        float weightC = ty * (1 - tx);
+        float weightD = tx * ty;
+        int ax = (int)Math.floor(x);
+        int ay = (int)Math.floor(y);
+        if (ax >= 0 && ax < width - 1 && ay >= 0 && ay < height - 1)
+        {
+            values[ax + width * ay] += value * weightA;
+            values[(ax + 1) + width * ay] += value * weightB;
+            values[ax + width * (ay + 1)] += value * weightC;
+            values[(ax + 1) + width * (ay + 1)] += value * weightD;
+        }
+
+    }
+
     public void fillNoise(float min, float max)
     {
         for (int i = 0; i < width * height; i++)
@@ -175,11 +195,16 @@ public class HeightMap {
         }
     }
 
-    public void setValues(float[] values)
+
+    // Duplicate the src height, width and values into this heightmap
+    public void copyFrom(HeightMap src)
     {
+        width = src.getWidth();
+        height = src.getHeight();
+        values = new float[width * height];
         for (int i = 0; i < width * height; i++)
         {
-            this.values[i] = values[i];
+            values[i] = src.values[i];
         }
     }
 }

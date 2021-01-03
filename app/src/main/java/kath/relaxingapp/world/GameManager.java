@@ -36,14 +36,8 @@ public class GameManager {
     public void startGame()
     {
         TempHeightmapGenerator tempHeightmapGenerator = new TempHeightmapGenerator(75, 75);
-        HeightMap terrainHeightMap = tempHeightmapGenerator.generatePerlinTerrain(75, 75, 3, 8);
-        terrainHeightMap.applyExpCurve(4);
-        terrainHeightMap.applyMultiplier(100);
-        terrainHeightMap.applyBoxBlur();
-        HeightMap waterTerrainHeightMap = new HeightMap(75, 75);
-        waterTerrainHeightMap.setValues(tempHeightmapGenerator.values);
-        tempHeightmapGenerator.applyRivers();
-        //terrainHeightMap.setValues(tempHeightmapGenerator.values);
+        HeightMap terrainHeightMap = tempHeightmapGenerator.getLandWithRivers();
+        HeightMap waterTerrainHeightMap = tempHeightmapGenerator.getLandWithoutRivers();
 
         SceneManager.Inst().getTerrain().init(terrainCellSize, terrainHeightMap);
 
