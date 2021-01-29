@@ -42,8 +42,7 @@ public class GameManager {
         SceneManager.Inst().getTerrain().init(terrainCellSize, terrainHeightMap);
 
         MeshBuilder terrainMeshBuilder = new MeshBuilder();
-        terrainMeshBuilder.setColour(0.6f, 0.6f, 0.6f, 1.f);
-        terrainMeshBuilder.setRandomColourMode("green");
+        terrainMeshBuilder.setColour(0.1f, 0.5f, 0.1f, 1.f);
         AddGeometry.addTerrain(terrainCellSize, terrainHeightMap, terrainMeshBuilder);
         RenderMeshManager.Inst().getTerrain().setData(terrainMeshBuilder);
 

@@ -20,7 +20,7 @@ public class RenderMesh {
 
 
     // How many bytes between vertices in the buffer
-    private final int strideBytes = 7 * bytesPerFloat;
+    private final int strideBytes = 10 * bytesPerFloat;
 
     /**
      * Initialize the model data.
@@ -50,6 +50,15 @@ public class RenderMesh {
             GLES20.glVertexAttribPointer(ShaderManager.Inst().getColorHandle(), 4, GLES20.GL_FLOAT, false, strideBytes, vertexBuffer);
 
             GLES20.glEnableVertexAttribArray(ShaderManager.Inst().getColorHandle());
+
+            // Pass in normal info
+            vertexBuffer.position(7);
+
+            GLES20.glVertexAttribPointer(ShaderManager.Inst().getNormalHandle(), 3, GLES20.GL_FLOAT, false, strideBytes, vertexBuffer);
+
+            GLES20.glEnableVertexAttribArray(ShaderManager.Inst().getNormalHandle());
+
+            // Render
 
             GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
         }

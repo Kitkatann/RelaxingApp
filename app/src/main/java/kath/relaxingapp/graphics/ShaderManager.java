@@ -23,6 +23,7 @@ public class ShaderManager {
     private int mvpMatrixHandle;
     private int positionHandle;
     private int colorHandle;
+    private int normalHandle;
 
     // Allocate storage for the matrices
     private float[] mvpMatrix = new float[16];
@@ -42,6 +43,8 @@ public class ShaderManager {
     {
         return colorHandle;
     }
+
+    public int getNormalHandle() { return normalHandle; }
 
     /**
      * Set matrix and send to shader
@@ -138,6 +141,7 @@ public class ShaderManager {
         // Bind attributes
         GLES20.glBindAttribLocation(programHandle, 0, "a_Position");
         GLES20.glBindAttribLocation(programHandle, 1, "a_Color");
+        GLES20.glBindAttribLocation(programHandle, 2, "a_Normal");
 
         // Link the two shaders together into a program
         GLES20.glLinkProgram(programHandle);
@@ -156,6 +160,7 @@ public class ShaderManager {
         mvpMatrixHandle = GLES20.glGetUniformLocation(programHandle, "u_MVPMatrix");
         positionHandle = GLES20.glGetAttribLocation(programHandle, "a_Position");
         colorHandle = GLES20.glGetAttribLocation(programHandle, "a_Color");
+        normalHandle = GLES20.glGetAttribLocation(programHandle, "a_Normal");
 
         // Tell OpenGL to use this program when rendering
         GLES20.glUseProgram(programHandle);
