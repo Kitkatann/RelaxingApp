@@ -47,8 +47,7 @@ public class GameManager {
         RenderMeshManager.Inst().getTerrain().setData(terrainMeshBuilder);
 
         MeshBuilder waterTerrainMeshBuilder = new MeshBuilder();
-        waterTerrainMeshBuilder.setColour(0.6f, 0.6f, 0.6f, 1.f);
-        waterTerrainMeshBuilder.setRandomColourMode("blue");
+        waterTerrainMeshBuilder.setColour(0.1f, 0.6f, 0.9f, 1.f);
         AddGeometry.addTerrain(terrainCellSize, waterTerrainHeightMap, waterTerrainMeshBuilder);
         RenderMeshManager.Inst().getWaterTerrain().setData(waterTerrainMeshBuilder);
 

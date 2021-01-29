@@ -6,7 +6,7 @@ import kath.relaxingapp.utilities.MathUtil;
 
 public class TempHeightmapGenerator {
 
-    private int numRiverSource = 200;
+    private int numRiverSource = 50;
 
     private HeightMap landWithoutRivers;
     private HeightMap landWithRivers;
