@@ -60,7 +60,7 @@ public class Player {
         float az = objz - pz;
         float aLen = (float) Math.sqrt(ax * ax + az * az);
         float yDif = Math.abs(objy - py);
-        if (aLen < objRad + collRad && yDif < ((objHeight / 2) + (collHeight / 2)))
+        if (aLen < objRad + collRad && yDif < ((objHeight / 2) + (collHeight / 2)) && aLen > 0.0001f)
         {
             float dLen = (objRad + collRad) - aLen;
             float dx = -(ax * (dLen / aLen));

@@ -1,12 +1,14 @@
 uniform mat4 u_MVPMatrix;
-attribute vec4 a_Position;
+attribute vec3 a_Position;
 attribute vec4 a_Color;
 attribute vec3 a_Normal;
 varying vec4 v_Color;
 void main()
 {
     const vec3 lightDir = vec3(0.57, 0.57, 0.57);
-    float cosine = dot(a_Normal, lightDir);
-    v_Color = vec4(cosine, cosine, cosine, 1) * a_Color;
-	gl_Position = u_MVPMatrix * a_Position;
+    const vec3 ambient = vec3(0.1, 0.3, 0.6);
+    const vec3 lightColour = vec3(0.9, 0.9, 0.8);
+    float lightFactor = max(dot(a_Normal, lightDir), 0.0);
+    v_Color = vec4(lightColour * lightFactor + ambient, 1.0) * a_Color;
+	gl_Position = u_MVPMatrix * vec4(a_Position, 1.0);
 }

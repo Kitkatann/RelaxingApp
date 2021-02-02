@@ -48,8 +48,8 @@ public class MyRenderer implements GLSurfaceView.Renderer{
 
     @Override
     public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
-        // Set the background clear colour to grey
-        GLES20.glClearColor(0.5f, 0.5f, 0.5f, 0.f);
+        // Set the background clear colour to sky blue
+        GLES20.glClearColor(0.7f, 0.9f, 1.f, 0.f);
 
         // Set up shaders
         ShaderManager.Inst().setupShaders(R.raw.vertex, R.raw.fragment);

@@ -22,15 +22,15 @@ public class TestRenderMeshes {
     public TestRenderMeshes()
     {
         tempCubeMeshBuilder = new MeshBuilder();
-        tempCubeMeshBuilder.setColour(0.0f, 0.0f, 1.0f, 1.0f);
+        tempCubeMeshBuilder.setColour(1.f, 0.f, 0.f, 1.0f);
         AddGeometry.addCube(1.f, tempCubeMeshBuilder);
 
         tempCuboidMeshBuilder = new MeshBuilder();
-        tempCuboidMeshBuilder.setColour(1.0f, 0.0f, 1.0f, 1.0f);
+        tempCuboidMeshBuilder.setColour(1.f, 0.f, 0.f, 1.0f);
         AddGeometry.addCuboid(0.5f, 2.f, 2.f,  tempCuboidMeshBuilder);
 
         tempCircleMeshBuilder = new MeshBuilder();
-        tempCircleMeshBuilder.setColour(0.f, 1.f, 0.f, 1.0f);
+        tempCircleMeshBuilder.setColour(1.f, 0.f, 0.f, 1.0f);
         AddGeometry.addCircle(1.f, 32,  tempCircleMeshBuilder);
 
         tempPlaneMeshBuilder = new MeshBuilder();
@@ -42,7 +42,7 @@ public class TestRenderMeshes {
         AddGeometry.addPrism(1.f, 1.f, 5,  tempPrismMeshBuilder);
 
         tempSphereMeshBuilder = new MeshBuilder();
-        tempSphereMeshBuilder.setColour(0.f, 1.f, 1.f, 1.0f);
+        tempSphereMeshBuilder.setColour(1.f, 0.f, 0.f, 1.0f);
         AddGeometry.addSphere(1.f, 32, 32,  tempSphereMeshBuilder);
 
         tempCube = new RenderMesh(tempCubeMeshBuilder);

@@ -42,12 +42,12 @@ public class GameManager {
         SceneManager.Inst().getTerrain().init(terrainCellSize, terrainHeightMap);
 
         MeshBuilder terrainMeshBuilder = new MeshBuilder();
-        terrainMeshBuilder.setColour(0.1f, 0.5f, 0.1f, 1.f);
+        terrainMeshBuilder.setColour(0.15f, 0.25f, 0.1f, 1.f);
         AddGeometry.addTerrain(terrainCellSize, terrainHeightMap, terrainMeshBuilder);
         RenderMeshManager.Inst().getTerrain().setData(terrainMeshBuilder);
 
         MeshBuilder waterTerrainMeshBuilder = new MeshBuilder();
-        waterTerrainMeshBuilder.setColour(0.1f, 0.6f, 0.9f, 1.f);
+        waterTerrainMeshBuilder.setColour(0.1f, 0.15f, 0.2f, 1.f);
         AddGeometry.addTerrain(terrainCellSize, waterTerrainHeightMap, waterTerrainMeshBuilder);
         RenderMeshManager.Inst().getWaterTerrain().setData(waterTerrainMeshBuilder);
 

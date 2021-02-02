@@ -121,12 +121,12 @@ public class ShaderManager {
 
         // If the compilation failed, give error message
         if (compileStatus[0] == 0) {
-            Log.v("myErrors", "compilation failed for vertex shader");
+            Log.v("myErrors", "compilation failed for vertex shader " + GLES20.glGetShaderInfoLog(vertexShaderHandle));
         }
 
         GLES20.glGetShaderiv(fragmentShaderHandle, GLES20.GL_COMPILE_STATUS, compileStatus, 0);
         if (compileStatus[0] == 0) {
-            Log.v("myErrors", "compilation failed for fragment shader");
+            Log.v("myErrors", "compilation failed for fragment shader " + GLES20.glGetShaderInfoLog(fragmentShaderHandle));
         }
 
         // Create a program object and store the handle to it
