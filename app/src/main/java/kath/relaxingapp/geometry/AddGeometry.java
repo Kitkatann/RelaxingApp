@@ -77,7 +77,6 @@ public class AddGeometry {
         {
             Log.v("myErrors", "Invalid number of segments");
         }
-
     }
 
     public static void addPlane(float width, float length, MeshBuilder planeMeshBuilder) {

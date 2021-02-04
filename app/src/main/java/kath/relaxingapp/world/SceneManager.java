@@ -38,12 +38,12 @@ public class SceneManager {
         TestRenderMeshes testRenderMeshes = RenderMeshManager.Inst().getTestRenderMeshes();
         if (testRenderMeshes != null)
         {
-//            addSceneObject(3, terrain.getY(3, -3), -3, testRenderMeshes.tempCube);
-//            addSceneObject(6, terrain.getY(6, -6), -6, testRenderMeshes.tempCuboid);
-//            addSceneObject(9, terrain.getY(9, -9), -9, testRenderMeshes.tempCircle);
-//            addSceneObject(12, terrain.getY(12, -12), -12, testRenderMeshes.tempPlane);
-//            //addSceneObject(15, terrain.getY(15, -15), -15, testRenderMeshes.tempPrism);
-//            addSceneObject(18, terrain.getY(18, -18), -18, testRenderMeshes.tempSphere);
+            addSceneObject(3, terrain.getY(3, -3), -3, testRenderMeshes.tempCube);
+            addSceneObject(6, terrain.getY(6, -6), -6, testRenderMeshes.tempCuboid);
+            addSceneObject(9, terrain.getY(9, -9), -9, testRenderMeshes.tempCircle);
+            addSceneObject(12, terrain.getY(12, -12), -12, testRenderMeshes.tempPlane);
+            addSceneObject(15, terrain.getY(15, -15), -15, testRenderMeshes.tempPrism);
+            addSceneObject(18, terrain.getY(18, -18), -18, testRenderMeshes.tempSphere);
             addSceneObject(0, 0, 0, RenderMeshManager.Inst().getTerrain());
             addSceneObject(0, -6, 0, RenderMeshManager.Inst().getWaterTerrain());
         }

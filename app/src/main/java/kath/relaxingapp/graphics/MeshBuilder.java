@@ -9,7 +9,7 @@ public class MeshBuilder {
     private float[] colour = new float[4];
     private float[] normal = new float[3];
     private ArrayList<Float> triangles = new ArrayList<>();
-    private String randomColourMode = "";
+//    private String randomColourMode = "";
 
     public ArrayList<Float> getTriangles()
     {
@@ -18,14 +18,14 @@ public class MeshBuilder {
 
     public void addTriangle(float p1x, float p1y, float p1z, float p2x, float p2y, float p2z, float p3x, float p3y, float p3z)
     {
-        if (randomColourMode.equals("green"))
-        {
-            setColour(0.1f, (float) (Math.random() * 0.1f) + 0.5f, 0.1f, 1);
-        }
-        if (randomColourMode.equals("blue"))
-        {
-            setColour((float) (Math.random() * 0.1f) + 0.1f, (float) (Math.random() * 0.1f) + 0.6f, (float) (Math.random() * 0.1f) + 0.9f, 1);
-        }
+//        if (randomColourMode.equals("green"))
+//        {
+//            setColour(0.1f, (float) (Math.random() * 0.1f) + 0.5f, 0.1f, 1);
+//        }
+//        if (randomColourMode.equals("blue"))
+//        {
+//            setColour((float) (Math.random() * 0.1f) + 0.1f, (float) (Math.random() * 0.1f) + 0.6f, (float) (Math.random() * 0.1f) + 0.9f, 1);
+//        }
 
         computeVertexNormals(p1x, p1y, p1z, p2x, p2y, p2z, p3x, p3y, p3z);
 
@@ -80,10 +80,10 @@ public class MeshBuilder {
         colour[3] = a;
     }
 
-    public void setRandomColourMode(String colour)
-    {
-        randomColourMode = colour;
-    }
+//    public void setRandomColourMode(String colour)
+//    {
+//        randomColourMode = colour;
+//    }
 
     public void computeVertexNormals(float p1x, float p1y, float p1z, float p2x, float p2y, float p2z, float p3x, float p3y, float p3z)
     {

@@ -18,9 +18,11 @@ public class RenderMesh {
     /** How many bytes per float. */
     private final int bytesPerFloat = 4;
 
+    private final int vertexElements = 10;
 
     // How many bytes between vertices in the buffer
-    private final int strideBytes = 10 * bytesPerFloat;
+    private final int strideBytes = vertexElements * bytesPerFloat;
+
 
     /**
      * Initialize the model data.
@@ -77,6 +79,6 @@ public class RenderMesh {
         }
 
         // Initialise vertexCount
-        vertexCount = triangles.size()/7;
+        vertexCount = triangles.size()/vertexElements;
     }
 }
