@@ -2,7 +2,7 @@ package kath.relaxingapp.graphics;
 
 public class RenderMeshManager {
 
-    private TestRenderMeshes testRenderMeshes;
+    private MeshLibrary meshLibrary;
     private RenderMesh terrain;
     private RenderMesh waterTerrain;
 
@@ -18,14 +18,14 @@ public class RenderMeshManager {
 
     public RenderMeshManager()
     {
-        testRenderMeshes = new TestRenderMeshes();
+        meshLibrary = new MeshLibrary();
         terrain = new RenderMesh();
         waterTerrain = new RenderMesh();
     }
 
-    public TestRenderMeshes getTestRenderMeshes()
+    public MeshLibrary getMeshLibrary()
     {
-        return testRenderMeshes;
+        return meshLibrary;
     }
 
     public RenderMesh getTerrain()

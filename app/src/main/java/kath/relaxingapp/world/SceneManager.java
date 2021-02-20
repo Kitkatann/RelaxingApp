@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import kath.relaxingapp.graphics.RenderMesh;
 import kath.relaxingapp.graphics.RenderMeshManager;
-import kath.relaxingapp.graphics.TestRenderMeshes;
+import kath.relaxingapp.graphics.MeshLibrary;
 import kath.relaxingapp.terrain.Terrain;
 
 public class SceneManager {
@@ -35,15 +35,18 @@ public class SceneManager {
 
     public void createTestScene()
     {
-        TestRenderMeshes testRenderMeshes = RenderMeshManager.Inst().getTestRenderMeshes();
-        if (testRenderMeshes != null)
+        MeshLibrary meshLibrary = RenderMeshManager.Inst().getMeshLibrary();
+        if (meshLibrary != null)
         {
-            addSceneObject(3, terrain.getY(3, -3), -3, testRenderMeshes.tempCube);
-            addSceneObject(6, terrain.getY(6, -6), -6, testRenderMeshes.tempCuboid);
-            addSceneObject(9, terrain.getY(9, -9), -9, testRenderMeshes.tempCircle);
-            addSceneObject(12, terrain.getY(12, -12), -12, testRenderMeshes.tempPlane);
-            addSceneObject(15, terrain.getY(15, -15), -15, testRenderMeshes.tempPrism);
-            addSceneObject(18, terrain.getY(18, -18), -18, testRenderMeshes.tempSphere);
+//            addSceneObject(3, terrain.getY(3, -3), -3, meshLibrary.tempCube);
+//            addSceneObject(6, terrain.getY(6, -6), -6, meshLibrary.tempCuboid);
+//            addSceneObject(9, terrain.getY(9, -9), -9, meshLibrary.tempCircle);
+//            addSceneObject(12, terrain.getY(12, -12), -12, meshLibrary.tempPlane);
+//            addSceneObject(15, terrain.getY(15, -15), -15, meshLibrary.tempPrism);
+//            addSceneObject(18, terrain.getY(18, -18), -18, meshLibrary.tempSphere);
+
+            addSceneObject(0.f, terrain.getY(0.f, 0.f) + 5.f, 0.f, meshLibrary.testCube);
+
             addSceneObject(0, 0, 0, RenderMeshManager.Inst().getTerrain());
             addSceneObject(0, -6, 0, RenderMeshManager.Inst().getWaterTerrain());
         }

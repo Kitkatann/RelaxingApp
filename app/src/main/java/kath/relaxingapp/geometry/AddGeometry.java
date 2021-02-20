@@ -88,23 +88,34 @@ public class AddGeometry {
 
     public static void addPrism(float width, float depth, int segments, MeshBuilder prismMeshBuilder)
     {
+        addPrism(width, width, true, depth, segments, prismMeshBuilder);
+    }
+
+    public static void addPrism(float aWidth, float bWidth, boolean endsCapped, float depth, int segments, MeshBuilder prismMeshBuilder)
+    {
         if (segments > 2 && segments < 500)
         {
-            float x = width/2;
+            aWidth /= 2;
+            bWidth /= 2;
+            float x = 1.f;
             float y = 0.f;
             float prevX = x;
             float prevY = y;
             for (int i = 1; i <= segments; i++)
             {
                 float theta = (float) ((2 * Math.PI) / segments) * i;
-                x = (float) (width/2 * Math.cos(theta));
-                y = (float) (width/2 * Math.sin(theta));
-                // face triangle
-                prismMeshBuilder.addTriangle(0, 0, depth/2, prevX, prevY, depth/2, x, y, depth/2);
+                x = (float) Math.cos(theta);
+                y = (float) Math.sin(theta);
+
                 // side triangles
-                prismMeshBuilder.addQuad(x, y, depth/2, prevX, prevY, depth/2, prevX, prevY, -depth/2, x, y, -depth/2);
-                // opposite face triangle
-                prismMeshBuilder.addTriangle(0, 0, -depth/2, x, y, -depth/2, prevX, prevY, -depth/2);
+                prismMeshBuilder.addQuad(x * aWidth, y * aWidth, depth/2, prevX * aWidth, prevY * aWidth, depth/2, prevX * bWidth, prevY * bWidth, -depth/2, x * bWidth, y * bWidth, -depth/2);
+                if (endsCapped)
+                {
+                    // face triangle
+                    prismMeshBuilder.addTriangle(0, 0, depth / 2, prevX * aWidth, prevY * aWidth, depth / 2, x * aWidth, y * aWidth, depth / 2);
+                    // opposite face triangle
+                    prismMeshBuilder.addTriangle(0, 0, -depth / 2, x * bWidth, y * bWidth, -depth / 2, prevX * bWidth, prevY * bWidth, -depth / 2);
+                }
                 prevX = x;
                 prevY = y;
             }

@@ -1,6 +1,11 @@
 package kath.relaxingapp.graphics;
 
+import android.opengl.Matrix;
+import android.util.Log;
+
 import java.util.ArrayList;
+
+import kath.relaxingapp.utilities.MathUtil;
 
 //A temporary class used in constructing a mesh (nice API to add colourful triangles to a list).
 // Used to initialize a RenderMesh (the MeshBuilder can then be discarded)
@@ -9,7 +14,13 @@ public class MeshBuilder {
     private float[] colour = new float[4];
     private float[] normal = new float[3];
     private ArrayList<Float> triangles = new ArrayList<>();
-//    private String randomColourMode = "";
+    private float[] transform = new float[16];
+    private float[] tempTransform = new float[16];
+
+    public MeshBuilder()
+    {
+        Matrix.setIdentityM(transform, 0);
+    }
 
     public ArrayList<Float> getTriangles()
     {
@@ -18,14 +29,29 @@ public class MeshBuilder {
 
     public void addTriangle(float p1x, float p1y, float p1z, float p2x, float p2y, float p2z, float p3x, float p3y, float p3z)
     {
-//        if (randomColourMode.equals("green"))
-//        {
-//            setColour(0.1f, (float) (Math.random() * 0.1f) + 0.5f, 0.1f, 1);
-//        }
-//        if (randomColourMode.equals("blue"))
-//        {
-//            setColour((float) (Math.random() * 0.1f) + 0.1f, (float) (Math.random() * 0.1f) + 0.6f, (float) (Math.random() * 0.1f) + 0.9f, 1);
-//        }
+        // Apply transform matrix to the points before adding them
+        float[] p1 = new float[] {p1x, p1y, p1z, 1.f};
+        float[] p2 = new float[] {p2x, p2y, p2z, 1.f};
+        float[] p3 = new float[] {p3x, p3y, p3z, 1.f};
+
+        float[] p1Result = new float[4];
+        float[] p2Result = new float[4];
+        float[] p3Result = new float[4];
+
+        Matrix.multiplyMV(p1Result, 0, transform, 0, p1, 0);
+        Matrix.multiplyMV(p2Result, 0, transform, 0, p2, 0);
+        Matrix.multiplyMV(p3Result, 0, transform, 0, p3, 0);
+
+        p1x = p1Result[0];
+        p1y = p1Result[1];
+        p1z = p1Result[2];
+        p2x = p2Result[0];
+        p2y = p2Result[1];
+        p2z = p2Result[2];
+        p3x = p3Result[0];
+        p3y = p3Result[1];
+        p3z = p3Result[2];
+
 
         computeVertexNormals(p1x, p1y, p1z, p2x, p2y, p2z, p3x, p3y, p3z);
 
@@ -80,10 +106,44 @@ public class MeshBuilder {
         colour[3] = a;
     }
 
-//    public void setRandomColourMode(String colour)
-//    {
-//        randomColourMode = colour;
-//    }
+    // Rotate transform matrix. Looks from a towards b
+    public void setLookAt(float ax, float ay, float az, float bx, float by, float bz)
+    {
+        float dx = bx - ax;
+        float dy = by - ay;
+        float dz = bz - az;
+        float rx = MathUtil.vectorToRotationX(dx, dy, dz);
+        float ry = MathUtil.vectorToRotationY(dx, dy, dz);
+        MathUtil.eulerRotationMatrix(tempTransform, rx, ry);
+        float[] result = new float[16];
+        Matrix.multiplyMM(result, 0, transform, 0, tempTransform, 0);
+        transform = result;
+    }
+
+    // Translate transform matrix by translation factors x, y, and z
+    public void setTranslation(float x, float y, float z)
+    {
+        Matrix.setIdentityM(tempTransform, 0);
+        Matrix.translateM(tempTransform, 0, x, y, z);
+        float[] result = new float[16];
+        Matrix.multiplyMM(result, 0, transform, 0, tempTransform, 0);
+        transform = result;
+    }
+
+    // Scale transform matrix by scale factors x, y, and z
+    public void setScale(float x, float y, float z)
+    {
+        Matrix.setIdentityM(tempTransform, 0);
+        Matrix.scaleM(tempTransform, 0, x, y, z);
+        float[] result = new float[16];
+        Matrix.multiplyMM(result, 0, transform, 0, tempTransform, 0);
+        transform = result;
+    }
+
+    public void setIdentity()
+    {
+        Matrix.setIdentityM(transform, 0);
+    }
 
     public void computeVertexNormals(float p1x, float p1y, float p1z, float p2x, float p2y, float p2z, float p3x, float p3y, float p3z)
     {
