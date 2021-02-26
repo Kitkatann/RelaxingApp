@@ -39,7 +39,7 @@ public class RenderMesh {
 
     public void drawMesh()
     {
-        if (vertexBuffer != null)
+        if (vertexBuffer != null && vertexCount > 0)
         {
             // Pass in the position info
             vertexBuffer.position(0);

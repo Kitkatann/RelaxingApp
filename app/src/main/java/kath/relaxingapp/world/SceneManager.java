@@ -45,7 +45,7 @@ public class SceneManager {
 //            addSceneObject(15, terrain.getY(15, -15), -15, meshLibrary.tempPrism);
 //            addSceneObject(18, terrain.getY(18, -18), -18, meshLibrary.tempSphere);
 
-            addSceneObject(0.f, terrain.getY(0.f, 0.f) + 5.f, 0.f, meshLibrary.testCube);
+            addSceneObject(25.f, terrain.getY(25.f, 25.f), -25.f, meshLibrary.testTree);
 
             addSceneObject(0, 0, 0, RenderMeshManager.Inst().getTerrain());
             addSceneObject(0, -6, 0, RenderMeshManager.Inst().getWaterTerrain());

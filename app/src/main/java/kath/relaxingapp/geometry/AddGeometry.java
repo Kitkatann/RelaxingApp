@@ -86,6 +86,13 @@ public class AddGeometry {
         planeMeshBuilder.addQuad(-w, 0, l, w, 0, l, w, 0, -l, -w, 0, -l);
     }
 
+    public static void addDiamond(float width, float length, MeshBuilder planeMeshBuilder) {
+        float w = width / 2;
+        float l = length / 2;
+
+        planeMeshBuilder.addQuad(0, 0, l, w, 0, 0, 0, 0, -l, -w, 0, 0);
+    }
+
     public static void addPrism(float width, float depth, int segments, MeshBuilder prismMeshBuilder)
     {
         addPrism(width, width, true, depth, segments, prismMeshBuilder);

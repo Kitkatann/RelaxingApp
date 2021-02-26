@@ -21,7 +21,7 @@ public class MathUtil {
     static float[] tempMatrix1 = new float[16];
     static float[] tempMatrix2 = new float[16];
 
-    public static void eulerRotationMatrix(float[] matrix, float rx, float ry)
+    public static void rotationMatrix(float[] matrix, float rx, float ry)
     {
         Matrix.setIdentityM(tempMatrix1, 0);
         Matrix.setIdentityM(tempMatrix2, 0);

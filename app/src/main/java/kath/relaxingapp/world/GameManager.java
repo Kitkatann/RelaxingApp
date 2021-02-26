@@ -39,6 +39,10 @@ public class GameManager {
         HeightMap terrainHeightMap = tempHeightmapGenerator.getLandWithRivers();
         HeightMap waterTerrainHeightMap = tempHeightmapGenerator.getLandWithoutRivers();
 
+        // For testing with flat terrain
+        terrainHeightMap.applyMultiplier(0.f);
+        waterTerrainHeightMap.applyMultiplier(0.f);
+
         SceneManager.Inst().getTerrain().init(terrainCellSize, terrainHeightMap);
 
         MeshBuilder terrainMeshBuilder = new MeshBuilder();

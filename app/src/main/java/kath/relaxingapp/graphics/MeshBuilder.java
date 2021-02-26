@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import kath.relaxingapp.utilities.MathUtil;
+import kath.relaxingapp.utilities.Vector3;
 
 //A temporary class used in constructing a mesh (nice API to add colourful triangles to a list).
 // Used to initialize a RenderMesh (the MeshBuilder can then be discarded)
@@ -107,14 +108,14 @@ public class MeshBuilder {
     }
 
     // Rotate transform matrix. Looks from a towards b
-    public void setLookAt(float ax, float ay, float az, float bx, float by, float bz)
+    public void setLookAt(Vector3 a, Vector3 b)
     {
-        float dx = bx - ax;
-        float dy = by - ay;
-        float dz = bz - az;
-        float rx = MathUtil.vectorToRotationX(dx, dy, dz);
-        float ry = MathUtil.vectorToRotationY(dx, dy, dz);
-        MathUtil.eulerRotationMatrix(tempTransform, rx, ry);
+        Vector3 ab = b.clone();
+        ab.sub(a);
+
+        float rx = MathUtil.vectorToRotationX(ab.x, ab.y, ab.z);
+        float ry = MathUtil.vectorToRotationY(ab.x, ab.y, ab.z);
+        MathUtil.rotationMatrix(tempTransform, rx, ry);
         float[] result = new float[16];
         Matrix.multiplyMM(result, 0, transform, 0, tempTransform, 0);
         transform = result;
