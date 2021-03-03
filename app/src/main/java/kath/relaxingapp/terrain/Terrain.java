@@ -24,4 +24,14 @@ public class Terrain {
         this.scale = scale;
         this.heightMap = heightMap;
     }
+
+    public float getWidth()
+    {
+        return heightMap.getWidth();
+    }
+
+    public float getHeight()
+    {
+        return heightMap.getHeight();
+    }
 }

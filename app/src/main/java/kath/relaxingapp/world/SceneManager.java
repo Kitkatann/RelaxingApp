@@ -3,11 +3,13 @@ package kath.relaxingapp.world;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kath.relaxingapp.graphics.RenderMesh;
 import kath.relaxingapp.graphics.RenderMeshManager;
 import kath.relaxingapp.graphics.MeshLibrary;
 import kath.relaxingapp.terrain.Terrain;
+import kath.relaxingapp.utilities.Vector3;
 
 public class SceneManager {
     private ArrayList<SceneObject> sceneObjects = new ArrayList<>();
@@ -45,7 +47,26 @@ public class SceneManager {
 //            addSceneObject(15, terrain.getY(15, -15), -15, meshLibrary.tempPrism);
 //            addSceneObject(18, terrain.getY(18, -18), -18, meshLibrary.tempSphere);
 
-            addSceneObject(25.f, terrain.getY(25.f, 25.f), -25.f, meshLibrary.testTree);
+            int numTrees = 100;
+            float treeYLimit = 40.f;
+            float terrainWidth = terrain.getWidth() * GameManager.terrainCellSize;
+            float terrainHeight = terrain.getHeight() * GameManager.terrainCellSize;
+            List<Vector3> treeSpawnPoints = new ArrayList<>();
+            for (int i = 0; i < numTrees; i++)
+            {
+                float x = (float)Math.random() * terrainWidth;
+                float z = -(float)Math.random() * terrainHeight;
+                if (terrain.getY(x, z) < treeYLimit)
+                {
+                    treeSpawnPoints.add( new Vector3(x, terrain.getY(x, z), z));
+                }
+
+            }
+
+            for (int i = 0; i < treeSpawnPoints.size(); i++)
+            {
+                addSceneObject(treeSpawnPoints.get(i).x, treeSpawnPoints.get(i).y, treeSpawnPoints.get(i).z, meshLibrary.trees[(int)Math.floor(Math.random() * (meshLibrary.treeTypes - 1))]);
+            }
 
             addSceneObject(0, 0, 0, RenderMeshManager.Inst().getTerrain());
             addSceneObject(0, -6, 0, RenderMeshManager.Inst().getWaterTerrain());

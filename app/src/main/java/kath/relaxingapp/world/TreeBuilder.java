@@ -16,6 +16,7 @@ public class TreeBuilder {
     private float treeNFactor = 0.8f;
     private int fairRandomIndex = 0;
     private boolean[] fairRandomArray;
+    private float leafScalar = 1.f;
 
     public TreeBuilder(MeshBuilder meshBuilder)
     {
@@ -35,6 +36,7 @@ public class TreeBuilder {
         if (generation == 0)
         {
             lod = 10;
+            leafScalar = length;
         }
         else
         {
@@ -61,7 +63,7 @@ public class TreeBuilder {
             a.copy(b);
         }
         // draw leaf at end of branch
-        drawLeaf(b, d);
+        drawLeaf(b, d, leafScalar);
         if (generation < 3)
         {
             // spawn the child branches
@@ -120,14 +122,14 @@ public class TreeBuilder {
         AddGeometry.addPrism(startRad, endRad, false, length, lod, meshBuilder);
     }
 
-    public void drawLeaf(Vector3 pos, Vector3 direction)
+    public void drawLeaf(Vector3 pos, Vector3 direction, float scalar)
     {
         meshBuilder.setIdentity();
         meshBuilder.setColour(0.5f, 0.75f, 0.25f, 1.f);
         meshBuilder.setTranslation(pos.x, pos.y, pos.z);
         meshBuilder.setLookAt(new Vector3(0, 0, 0), direction);
-        AddGeometry.addDiamond(0.1f, 0.2f, meshBuilder);
-        AddGeometry.addDiamond(-0.1f, 0.2f, meshBuilder);
+        AddGeometry.addDiamond(0.2f * scalar, 0.4f * scalar, meshBuilder);
+        AddGeometry.addDiamond(-0.2f * scalar, 0.4f * scalar, meshBuilder);
     }
 
     public boolean fairRandom()
