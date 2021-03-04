@@ -10,8 +10,8 @@ public class InputManager {
     private int[] pointerIdList = new int[maxPointerCount];
     private boolean[] pointerValidList = new boolean[maxPointerCount];
 
-    private Joystick joystickA = new Joystick(250, 250, 400, 400);
-    private Joystick joystickB = new Joystick(GlobalsManager.Inst().getScreenResWidth() - 250, 250, 400, 400);
+    private Joystick joystickA = new Joystick(250, 250, 200);
+    private Joystick joystickB = new Joystick(GlobalsManager.Inst().getScreenResWidth() - 250, 250, 200);
 
     public InputManager()
     {

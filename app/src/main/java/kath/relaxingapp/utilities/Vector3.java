@@ -82,4 +82,15 @@ public class Vector3 {
         float dz = z - targetVector.z;
         return (float)Math.sqrt((dx * dx) + (dy * dy) + (dz * dz));
     }
+
+    public void clampLength(float l)
+    {
+        float currentLength = length();
+        if (currentLength > l)
+        {
+            x *= l / currentLength;
+            y *= l / currentLength;
+            z *= l / currentLength;
+        }
+    }
 }

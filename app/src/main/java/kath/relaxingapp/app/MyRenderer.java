@@ -108,14 +108,10 @@ public class MyRenderer implements GLSurfaceView.Renderer{
     private void drawJoystick(Joystick joystick)
     {
         drawRenderMesh2D(joystickBox, joystick.getPx(), joystick.getPy());
-        float inputX = joystick.getInputX();
-        float inputY = joystick.getInputY();
-        float px = joystick.getPx();
-        float py = joystick.getPy();
-        float height = joystick.getHeight();
-        float width = joystick.getWidth();
+        Vector3 screenPointer = new Vector3();
+        joystick.joystickToScreenPoint(new Vector3(joystick.getInputX(), joystick.getInputY(), 0.f), screenPointer);
 
-        drawRenderMesh2D(joystickPointer, px + inputX * width / 2, py + inputY * height / 2);
+        drawRenderMesh2D(joystickPointer, screenPointer.x, screenPointer.y);
     }
 
     private void drawRenderMesh2D(RenderMesh renderMesh, float px, float py)
