@@ -4,6 +4,7 @@ import android.transition.Scene;
 import android.util.Log;
 
 import kath.relaxingapp.input.InputManager;
+import kath.relaxingapp.utilities.Vector3;
 import kath.relaxingapp.world.GameManager;
 import kath.relaxingapp.world.SceneManager;
 import kath.relaxingapp.world.SceneObject;
@@ -11,12 +12,8 @@ import kath.relaxingapp.audio.AudioManager;
 
 public class Player {
 
-    public float px = 25;
-    public float py = 1.7f;
-    public float pz = -25;
-    public float rotX = 0;
-    public float rotY = 0;
-    public float rotZ = 0;
+    public Vector3 pos = new Vector3(25.f, 1.7f, -25.f);
+    public Vector3 rot = new Vector3(0.f, 0.f, 0.f);
     public float collRad = 0.3f;
     public float collHeight = 1.7f;
     public static final float movementSpeed = 0.3f;
@@ -29,13 +26,13 @@ public class Player {
         float bx = InputManager.Inst().getJoystickB().getInputX();
         float by = InputManager.Inst().getJoystickB().getInputY();
 
-        float theta = rotY * (float)Math.PI / 180.0f;
+        float theta = rot.y * (float)Math.PI / 180.0f;
         // Update position
-        px += (-Math.sin(theta) * ay + Math.cos(theta) * ax) * movementSpeed;
-        pz += (-Math.cos(theta) * ay + -Math.sin(theta) * ax) * movementSpeed;
+        pos.x += (-Math.sin(theta) * ay + Math.cos(theta) * ax) * movementSpeed;
+        pos.z += (-Math.cos(theta) * ay + -Math.sin(theta) * ax) * movementSpeed;
         // Update rotation
-        rotX += by * lookSpeed;
-        rotY -= bx * lookSpeed;
+        rot.x += by * lookSpeed;
+        rot.y -= bx * lookSpeed;
         // Update collision
         updateCollision();
         updateTerrainCollision();
@@ -48,25 +45,25 @@ public class Player {
         {
             if (obj.getIsSolid())
             {
-                float[] objPos = obj.getPosition();
-                collideWithObject(objPos[0], objPos[1], objPos[2], 1, 2);
+                Vector3 objPos = obj.getPosition();
+                collideWithObject(objPos.x, objPos.y, objPos.z, 1, 2);
             }
         }
     }
 
     private void collideWithObject(float objx, float objy, float objz, float objRad, float objHeight)
     {
-        float ax = objx - px;
-        float az = objz - pz;
+        float ax = objx - pos.x;
+        float az = objz - pos.z;
         float aLen = (float) Math.sqrt(ax * ax + az * az);
-        float yDif = Math.abs(objy - py);
+        float yDif = Math.abs(objy - pos.y);
         if (aLen < objRad + collRad && yDif < ((objHeight / 2) + (collHeight / 2)) && aLen > 0.0001f)
         {
             float dLen = (objRad + collRad) - aLen;
             float dx = -(ax * (dLen / aLen));
             float dz = -(az * (dLen / aLen));
-            px = px + dx;
-            pz = pz + dz;
+            pos.x = pos.x + dx;
+            pos.z = pos.z + dz;
             // TEMPORARY - REMOVE THIS LINE
             Log.v("MyErrors", "" + AudioManager.Inst().playSound(AudioManager.wind_chimes));
         }
@@ -74,8 +71,8 @@ public class Player {
 
     private void updateTerrainCollision()
     {
-        float ty = SceneManager.Inst().getTerrain().getY(px, pz);
-        py = ty + collHeight / 2;
+        float ty = SceneManager.Inst().getTerrain().getY(pos.x, pos.z);
+        pos.y = ty + collHeight / 2;
 
     }
 }

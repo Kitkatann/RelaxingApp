@@ -13,6 +13,7 @@ import kath.relaxingapp.R;
 import kath.relaxingapp.geometry.AddGeometry;
 import kath.relaxingapp.graphics.RenderMeshManager;
 import kath.relaxingapp.terrain.HeightMap;
+import kath.relaxingapp.utilities.Vector3;
 import kath.relaxingapp.world.GameManager;
 import kath.relaxingapp.world.SceneManager;
 import kath.relaxingapp.world.SceneObject;
@@ -119,15 +120,15 @@ public class MyRenderer implements GLSurfaceView.Renderer{
 
     private void drawRenderMesh2D(RenderMesh renderMesh, float px, float py)
     {
-        ShaderManager.Inst().updateMatrix(px, py, 0, false);
+        ShaderManager.Inst().updateMatrix(new Vector3(px, py, 0.f), new Vector3(), false);
         renderMesh.drawMesh();
     }
 
-    private void drawRenderMesh3D(RenderMesh renderMesh, float px, float py, float pz)
+    private void drawRenderMesh3D(RenderMesh renderMesh, Vector3 pos, Vector3 rot)
     {
         if (renderMesh!= null)
         {
-            ShaderManager.Inst().updateMatrix(px, py, pz, true);
+            ShaderManager.Inst().updateMatrix(pos, rot, true);
             renderMesh.drawMesh();
         }
         else
@@ -142,9 +143,20 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         ArrayList<SceneObject> sceneObjects = SceneManager.Inst().getSceneObjects();
         for (int i = 0; i < sceneObjects.size(); i++)
         {
-            float[] position = sceneObjects.get(i).getPosition();
-            RenderMesh renderMesh = sceneObjects.get(i).getRenderMesh();
-            drawRenderMesh3D(renderMesh, position[0], position[1], position[2]);
+            if (!cullSceneObject(sceneObjects.get(i)))
+            {
+                Vector3 position = sceneObjects.get(i).getPosition();
+                Vector3 rotation = sceneObjects.get(i).getRotation();
+                RenderMesh renderMesh = sceneObjects.get(i).getRenderMesh();
+                drawRenderMesh3D(renderMesh, position, rotation);
+            }
         }
+    }
+
+    private boolean cullSceneObject(SceneObject obj)
+    {
+        Vector3 cameraPos = GlobalsManager.Inst().getCamera().pos;
+        Vector3 objPos = obj.getPosition();
+        return cameraPos.distanceTo(objPos) > obj.getCullDistance();
     }
 }

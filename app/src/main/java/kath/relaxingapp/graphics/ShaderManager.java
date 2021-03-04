@@ -6,6 +6,7 @@ import android.util.Log;
 
 import kath.relaxingapp.utilities.FileUtil;
 import kath.relaxingapp.app.GlobalsManager;
+import kath.relaxingapp.utilities.Vector3;
 
 public class ShaderManager {
 
@@ -49,20 +50,23 @@ public class ShaderManager {
     /**
      * Set matrix and send to shader
      */
-    public void updateMatrix(float x, float y, float z, boolean is3D)
+    public void updateMatrix(Vector3 pos, Vector3 rot, boolean is3D)
     {
         // Set model matrix
         Matrix.setIdentityM(modelMatrix, 0);
-        Matrix.translateM(modelMatrix,0, x, y, z);
+        Matrix.translateM(modelMatrix,0, pos.x, pos.y, pos.z);
+        Matrix.rotateM(modelMatrix, 0, rot.y, 0, 1, 0);
+        Matrix.rotateM(modelMatrix, 0, rot.x, 1, 0, 0);
+        Matrix.rotateM(modelMatrix, 0, rot.z, 0, 0, 1);
 
         if (is3D)
         {
             // Set camera matrix for 3D stuff (using camera position)
             Matrix.setIdentityM(cameraMatrix, 0);
-            Matrix.translateM(cameraMatrix, 0, GlobalsManager.Inst().getCamera().px, GlobalsManager.Inst().getCamera().py, GlobalsManager.Inst().getCamera().pz);
-            Matrix.rotateM(cameraMatrix, 0, GlobalsManager.Inst().getCamera().rotY, 0, 1, 0);
-            Matrix.rotateM(cameraMatrix, 0, GlobalsManager.Inst().getCamera().rotX, 1, 0, 0);
-            Matrix.rotateM(cameraMatrix, 0, GlobalsManager.Inst().getCamera().rotZ, 0, 0, 1);
+            Matrix.translateM(cameraMatrix, 0, GlobalsManager.Inst().getCamera().pos.x, GlobalsManager.Inst().getCamera().pos.y, GlobalsManager.Inst().getCamera().pos.z);
+            Matrix.rotateM(cameraMatrix, 0, GlobalsManager.Inst().getCamera().rot.y, 0, 1, 0);
+            Matrix.rotateM(cameraMatrix, 0, GlobalsManager.Inst().getCamera().rot.x, 1, 0, 0);
+            Matrix.rotateM(cameraMatrix, 0, GlobalsManager.Inst().getCamera().rot.z, 0, 0, 1);
             // Invert camera matrix and put the inverted matrix into view matrix
             Matrix.invertM(viewMatrix, 0, cameraMatrix, 0);
             // Set projection matrix for 3D stuff

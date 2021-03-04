@@ -8,7 +8,7 @@ import kath.relaxingapp.world.TreeBuilder;
 
 public class MeshLibrary {
 
-    public int treeTypes = 10;
+    public int treeTypes = 5;
 
     public RenderMesh tempCube;
     public RenderMesh tempCuboid;

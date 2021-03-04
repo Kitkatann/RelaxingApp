@@ -65,11 +65,11 @@ public class SceneManager {
 
             for (int i = 0; i < treeSpawnPoints.size(); i++)
             {
-                addSceneObject(treeSpawnPoints.get(i).x, treeSpawnPoints.get(i).y, treeSpawnPoints.get(i).z, meshLibrary.trees[(int)Math.floor(Math.random() * (meshLibrary.treeTypes - 1))]);
+                addSceneObject(treeSpawnPoints.get(i), new Vector3(0.f, (float) (Math.random() * 360.f), 0.f), meshLibrary.trees[(int)Math.floor(Math.random() * (meshLibrary.treeTypes - 1))], 100.f);
             }
 
-            addSceneObject(0, 0, 0, RenderMeshManager.Inst().getTerrain());
-            addSceneObject(0, -6, 0, RenderMeshManager.Inst().getWaterTerrain());
+            addSceneObject(new Vector3(), new Vector3(), RenderMeshManager.Inst().getTerrain(), Float.MAX_VALUE);
+            addSceneObject(new Vector3(0.f, -6.f, 0.f), new Vector3(), RenderMeshManager.Inst().getWaterTerrain(), Float.MAX_VALUE);
         }
         else
         {
@@ -77,9 +77,9 @@ public class SceneManager {
         }
     }
 
-    public void addSceneObject(float px, float py, float pz, RenderMesh renderMesh)
+    public void addSceneObject(Vector3 pos, Vector3 rot, RenderMesh renderMesh, float cullDistance)
     {
-        SceneObject mySceneObject = new SceneObject(px, py, pz, renderMesh, true);
+        SceneObject mySceneObject = new SceneObject(pos, rot, renderMesh, true, cullDistance);
         sceneObjects.add(mySceneObject);
     }
 

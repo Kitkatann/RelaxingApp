@@ -74,4 +74,12 @@ public class Vector3 {
             z /= length;
         }
     }
+
+    public float distanceTo(Vector3 targetVector)
+    {
+        float dx = x - targetVector.x;
+        float dy = y - targetVector.y;
+        float dz = z - targetVector.z;
+        return (float)Math.sqrt((dx * dx) + (dy * dy) + (dz * dz));
+    }
 }
