@@ -47,7 +47,7 @@ public class SceneManager {
 //            addSceneObject(15, terrain.getY(15, -15), -15, meshLibrary.tempPrism);
 //            addSceneObject(18, terrain.getY(18, -18), -18, meshLibrary.tempSphere);
 
-            int numTrees = 100;
+            int numTrees = 400;
             float treeYLimit = 40.f;
             float terrainWidth = terrain.getWidth() * GameManager.terrainCellSize;
             float terrainHeight = terrain.getHeight() * GameManager.terrainCellSize;
@@ -65,7 +65,7 @@ public class SceneManager {
 
             for (int i = 0; i < treeSpawnPoints.size(); i++)
             {
-                addSceneObject(treeSpawnPoints.get(i), new Vector3(0.f, (float) (Math.random() * 360.f), 0.f), meshLibrary.trees[(int)Math.floor(Math.random() * (meshLibrary.treeTypes - 1))], 100.f);
+                addSceneObject(treeSpawnPoints.get(i), new Vector3(0.f, (float) (Math.random() * 360.f), 0.f), meshLibrary.trees[(int)Math.floor(Math.random() * (meshLibrary.treeTypes - 1))], 200.f);
             }
 
             addSceneObject(new Vector3(), new Vector3(), RenderMeshManager.Inst().getTerrain(), Float.MAX_VALUE);

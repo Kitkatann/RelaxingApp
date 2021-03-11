@@ -116,7 +116,7 @@ public class TreeBuilder {
         center.add(b);
         center.divideScalar(2.f);
         meshBuilder.setIdentity();
-        meshBuilder.setColour(0.7f, 0.5f, 0.3f, 1.f);
+        meshBuilder.setColour(0.44f, 0.33f, 0.21f, 1.f);
         meshBuilder.setTranslation(center.x, center.y, center.z);
         meshBuilder.setLookAt(a, b);
         AddGeometry.addPrism(startRad, endRad, false, length, lod, meshBuilder);
@@ -125,7 +125,7 @@ public class TreeBuilder {
     public void drawLeaf(Vector3 pos, Vector3 direction, float scalar)
     {
         meshBuilder.setIdentity();
-        meshBuilder.setColour(0.5f, 0.75f, 0.25f, 1.f);
+        meshBuilder.setColour(0.16f, 0.46f, 0.16f, 1.f);
         meshBuilder.setTranslation(pos.x, pos.y, pos.z);
         meshBuilder.setLookAt(new Vector3(0, 0, 0), direction);
         AddGeometry.addDiamond(0.2f * scalar, 0.4f * scalar, meshBuilder);

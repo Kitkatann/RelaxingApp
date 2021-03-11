@@ -22,6 +22,8 @@ public class ShaderManager {
 
     // Shader variable handles
     private int mvpMatrixHandle;
+    private int modelMatrixHandle;
+    private int cameraPositionHandle;
     private int positionHandle;
     private int colorHandle;
     private int normalHandle;
@@ -99,7 +101,11 @@ public class ShaderManager {
         // Multiply model and view matrix by the projection matrix and store result in mvp matrix
         Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvpMatrix, 0);
 
+        // Update shader uniforms
         GLES20.glUniformMatrix4fv(mvpMatrixHandle, 1, false, mvpMatrix, 0);
+        GLES20.glUniformMatrix4fv(modelMatrixHandle, 1, false, modelMatrix, 0);
+        Vector3 cameraPos = GlobalsManager.Inst().getCamera().pos;
+        GLES20.glUniform3f(cameraPositionHandle, cameraPos.x, cameraPos.y, cameraPos.z);
     }
 
     public void setupShaders(int vertexResID, int fragmentResID) {
@@ -162,6 +168,8 @@ public class ShaderManager {
 
         // Set program handles
         mvpMatrixHandle = GLES20.glGetUniformLocation(programHandle, "u_MVPMatrix");
+        modelMatrixHandle = GLES20.glGetUniformLocation(programHandle, "u_ModelMatrix");
+        cameraPositionHandle = GLES20.glGetUniformLocation(programHandle, "u_CameraPosition");
         positionHandle = GLES20.glGetAttribLocation(programHandle, "a_Position");
         colorHandle = GLES20.glGetAttribLocation(programHandle, "a_Color");
         normalHandle = GLES20.glGetAttribLocation(programHandle, "a_Normal");

@@ -50,7 +50,7 @@ public class MyRenderer implements GLSurfaceView.Renderer{
     @Override
     public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
         // Set the background clear colour to sky blue
-        GLES20.glClearColor(0.7f, 0.9f, 1.f, 0.f);
+        GLES20.glClearColor(0.59f, 0.73f, 0.81f, 0.f);
 
         // Set up shaders
         ShaderManager.Inst().setupShaders(R.raw.vertex, R.raw.fragment);
@@ -82,8 +82,8 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         GLES20.glEnable(GLES20.GL_BLEND);
         GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 
-        drawJoystick(InputManager.Inst().getJoystickA());
-        drawJoystick(InputManager.Inst().getJoystickB());
+//        drawJoystick(InputManager.Inst().getJoystickA());
+//        drawJoystick(InputManager.Inst().getJoystickB());
 
         // Draw pointers for debugging purposes
         //for (int i = 0; i < InputManager.Inst().getMaxPointerCount(); i++)
