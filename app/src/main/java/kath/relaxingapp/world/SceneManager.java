@@ -1,19 +1,23 @@
 package kath.relaxingapp.world;
 
+import android.provider.MediaStore;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import kath.relaxingapp.audio.AudioManager;
 import kath.relaxingapp.graphics.RenderMesh;
 import kath.relaxingapp.graphics.RenderMeshManager;
 import kath.relaxingapp.graphics.MeshLibrary;
 import kath.relaxingapp.terrain.Terrain;
 import kath.relaxingapp.utilities.Vector3;
+import kath.relaxingapp.audio.AudioEmitter;
 
 public class SceneManager {
     private ArrayList<SceneObject> sceneObjects = new ArrayList<>();
     private Terrain terrain;
+    private ArrayList<AudioEmitter> audioEmitters = new ArrayList<>();
 
     public SceneManager()
     {
@@ -35,17 +39,30 @@ public class SceneManager {
         return sceneObjects;
     }
 
+    public ArrayList<AudioEmitter> getAudioEmitters()
+    {
+        return audioEmitters;
+    }
+
     public void createTestScene()
     {
         MeshLibrary meshLibrary = RenderMeshManager.Inst().getMeshLibrary();
         if (meshLibrary != null)
         {
-//            addSceneObject(3, terrain.getY(3, -3), -3, meshLibrary.tempCube);
-//            addSceneObject(6, terrain.getY(6, -6), -6, meshLibrary.tempCuboid);
-//            addSceneObject(9, terrain.getY(9, -9), -9, meshLibrary.tempCircle);
-//            addSceneObject(12, terrain.getY(12, -12), -12, meshLibrary.tempPlane);
-//            addSceneObject(15, terrain.getY(15, -15), -15, meshLibrary.tempPrism);
-//            addSceneObject(18, terrain.getY(18, -18), -18, meshLibrary.tempSphere);
+            //TESTING
+            Vector3 cubePos = new Vector3(3, terrain.getY(3, -3), -3);
+            Vector3 spherePos = new Vector3(13, terrain.getY(13, -13), -13);
+            Vector3 cuboidPos = new Vector3(23, terrain.getY(23, -23), -23);
+            Vector3 prismPos = new Vector3(33, terrain.getY(33, -33), -33);
+
+            addSceneObject(cubePos, new Vector3(0, 1, 0), meshLibrary.tempCube, 100);
+            addAudioEmitter(cubePos, AudioManager.bird_song_0);
+//            addSceneObject(spherePos, new Vector3(0, 1, 0), meshLibrary.tempSphere, 100);
+//            addSceneObject(cuboidPos, new Vector3(0, 1, 0), meshLibrary.tempCuboid, 100);
+            addSceneObject(prismPos, new Vector3(0, 1, 0), meshLibrary.tempSphere, 100);
+            addAudioEmitter(prismPos, AudioManager.wind_chimes_0);
+
+
 
             int numTrees = 400;
             float treeYLimit = 40.f;
@@ -81,6 +98,12 @@ public class SceneManager {
     {
         SceneObject mySceneObject = new SceneObject(pos, rot, renderMesh, true, cullDistance);
         sceneObjects.add(mySceneObject);
+    }
+
+    public void addAudioEmitter(Vector3 position, int soundID)
+    {
+        AudioEmitter audioEmitter = new AudioEmitter(soundID, position);
+        audioEmitters.add(audioEmitter);
     }
 
     public void clearScene()

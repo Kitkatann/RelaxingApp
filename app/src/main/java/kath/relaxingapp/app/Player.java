@@ -3,6 +3,7 @@ package kath.relaxingapp.app;
 import android.transition.Scene;
 import android.util.Log;
 
+import kath.relaxingapp.audio.AudioEmitter;
 import kath.relaxingapp.input.InputManager;
 import kath.relaxingapp.utilities.Vector3;
 import kath.relaxingapp.world.GameManager;
@@ -36,7 +37,8 @@ public class Player {
         // Update collision
         updateCollision();
         updateTerrainCollision();
-
+        // Update audio
+        updateAudio();
     }
 
     public void updateCollision()
@@ -64,8 +66,6 @@ public class Player {
             float dz = -(az * (dLen / aLen));
             pos.x = pos.x + dx;
             pos.z = pos.z + dz;
-            // TEMPORARY - REMOVE THIS LINE
-            Log.v("MyErrors", "" + AudioManager.Inst().playSound(AudioManager.wind_chimes));
         }
     }
 
@@ -74,5 +74,10 @@ public class Player {
         float ty = SceneManager.Inst().getTerrain().getY(pos.x, pos.z);
         pos.y = ty + collHeight / 2;
 
+    }
+
+    private void updateAudio()
+    {
+        AudioManager.Inst().updateAudio();
     }
 }
