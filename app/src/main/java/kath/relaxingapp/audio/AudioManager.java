@@ -25,7 +25,9 @@ public class AudioManager {
 
     public static final int wind_chimes_0 = 0;
     public static final int bird_song_0 = 1;
-    public static final int soundTypeCount = 2;
+    public static final int stream_0 = 2;
+    public static final int wind_0 = 3;
+    public static final int soundTypeCount = 4;
 
     // Create singleton AudioManager instance
     private static AudioManager inst = null;
@@ -55,6 +57,10 @@ public class AudioManager {
         soundIDFallOffs[wind_chimes_0] = 0.2f;
         soundIDs[bird_song_0] = soundPool.load(MainActivity.appContext, R.raw.bird_song_0, 1);
         soundIDFallOffs[bird_song_0] = 0.2f;
+        soundIDs[stream_0] = soundPool.load(MainActivity.appContext, R.raw.stream_1, 1);
+        soundIDFallOffs[stream_0] = 0.2f;
+        soundIDs[wind_0] = soundPool.load(MainActivity.appContext, R.raw.wind_0, 1);
+        soundIDFallOffs[wind_0] = 0.2f;
     }
 
     public void updateAudio()

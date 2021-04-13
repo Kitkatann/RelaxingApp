@@ -1,11 +1,13 @@
 package kath.relaxingapp.world;
 
+import android.transition.Scene;
+
 import kath.relaxingapp.app.Player;
 import kath.relaxingapp.geometry.AddGeometry;
 import kath.relaxingapp.graphics.MeshBuilder;
 import kath.relaxingapp.graphics.RenderMeshManager;
 import kath.relaxingapp.terrain.HeightMap;
-import kath.relaxingapp.terrain.TempHeightmapGenerator;
+import kath.relaxingapp.terrain.HeightmapGenerator;
 
 public class GameManager {
     private Player player;
@@ -35,15 +37,16 @@ public class GameManager {
 
     public void startGame()
     {
-        TempHeightmapGenerator tempHeightmapGenerator = new TempHeightmapGenerator(75, 75);
-        HeightMap terrainHeightMap = tempHeightmapGenerator.getLandWithRivers();
-        HeightMap waterTerrainHeightMap = tempHeightmapGenerator.getLandWithoutRivers();
+        HeightmapGenerator heightmapGenerator = new HeightmapGenerator(75, 75);
+        HeightMap terrainHeightMap = heightmapGenerator.getLandWithRivers();
+        HeightMap waterTerrainHeightMap = heightmapGenerator.getLandWithoutRivers();
 
         // For testing with flat terrain
 //        terrainHeightMap.applyMultiplier(0.f);
 //        waterTerrainHeightMap.applyMultiplier(0.f);
 
         SceneManager.Inst().getTerrain().init(terrainCellSize, terrainHeightMap);
+        SceneManager.Inst().getWaterTerrain().init(terrainCellSize, waterTerrainHeightMap);
 
         MeshBuilder terrainMeshBuilder = new MeshBuilder();
         terrainMeshBuilder.setColour(0.28f, 0.53f, 0.28f, 1.f);

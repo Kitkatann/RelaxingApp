@@ -17,11 +17,13 @@ import kath.relaxingapp.audio.AudioEmitter;
 public class SceneManager {
     private ArrayList<SceneObject> sceneObjects = new ArrayList<>();
     private Terrain terrain;
+    private Terrain waterTerrain;
     private ArrayList<AudioEmitter> audioEmitters = new ArrayList<>();
 
     public SceneManager()
     {
         terrain = new Terrain();
+        waterTerrain = new Terrain();
     }
 
     // Create singleton SceneManager instance
@@ -57,8 +59,10 @@ public class SceneManager {
 
             addSceneObject(cubePos, new Vector3(0, 1, 0), meshLibrary.tempCube, 100);
             addAudioEmitter(cubePos, AudioManager.bird_song_0);
-//            addSceneObject(spherePos, new Vector3(0, 1, 0), meshLibrary.tempSphere, 100);
-//            addSceneObject(cuboidPos, new Vector3(0, 1, 0), meshLibrary.tempCuboid, 100);
+            addSceneObject(spherePos, new Vector3(0, 1, 0), meshLibrary.tempSphere, 100);
+            addAudioEmitter(spherePos, AudioManager.bird_song_0);
+            addSceneObject(cuboidPos, new Vector3(0, 1, 0), meshLibrary.tempCuboid, 100);
+            addAudioEmitter(cuboidPos, AudioManager.bird_song_0);
             addSceneObject(prismPos, new Vector3(0, 1, 0), meshLibrary.tempSphere, 100);
             addAudioEmitter(prismPos, AudioManager.wind_chimes_0);
 
@@ -73,11 +77,34 @@ public class SceneManager {
             {
                 float x = (float)Math.random() * terrainWidth;
                 float z = -(float)Math.random() * terrainHeight;
-                if (terrain.getY(x, z) < treeYLimit)
+                float ty = terrain.getY(x, z);
+                float wy = waterTerrain.getY(x, z);
+                if (ty < treeYLimit && wy <= ty)
                 {
-                    treeSpawnPoints.add( new Vector3(x, terrain.getY(x, z), z));
+                    Vector3 treePos = new Vector3(x, ty, z);
+                    treeSpawnPoints.add(treePos);
+                    int rand = (int)Math.floor(Math.random() * 3.f);
+                    if (rand == 1)
+                    {
+                        addAudioEmitter(treePos, AudioManager.wind_0);
+                    }
+                    if (rand == 2)
+                    {
+                        addAudioEmitter(treePos, AudioManager.bird_song_0);
+                    }
                 }
+            }
 
+            for (int i = 0; i < 500; i++)
+            {
+                float x = (float)Math.random() * terrainWidth;
+                float z = -(float)Math.random() * terrainHeight;
+                float ty = terrain.getY(x, z);
+                float wy = waterTerrain.getY(x, z);
+                if (wy > ty)
+                {
+                    addAudioEmitter(new Vector3(x, ty, z), AudioManager.stream_0);
+                }
             }
 
             for (int i = 0; i < treeSpawnPoints.size(); i++)
@@ -114,6 +141,11 @@ public class SceneManager {
     public Terrain getTerrain()
     {
         return terrain;
+    }
+
+    public Terrain getWaterTerrain()
+    {
+        return waterTerrain;
     }
 
 }
