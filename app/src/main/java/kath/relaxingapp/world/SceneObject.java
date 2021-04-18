@@ -11,8 +11,6 @@ public class SceneObject {
     private float cullDistance;
     private float collRadius;
     private float collHeight;
-    private int soundStreamID;
-    private int soundEnum;
 
 
     public SceneObject(Vector3 pos, Vector3 rot, RenderMesh renderMesh, boolean isSolid, float cullDistance)
@@ -24,18 +22,6 @@ public class SceneObject {
 
         this.isSolid = isSolid;
         this.cullDistance = cullDistance;
-    }
-
-    public SceneObject(Vector3 pos, Vector3 rot, RenderMesh renderMesh, boolean isSolid, float cullDistance, int soundEnum)
-    {
-        this.renderMesh = renderMesh;
-
-        position.copy(pos);
-        rotation.copy(rot);
-
-        this.isSolid = isSolid;
-        this.cullDistance = cullDistance;
-        this.soundEnum = soundEnum;
     }
 
     public RenderMesh getRenderMesh()

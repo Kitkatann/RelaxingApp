@@ -66,6 +66,7 @@ public class SceneManager {
 //            addSceneObject(prismPos, new Vector3(0, 1, 0), meshLibrary.tempSphere, 100);
 //            addAudioEmitter(prismPos, AudioManager.wind_chimes_0);
 
+            List<Vector3> objectSpawnPoints = new ArrayList<>();
             Vector3 testPos = new Vector3(3, terrain.getY(3, -3) + 4, -3);
             addSceneObject(testPos, new Vector3(0, 1, 0), meshLibrary.object1, 100);
             addAudioEmitter(testPos, AudioManager.wind_chimes_0);
@@ -75,7 +76,6 @@ public class SceneManager {
             float terrainWidth = terrain.getWidth() * GameManager.terrainCellSize;
             float terrainHeight = terrain.getHeight() * GameManager.terrainCellSize;
             List<Vector3> treeSpawnPoints = new ArrayList<>();
-            List<Vector3> objectSpawnPoints = new ArrayList<>();
             for (int i = 0; i < numTrees; i++)
             {
                 float x = (float)Math.random() * terrainWidth;

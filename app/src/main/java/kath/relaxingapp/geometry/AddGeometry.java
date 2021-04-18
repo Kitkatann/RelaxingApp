@@ -79,11 +79,28 @@ public class AddGeometry {
         }
     }
 
-    public static void addPlane(float width, float length, MeshBuilder planeMeshBuilder) {
-        float w = width / 2;
-        float l = length / 2;
+    public static void addPlane(float width, float length, int gridWidth, int gridLength, MeshBuilder planeMeshBuilder) {
+        float xCellSize = width / gridWidth;
+        float zCellSize = length / gridLength;
 
-        planeMeshBuilder.addQuad(-w, 0, l, w, 0, l, w, 0, -l, -w, 0, -l);
+        float startX = -width / 2;
+        float startZ = -length / 2;
+
+        for (int z = 0; z < gridLength; z++)
+        {
+            for (int x = 0; x < gridWidth; x++)
+            {
+                float ax = startX + xCellSize * x;
+                float az = startZ + zCellSize * z;
+                float bx = ax;
+                float bz = az + zCellSize;
+                float cx = ax + xCellSize;
+                float cz = bz;
+                float dx = cx;
+                float dz = az;
+                planeMeshBuilder.addQuad(ax, 0, az, bx, 0, bz, cx, 0, cz, dx, 0, dz);
+            }
+        }
     }
 
     public static void addDiamond(float width, float length, MeshBuilder planeMeshBuilder) {
@@ -185,9 +202,9 @@ public class AddGeometry {
         int height = heightMap.getHeight();
         float x = 0;
         float z = 0;
-        for (int i = 0; i < height; i++)
+        for (int i = 0; i < height - 1; i++)
         {
-            for (int j = 0; j < width; j++)
+            for (int j = 0; j < width - 1; j++)
             {
                 terrainMeshBuilder.addQuad(
                         x, heightMap.getValue(j, i + 1), z - cellSize,

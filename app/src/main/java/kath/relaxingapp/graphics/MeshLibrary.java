@@ -37,7 +37,7 @@ public class MeshLibrary {
 
         MeshBuilder planeMeshBuilder = new MeshBuilder();
         planeMeshBuilder.setColour(0.24f, 0.6f, 0.75f, 1.f);
-        AddGeometry.addPlane(1024.f, 1024.f, planeMeshBuilder);
+        AddGeometry.addPlane(1024.f, 1024.f, 10, 10, planeMeshBuilder);
 
         MeshBuilder tempPrismMeshBuilder = new MeshBuilder();
         tempPrismMeshBuilder.setColour(1.f, 0.f, 0.f, 1.0f);
