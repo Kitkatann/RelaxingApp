@@ -1,9 +1,11 @@
 package kath.relaxingapp.app;
 
+import android.content.res.Resources;
+
 public class GlobalsManager {
 
-    private int screenResHeight = 1080;
-    private int screenResWidth = 2100;
+    private int screenResHeight;
+    private int screenResWidth;
 
     private Camera camera = new Camera();
 
@@ -15,6 +17,12 @@ public class GlobalsManager {
             inst = new GlobalsManager();
         }
         return inst;
+    }
+
+    public GlobalsManager()
+    {
+        screenResWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+        screenResHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
     public int getScreenResHeight()
