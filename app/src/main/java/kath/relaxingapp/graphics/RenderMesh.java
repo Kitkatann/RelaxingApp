@@ -7,7 +7,7 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
-// Contains a single mesh's vertex data in the correct data structure (FloatBuffer) and format to be rendered by GL.
+// Contains a single mesh's vertex3D data in the correct data structure (FloatBuffer) and format to be rendered by GL.
 // Also has the method to invoke that rendering (draw it to the screen)
 public class RenderMesh {
     /** Store our model data in a float buffer. */
@@ -43,22 +43,22 @@ public class RenderMesh {
         {
             // Pass in the position info
             vertexBuffer.position(0);
-            GLES20.glVertexAttribPointer(ShaderManager.Inst().getPositionHandle(), 3, GLES20.GL_FLOAT, false, strideBytes, vertexBuffer);
+            GLES20.glVertexAttribPointer(ShaderManager.Inst().getPositionHandles()[0], 3, GLES20.GL_FLOAT, false, strideBytes, vertexBuffer);
 
-            GLES20.glEnableVertexAttribArray(ShaderManager.Inst().getPositionHandle());
+            GLES20.glEnableVertexAttribArray(ShaderManager.Inst().getPositionHandles()[0]);
 
             // Pass in the colour info
             vertexBuffer.position(3);
-            GLES20.glVertexAttribPointer(ShaderManager.Inst().getColorHandle(), 4, GLES20.GL_FLOAT, false, strideBytes, vertexBuffer);
+            GLES20.glVertexAttribPointer(ShaderManager.Inst().getColorHandles()[0], 4, GLES20.GL_FLOAT, false, strideBytes, vertexBuffer);
 
-            GLES20.glEnableVertexAttribArray(ShaderManager.Inst().getColorHandle());
+            GLES20.glEnableVertexAttribArray(ShaderManager.Inst().getColorHandles()[0]);
 
             // Pass in normal info
             vertexBuffer.position(7);
 
-            GLES20.glVertexAttribPointer(ShaderManager.Inst().getNormalHandle(), 3, GLES20.GL_FLOAT, false, strideBytes, vertexBuffer);
+            GLES20.glVertexAttribPointer(ShaderManager.Inst().getNormalHandles()[0], 3, GLES20.GL_FLOAT, false, strideBytes, vertexBuffer);
 
-            GLES20.glEnableVertexAttribArray(ShaderManager.Inst().getNormalHandle());
+            GLES20.glEnableVertexAttribArray(ShaderManager.Inst().getNormalHandles()[0]);
 
             // Render
 

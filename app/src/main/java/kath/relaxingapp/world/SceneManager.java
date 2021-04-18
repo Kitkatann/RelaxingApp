@@ -52,27 +52,30 @@ public class SceneManager {
         if (meshLibrary != null)
         {
             //TESTING
-            Vector3 cubePos = new Vector3(3, terrain.getY(3, -3), -3);
-            Vector3 spherePos = new Vector3(13, terrain.getY(13, -13), -13);
-            Vector3 cuboidPos = new Vector3(23, terrain.getY(23, -23), -23);
-            Vector3 prismPos = new Vector3(33, terrain.getY(33, -33), -33);
+//            Vector3 cubePos = new Vector3(3, terrain.getY(3, -3), -3);
+//            Vector3 spherePos = new Vector3(13, terrain.getY(13, -13), -13);
+//            Vector3 cuboidPos = new Vector3(23, terrain.getY(23, -23), -23);
+//            Vector3 prismPos = new Vector3(33, terrain.getY(33, -33), -33);
+//
+//            addSceneObject(cubePos, new Vector3(0, 1, 0), meshLibrary.tempCube, 100);
+//            addAudioEmitter(cubePos, AudioManager.bird_song_0);
+//            addSceneObject(spherePos, new Vector3(0, 1, 0), meshLibrary.tempSphere, 100);
+//            addAudioEmitter(spherePos, AudioManager.bird_song_0);
+//            addSceneObject(cuboidPos, new Vector3(0, 1, 0), meshLibrary.tempCuboid, 100);
+//            addAudioEmitter(cuboidPos, AudioManager.bird_song_0);
+//            addSceneObject(prismPos, new Vector3(0, 1, 0), meshLibrary.tempSphere, 100);
+//            addAudioEmitter(prismPos, AudioManager.wind_chimes_0);
 
-            addSceneObject(cubePos, new Vector3(0, 1, 0), meshLibrary.tempCube, 100);
-            addAudioEmitter(cubePos, AudioManager.bird_song_0);
-            addSceneObject(spherePos, new Vector3(0, 1, 0), meshLibrary.tempSphere, 100);
-            addAudioEmitter(spherePos, AudioManager.bird_song_0);
-            addSceneObject(cuboidPos, new Vector3(0, 1, 0), meshLibrary.tempCuboid, 100);
-            addAudioEmitter(cuboidPos, AudioManager.bird_song_0);
-            addSceneObject(prismPos, new Vector3(0, 1, 0), meshLibrary.tempSphere, 100);
-            addAudioEmitter(prismPos, AudioManager.wind_chimes_0);
-
-
+            Vector3 testPos = new Vector3(3, terrain.getY(3, -3) + 4, -3);
+            addSceneObject(testPos, new Vector3(0, 1, 0), meshLibrary.object1, 100);
+            addAudioEmitter(testPos, AudioManager.wind_chimes_0);
 
             int numTrees = 400;
             float treeYLimit = 40.f;
             float terrainWidth = terrain.getWidth() * GameManager.terrainCellSize;
             float terrainHeight = terrain.getHeight() * GameManager.terrainCellSize;
             List<Vector3> treeSpawnPoints = new ArrayList<>();
+            List<Vector3> objectSpawnPoints = new ArrayList<>();
             for (int i = 0; i < numTrees; i++)
             {
                 float x = (float)Math.random() * terrainWidth;
@@ -114,10 +117,11 @@ public class SceneManager {
 
             addSceneObject(new Vector3(), new Vector3(), RenderMeshManager.Inst().getTerrain(), Float.MAX_VALUE);
             addSceneObject(new Vector3(0.f, -6.f, 0.f), new Vector3(), RenderMeshManager.Inst().getWaterTerrain(), Float.MAX_VALUE);
+            addSceneObject(new Vector3(GameManager.terrainCellSize * 32, -5f, GameManager.terrainCellSize * -32), new Vector3(), meshLibrary.plane, Float.MAX_VALUE);
         }
         else
         {
-            Log.v("myErrors", "testRenderMeshes is null");
+            Log.v("myErrors", "renderMeshes is null");
         }
     }
 

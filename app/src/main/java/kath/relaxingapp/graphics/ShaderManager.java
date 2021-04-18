@@ -20,13 +20,20 @@ public class ShaderManager {
         return inst;
     }
 
+    private int shaderCount = 2;
+
+    private int currentShaderProgramIndex;
+
     // Shader variable handles
-    private int mvpMatrixHandle;
-    private int modelMatrixHandle;
-    private int cameraPositionHandle;
-    private int positionHandle;
-    private int colorHandle;
-    private int normalHandle;
+    private int[] mvpMatrixHandles = new int[shaderCount];
+    private int[] modelMatrixHandles = new int[shaderCount];
+    private int[] cameraPositionHandles = new int[shaderCount];
+    private int[] positionHandles = new int[shaderCount];
+    private int[] colorHandles = new int[shaderCount];
+    private int[] normalHandles = new int[shaderCount];
+
+    // Program handles
+    private int programHandles[] = new int[shaderCount];
 
     // Allocate storage for the matrices
     private float[] mvpMatrix = new float[16];
@@ -37,17 +44,17 @@ public class ShaderManager {
     private float[] projectionMatrix = new float[16];
 
 
-    public int getPositionHandle()
+    public int[] getPositionHandles()
     {
-        return positionHandle;
+        return positionHandles;
     }
 
-    public int getColorHandle()
+    public int[] getColorHandles()
     {
-        return colorHandle;
+        return colorHandles;
     }
 
-    public int getNormalHandle() { return normalHandle; }
+    public int[] getNormalHandles() { return normalHandles; }
 
     /**
      * Set matrix and send to shader
@@ -102,80 +109,88 @@ public class ShaderManager {
         Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvpMatrix, 0);
 
         // Update shader uniforms
-        GLES20.glUniformMatrix4fv(mvpMatrixHandle, 1, false, mvpMatrix, 0);
-        GLES20.glUniformMatrix4fv(modelMatrixHandle, 1, false, modelMatrix, 0);
+        GLES20.glUniformMatrix4fv(mvpMatrixHandles[currentShaderProgramIndex], 1, false, mvpMatrix, 0);
+        GLES20.glUniformMatrix4fv(modelMatrixHandles[currentShaderProgramIndex], 1, false, modelMatrix, 0);
         Vector3 cameraPos = GlobalsManager.Inst().getCamera().pos;
-        GLES20.glUniform3f(cameraPositionHandle, cameraPos.x, cameraPos.y, cameraPos.z);
+        GLES20.glUniform3f(cameraPositionHandles[currentShaderProgramIndex], cameraPos.x, cameraPos.y, cameraPos.z);
     }
 
-    public void setupShaders(int vertexResID, int fragmentResID) {
+    public void setupShaders(int[] vertexResIDs, int[] fragmentResIDs) {
 
-        final String vertexShader = FileUtil.readRawTextFile(vertexResID);
-        final String fragmentShader = FileUtil.readRawTextFile(fragmentResID);
+        for (int i = 0; i < shaderCount; i++)
+        {
+            String vertexShaderCode = FileUtil.readRawTextFile(vertexResIDs[i]);
+            String fragmentShaderCode = FileUtil.readRawTextFile(fragmentResIDs[i]);
 
-        // Load in the vertex shader and fragment shader
-        int vertexShaderHandle = GLES20.glCreateShader(GLES20.GL_VERTEX_SHADER);
-        int fragmentShaderHandle = GLES20.glCreateShader(GLES20.GL_FRAGMENT_SHADER);
+            // Load in the vertex3D shader and fragment3D shader
+            int vertexShaderHandle = GLES20.glCreateShader(GLES20.GL_VERTEX_SHADER);
+            int fragmentShaderHandle = GLES20.glCreateShader(GLES20.GL_FRAGMENT_SHADER);
 
-        // Pass in the shader sources
-        GLES20.glShaderSource(vertexShaderHandle, vertexShader);
-        GLES20.glShaderSource(fragmentShaderHandle, fragmentShader);
+            // Pass in the shader sources
+            GLES20.glShaderSource(vertexShaderHandle, vertexShaderCode);
+            GLES20.glShaderSource(fragmentShaderHandle, fragmentShaderCode);
 
-        // Compile the shaders
-        GLES20.glCompileShader(vertexShaderHandle);
-        GLES20.glCompileShader(fragmentShaderHandle);
+            // Compile the shaders
+            GLES20.glCompileShader(vertexShaderHandle);
+            GLES20.glCompileShader(fragmentShaderHandle);
 
-        // Get the compilation status
-        final int[] compileStatus = new int[1];
-        GLES20.glGetShaderiv(vertexShaderHandle, GLES20.GL_COMPILE_STATUS, compileStatus, 0);
+            // Get the compilation status
+            final int[] compileStatus = new int[1];
+            GLES20.glGetShaderiv(vertexShaderHandle, GLES20.GL_COMPILE_STATUS, compileStatus, 0);
 
-        // If the compilation failed, give error message
-        if (compileStatus[0] == 0) {
-            Log.v("myErrors", "compilation failed for vertex shader " + GLES20.glGetShaderInfoLog(vertexShaderHandle));
+            // If the compilation failed, give error message
+            if (compileStatus[0] == 0) {
+                Log.v("myErrors", "compilation failed for vertex3D shader " + GLES20.glGetShaderInfoLog(vertexShaderHandle));
+            }
+
+            GLES20.glGetShaderiv(fragmentShaderHandle, GLES20.GL_COMPILE_STATUS, compileStatus, 0);
+            if (compileStatus[0] == 0) {
+                Log.v("myErrors", "compilation failed for fragment3D shader " + GLES20.glGetShaderInfoLog(fragmentShaderHandle));
+            }
+
+            // Create a program object and store the handle to it
+            programHandles[i] = GLES20.glCreateProgram();
+
+            // Bind the vertex shader to the program
+            GLES20.glAttachShader(programHandles[i], vertexShaderHandle);
+
+            // Bind the fragment shader to the program
+            GLES20.glAttachShader(programHandles[i], fragmentShaderHandle);
+
+            // Bind attributes
+            GLES20.glBindAttribLocation(programHandles[i], 0, "a_Position");
+            GLES20.glBindAttribLocation(programHandles[i], 1, "a_Color");
+            GLES20.glBindAttribLocation(programHandles[i], 2, "a_Normal");
+
+            // Link the two shaders together into a program
+            GLES20.glLinkProgram(programHandles[i]);
+
+            // Get the link status
+            final int[] linkStatus = new int[1];
+            GLES20.glGetProgramiv(programHandles[i], GLES20.GL_LINK_STATUS, linkStatus, 0);
+
+            // If the link failed, give error
+            if (linkStatus[0] == 0) {
+                Log.v("myErrors", "vertex3D and fragment3D shader link failed");
+            }
+
+            // Set program handles
+            mvpMatrixHandles[i] = GLES20.glGetUniformLocation(programHandles[i], "u_MVPMatrix");
+            modelMatrixHandles[i] = GLES20.glGetUniformLocation(programHandles[i], "u_ModelMatrix");
+            cameraPositionHandles[i] = GLES20.glGetUniformLocation(programHandles[i], "u_CameraPosition");
+            positionHandles[i] = GLES20.glGetAttribLocation(programHandles[i], "a_Position");
+            colorHandles[i] = GLES20.glGetAttribLocation(programHandles[i], "a_Color");
+            normalHandles[i] = GLES20.glGetAttribLocation(programHandles[i], "a_Normal");
+
+
         }
+    }
 
-        GLES20.glGetShaderiv(fragmentShaderHandle, GLES20.GL_COMPILE_STATUS, compileStatus, 0);
-        if (compileStatus[0] == 0) {
-            Log.v("myErrors", "compilation failed for fragment shader " + GLES20.glGetShaderInfoLog(fragmentShaderHandle));
-        }
-
-        // Create a program object and store the handle to it
-        int programHandle = GLES20.glCreateProgram();
-
-        // Bind the vertex shader to the program
-        GLES20.glAttachShader(programHandle, vertexShaderHandle);
-
-        // Bind the fragment shader to the program
-        GLES20.glAttachShader(programHandle, fragmentShaderHandle);
-
-        // Bind attributes
-        GLES20.glBindAttribLocation(programHandle, 0, "a_Position");
-        GLES20.glBindAttribLocation(programHandle, 1, "a_Color");
-        GLES20.glBindAttribLocation(programHandle, 2, "a_Normal");
-
-        // Link the two shaders together into a program
-        GLES20.glLinkProgram(programHandle);
-
-        // Get the link status
-        final int[] linkStatus = new int[1];
-        GLES20.glGetProgramiv(programHandle, GLES20.GL_LINK_STATUS, linkStatus, 0);
-
-        // If the link failed, give error
-        if (linkStatus[0] == 0) {
-            Log.v("myErrors", "vertex and fragment shader link failed");
-        }
-
-
-        // Set program handles
-        mvpMatrixHandle = GLES20.glGetUniformLocation(programHandle, "u_MVPMatrix");
-        modelMatrixHandle = GLES20.glGetUniformLocation(programHandle, "u_ModelMatrix");
-        cameraPositionHandle = GLES20.glGetUniformLocation(programHandle, "u_CameraPosition");
-        positionHandle = GLES20.glGetAttribLocation(programHandle, "a_Position");
-        colorHandle = GLES20.glGetAttribLocation(programHandle, "a_Color");
-        normalHandle = GLES20.glGetAttribLocation(programHandle, "a_Normal");
-
+    public void setShaderProgram(int index)
+    {
         // Tell OpenGL to use this program when rendering
-        GLES20.glUseProgram(programHandle);
+        GLES20.glUseProgram(programHandles[index]);
 
+        currentShaderProgramIndex = index;
     }
 }

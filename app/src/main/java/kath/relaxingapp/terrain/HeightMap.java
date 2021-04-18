@@ -187,6 +187,20 @@ public class HeightMap {
         }
     }
 
+    public void constrainAtEdges()
+    {
+        for (int y = 0; y < height; ++y)
+        {
+            for (int x = 0; x < width; ++x)
+            {
+                if (x == 0 || x == width - 1 || y == 0 || y == height - 1)
+                {
+                    values[x + width * y] = -6.f;
+                }
+            }
+        }
+    }
+
     public void setValue(int x, int y, float value)
     {
         if (x >= 0 && x < width && y >= 0 && y < height)

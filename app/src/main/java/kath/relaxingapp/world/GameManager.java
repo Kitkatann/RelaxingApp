@@ -37,7 +37,7 @@ public class GameManager {
 
     public void startGame()
     {
-        HeightmapGenerator heightmapGenerator = new HeightmapGenerator(75, 75);
+        HeightmapGenerator heightmapGenerator = new HeightmapGenerator(64, 64);
         HeightMap terrainHeightMap = heightmapGenerator.getLandWithRivers();
         HeightMap waterTerrainHeightMap = heightmapGenerator.getLandWithoutRivers();
 

@@ -13,9 +13,10 @@ public class MeshLibrary {
     public RenderMesh tempCube;
     public RenderMesh tempCuboid;
     public RenderMesh tempCircle;
-    public RenderMesh tempPlane;
+    public RenderMesh plane;
     public RenderMesh tempPrism;
     public RenderMesh tempSphere;
+    public RenderMesh object1;
     public RenderMesh[] trees = new RenderMesh[treeTypes];
 
 
@@ -34,9 +35,9 @@ public class MeshLibrary {
         tempCircleMeshBuilder.setColour(1.f, 0.f, 0.f, 1.0f);
         AddGeometry.addCircle(1.f, 32, tempCircleMeshBuilder);
 
-        MeshBuilder tempPlaneMeshBuilder = new MeshBuilder();
-        tempPlaneMeshBuilder.setColour(1.f, 0.f, 0.f, 1.0f);
-        AddGeometry.addPlane(1.f, 1.f, tempPlaneMeshBuilder);
+        MeshBuilder planeMeshBuilder = new MeshBuilder();
+        planeMeshBuilder.setColour(0.24f, 0.6f, 0.75f, 1.f);
+        AddGeometry.addPlane(1024.f, 1024.f, planeMeshBuilder);
 
         MeshBuilder tempPrismMeshBuilder = new MeshBuilder();
         tempPrismMeshBuilder.setColour(1.f, 0.f, 0.f, 1.0f);
@@ -45,6 +46,11 @@ public class MeshLibrary {
         MeshBuilder tempSphereMeshBuilder = new MeshBuilder();
         tempSphereMeshBuilder.setColour(1.f, 0.f, 0.f, 1.0f);
         AddGeometry.addSphere(1.f, 32, 32, tempSphereMeshBuilder);
+
+        MeshBuilder object1MeshBuilder = new MeshBuilder();
+        object1MeshBuilder.setColour(0.70f, 0.44f, 0.96f, 1.0f);
+        object1MeshBuilder.setTranslation(1.f, 2.f, 1.f);
+        AddGeometry.addSphere(1.f, 4, 4, object1MeshBuilder);
 
         float length = 1.5f;
         float startRadius = 1.f;
@@ -62,9 +68,10 @@ public class MeshLibrary {
         tempCube = new RenderMesh(tempCubeMeshBuilder);
         tempCuboid = new RenderMesh(tempCuboidMeshBuilder);
         tempCircle = new RenderMesh(tempCircleMeshBuilder);
-        tempPlane = new RenderMesh(tempPlaneMeshBuilder);
+        plane = new RenderMesh(planeMeshBuilder);
         tempPrism = new RenderMesh(tempPrismMeshBuilder);
         tempSphere = new RenderMesh(tempSphereMeshBuilder);
+        object1 = new RenderMesh(object1MeshBuilder);
         for (int i = 0; i < trees.length; i++)
         {
             trees[i] = new RenderMesh(treeMeshBuilders[i]);

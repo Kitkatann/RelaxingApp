@@ -53,7 +53,13 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         GLES20.glClearColor(0.59f, 0.73f, 0.81f, 0.f);
 
         // Set up shaders
-        ShaderManager.Inst().setupShaders(R.raw.vertex, R.raw.fragment);
+        int[] rawVertexShaders = new int[2];
+        rawVertexShaders[0] = R.raw.vertex3d;
+        rawVertexShaders[1] = R.raw.vertex2d;
+        int[] rawFragmentShaders = new int[2];
+        rawFragmentShaders[0] = R.raw.fragment3d;
+        rawFragmentShaders[1] = R.raw.fragment2d;
+        ShaderManager.Inst().setupShaders(rawVertexShaders, rawFragmentShaders);
     }
 
     @Override
@@ -72,6 +78,7 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         // Disable blending for 3D elements
         GLES20.glDisable(GLES20.GL_BLEND);
 
+        ShaderManager.Inst().setShaderProgram(0);
         drawSceneObjects();
 
         // Disable depth testing for UI elements
@@ -82,8 +89,9 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         GLES20.glEnable(GLES20.GL_BLEND);
         GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 
-//        drawJoystick(InputManager.Inst().getJoystickA());
-//        drawJoystick(InputManager.Inst().getJoystickB());
+        ShaderManager.Inst().setShaderProgram(1);
+        drawJoystick(InputManager.Inst().getJoystickA());
+        drawJoystick(InputManager.Inst().getJoystickB());
 
         // Draw pointers for debugging purposes
         //for (int i = 0; i < InputManager.Inst().getMaxPointerCount(); i++)
