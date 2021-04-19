@@ -17,10 +17,10 @@ public class Player {
     public Vector3 rot = new Vector3(0.f, 0.f, 0.f);
     public float collRad = 0.3f;
     public float collHeight = 1.7f;
-    public static final float movementSpeed = 0.3f;
-    public static final float lookSpeed = 0.9f;
+    public static final float movementSpeed = 15.f;
+    public static final float lookSpeed = 45.f;
 
-    public void updateMovement()
+    public void updateMovement(float deltaTime)
     {
         float ax = InputManager.Inst().getJoystickA().getInputX();
         float ay = InputManager.Inst().getJoystickA().getInputY();
@@ -29,11 +29,11 @@ public class Player {
 
         float theta = rot.y * (float)Math.PI / 180.0f;
         // Update position
-        pos.x += (-Math.sin(theta) * ay + Math.cos(theta) * ax) * movementSpeed;
-        pos.z += (-Math.cos(theta) * ay + -Math.sin(theta) * ax) * movementSpeed;
+        pos.x += (-Math.sin(theta) * ay + Math.cos(theta) * ax) * movementSpeed * deltaTime;
+        pos.z += (-Math.cos(theta) * ay + -Math.sin(theta) * ax) * movementSpeed * deltaTime;
         // Update rotation
-        rot.x += by * lookSpeed;
-        rot.y -= bx * lookSpeed;
+        rot.x += by * lookSpeed * deltaTime;
+        rot.y -= bx * lookSpeed * deltaTime;
         // Update collision
         updateCollision();
         updateTerrainCollision();

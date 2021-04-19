@@ -10,6 +10,9 @@ public class Joystick {
     private float inputX = 0;
     private float inputY = 0;
 
+    public static final float relativeScreenSize = 0.15f;
+    public static final float relativeScreenMargin = 0.2f;
+
     public Joystick(float px, float py, float radius)
     {
         this.px = px;

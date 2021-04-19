@@ -59,7 +59,7 @@ public class AudioManager {
         soundIDFallOffs[bird_song_0] = 0.2f;
         soundIDs[stream_0] = soundPool.load(MainActivity.appContext, R.raw.stream_1, 1);
         soundIDFallOffs[stream_0] = 0.2f;
-        soundIDs[wind_0] = soundPool.load(MainActivity.appContext, R.raw.wind_0, 1);
+        soundIDs[wind_0] = soundPool.load(MainActivity.appContext, R.raw.wind_1, 1);
         soundIDFallOffs[wind_0] = 0.2f;
     }
 

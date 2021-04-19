@@ -67,7 +67,7 @@ public class SceneManager {
 //            addAudioEmitter(prismPos, AudioManager.wind_chimes_0);
 
             List<Vector3> objectSpawnPoints = new ArrayList<>();
-            Vector3 testPos = new Vector3(3, terrain.getY(3, -3) + 4, -3);
+            Vector3 testPos = new Vector3(10, terrain.getY(10, -10) + 4, -10);
             addSceneObject(testPos, new Vector3(0, 1, 0), meshLibrary.object1, 100);
             addAudioEmitter(testPos, AudioManager.wind_chimes_0);
 

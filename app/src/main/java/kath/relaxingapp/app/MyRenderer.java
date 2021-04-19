@@ -31,15 +31,17 @@ public class MyRenderer implements GLSurfaceView.Renderer{
     private MeshBuilder joystickPointerMeshBuilder;
     private MeshBuilder joystickBoxMeshBuilder;
 
+    private long lastTime;
+
     public MyRenderer()
     {
         joystickPointerMeshBuilder = new MeshBuilder();
         joystickPointerMeshBuilder.setColour(0.4f, 0.4f, 0.4f, 0.5f);
-        AddGeometry.addCircle(50, 32, joystickPointerMeshBuilder);
+        AddGeometry.addCircle(GlobalsManager.Inst().getScreenResHeight() * Joystick.relativeScreenSize * 0.25f, 32, joystickPointerMeshBuilder);
 
         joystickBoxMeshBuilder = new MeshBuilder();
         joystickBoxMeshBuilder.setColour(0.4f, 0.4f, 0.4f, 0.5f);
-        AddGeometry.addCircle(200, 32, joystickBoxMeshBuilder);
+        AddGeometry.addCircle(GlobalsManager.Inst().getScreenResHeight() * Joystick.relativeScreenSize, 32, joystickBoxMeshBuilder);
 
         GameManager.Inst().startGame();
 
@@ -69,7 +71,8 @@ public class MyRenderer implements GLSurfaceView.Renderer{
 
     @Override
     public void onDrawFrame(GL10 glUnused) {
-        frameUpdate();
+        frameUpdate((float)(System.currentTimeMillis() - lastTime) / 1000.f);
+        lastTime = System.currentTimeMillis();
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
         // Enable depth testing for 3D elements
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
@@ -104,11 +107,11 @@ public class MyRenderer implements GLSurfaceView.Renderer{
 
     }
 
-    public void frameUpdate()
+    public void frameUpdate(float deltaTime)
     {
         InputManager.Inst().getJoystickA().updateInput();
         InputManager.Inst().getJoystickB().updateInput();
-        GameManager.Inst().getPlayer().updateMovement();
+        GameManager.Inst().getPlayer().updateMovement(deltaTime);
         GlobalsManager.Inst().getCamera().updateCamera();
     }
 
