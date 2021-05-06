@@ -1,9 +1,11 @@
 package kath.relaxingapp.app;
 
+import android.opengl.Matrix;
 import android.transition.Scene;
 import android.util.Log;
 
 import kath.relaxingapp.audio.AudioEmitter;
+import kath.relaxingapp.graphics.ShaderManager;
 import kath.relaxingapp.input.InputManager;
 import kath.relaxingapp.utilities.Vector3;
 import kath.relaxingapp.world.GameManager;
@@ -39,6 +41,8 @@ public class Player {
         updateTerrainCollision();
         // Update audio
         updateAudio();
+        // Update audio objects
+        updateAudioObjects();
     }
 
     public void updateCollision()
@@ -79,5 +83,29 @@ public class Player {
     private void updateAudio()
     {
         AudioManager.Inst().updateAudio();
+    }
+
+    public void updateAudioObjects()
+    {
+        float[] inverseCameraMatrix = new float[16];
+        Matrix.invertM(inverseCameraMatrix, 0, ShaderManager.Inst().getCameraMatrix(), 0);
+        for (SceneObject obj : SceneManager.Inst().getSceneObjects())
+        {
+            if (obj.getIsAudioObject())
+            {
+                Vector3 objPos = obj.getPosition();
+                float[] objPosVec4 = {objPos.x, objPos.y, objPos.z, 1.f};
+                float[] result = new float[16];
+                Matrix.multiplyMV(result, 0, inverseCameraMatrix, 0, objPosVec4, 0);
+                float distToObj = -result[2];
+                float distFromAxis = (float)Math.sqrt(result[0] * result[0] + result[1] * result[1]);
+                //Log.v("myErrors", result[0] + " " + result[1] + " " + result[2] + " " + result[3]);
+                if (distToObj > 0 && distToObj < 50 && distFromAxis < 5)
+                {
+                    //Log.v("myErrors", "in range");
+                    AudioManager.Inst().SetFocusedSoundType(AudioManager.wind_chimes_0);
+                }
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@ package kath.relaxingapp.audio;
 
 import android.media.AudioAttributes;
 import android.media.SoundPool;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -23,11 +24,13 @@ public class AudioManager {
     private float[] totalLeftVolume = new float[soundTypeCount];
     private float[] totalRightVolume = new float[soundTypeCount];
 
-    public static final int wind_chimes_0 = 0;
-    public static final int bird_song_0 = 1;
+    public static final int wind_chimes_0 = 1;
+    public static final int bird_song_0 = 0;
     public static final int stream_0 = 2;
     public static final int wind_0 = 3;
     public static final int soundTypeCount = 4;
+
+    private int focusedSoundType = -1;
 
     // Create singleton AudioManager instance
     private static AudioManager inst = null;
@@ -89,28 +92,41 @@ public class AudioManager {
             totalRightVolume[ae.getSoundType()] += rightVolume * weight;
         }
 
-        for (int i = 0; i < soundTypeCount; i++)
+        for (int soundType = 0; soundType < soundTypeCount; soundType++)
         {
-            float weight = totalWeights[i];
-            float leftVolume = totalLeftVolume[i] / weight;
-            float rightVolume = totalRightVolume[i] / weight;
+            float boostFactor = 1;
+            if (focusedSoundType == soundType)
+            {
+                boostFactor = 5.f;
+            }
+            float weight = totalWeights[soundType];
+            float leftVolume = totalLeftVolume[soundType] / weight;
+            float rightVolume = totalRightVolume[soundType] / weight;
             // Determine whether the sound should be playing or not
             if (weight > 0.1f)
             {
-                if (streamIDs[i] == 0)
+                if (streamIDs[soundType] == 0)
                 {
-                    streamIDs[i] = soundPool.play(soundIDs[i], leftVolume, rightVolume, 1, -1, 0.5f);
+                    streamIDs[soundType] = soundPool.play(soundIDs[soundType], leftVolume, rightVolume, 1, -1, 0.5f);
+                    Log.v("myErrors", "playing sound " + soundType);
+                    Log.v("myErrors", "" + streamIDs[1] + streamIDs[2] + streamIDs[3]);
                 }
-                soundPool.setVolume(streamIDs[i], leftVolume, rightVolume);
+                //soundPool.setVolume(streamIDs[soundType], leftVolume * boostFactor, rightVolume * boostFactor);
             }
             else
             {
-                if (streamIDs[i] != 0)
+                if (streamIDs[soundType] != 0)
                 {
-                    soundPool.stop(streamIDs[i]);
-                    streamIDs[i] = 0;
+                    soundPool.stop(streamIDs[soundType]);
+                    Log.v("myErrors", "stopping sound " + soundType);
+                    streamIDs[soundType] = 0;
                 }
             }
         }
+    }
+
+    public void SetFocusedSoundType(int soundType)
+    {
+        focusedSoundType = soundType;
     }
 }

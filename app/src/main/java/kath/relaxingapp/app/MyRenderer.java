@@ -113,6 +113,7 @@ public class MyRenderer implements GLSurfaceView.Renderer{
         InputManager.Inst().getJoystickB().updateInput();
         GameManager.Inst().getPlayer().updateMovement(deltaTime);
         GlobalsManager.Inst().getCamera().updateCamera();
+        SceneManager.Inst().frameUpdate(deltaTime);
     }
 
 

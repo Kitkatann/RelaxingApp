@@ -66,10 +66,17 @@ public class SceneManager {
 //            addSceneObject(prismPos, new Vector3(0, 1, 0), meshLibrary.tempSphere, 100);
 //            addAudioEmitter(prismPos, AudioManager.wind_chimes_0);
 
-            List<Vector3> objectSpawnPoints = new ArrayList<>();
-            Vector3 testPos = new Vector3(10, terrain.getY(10, -10) + 4, -10);
-            addSceneObject(testPos, new Vector3(0, 1, 0), meshLibrary.object1, 100);
-            addAudioEmitter(testPos, AudioManager.wind_chimes_0);
+
+            int numObjects = 10;
+            for (int i = 0; i < numObjects; i++)
+            {
+                Vector3 point = new Vector3();
+                getRandomTerrainPoint(point, true, false);
+                point.y += 4;
+                MoveableObject mySceneObject = new MoveableObject(point, new Vector3(), meshLibrary.object2, true, true, 400);
+                sceneObjects.add(mySceneObject);
+                addAudioEmitter(point, AudioManager.wind_chimes_0);
+            }
 
             int numTrees = 400;
             float treeYLimit = 40.f;
@@ -112,12 +119,12 @@ public class SceneManager {
 
             for (int i = 0; i < treeSpawnPoints.size(); i++)
             {
-                addSceneObject(treeSpawnPoints.get(i), new Vector3(0.f, (float) (Math.random() * 360.f), 0.f), meshLibrary.trees[(int)Math.floor(Math.random() * (meshLibrary.treeTypes - 1))], 200.f);
+                addSceneObject(treeSpawnPoints.get(i), new Vector3(0.f, (float) (Math.random() * 360.f), 0.f), meshLibrary.trees[(int)Math.floor(Math.random() * (meshLibrary.treeTypes - 1))], false, 200.f);
             }
 
-            addSceneObject(new Vector3(), new Vector3(), RenderMeshManager.Inst().getTerrain(), Float.MAX_VALUE);
-            addSceneObject(new Vector3(0.f, -6.f, 0.f), new Vector3(), RenderMeshManager.Inst().getWaterTerrain(), Float.MAX_VALUE);
-            addSceneObject(new Vector3(GameManager.terrainCellSize * 32, -5f, GameManager.terrainCellSize * -32), new Vector3(), meshLibrary.plane, Float.MAX_VALUE);
+            addSceneObject(new Vector3(), new Vector3(), RenderMeshManager.Inst().getTerrain(), false, Float.MAX_VALUE);
+            addSceneObject(new Vector3(0.f, -6.f, 0.f), new Vector3(), RenderMeshManager.Inst().getWaterTerrain(), false, Float.MAX_VALUE);
+            addSceneObject(new Vector3(GameManager.terrainCellSize * 32, -5f, GameManager.terrainCellSize * -32), new Vector3(), meshLibrary.plane, false, Float.MAX_VALUE);
         }
         else
         {
@@ -125,9 +132,9 @@ public class SceneManager {
         }
     }
 
-    public void addSceneObject(Vector3 pos, Vector3 rot, RenderMesh renderMesh, float cullDistance)
+    public void addSceneObject(Vector3 pos, Vector3 rot, RenderMesh renderMesh, boolean isAudioObject, float cullDistance)
     {
-        SceneObject mySceneObject = new SceneObject(pos, rot, renderMesh, true, cullDistance);
+        SceneObject mySceneObject = new SceneObject(pos, rot, renderMesh, true, isAudioObject, cullDistance);
         sceneObjects.add(mySceneObject);
     }
 
@@ -135,6 +142,23 @@ public class SceneManager {
     {
         AudioEmitter audioEmitter = new AudioEmitter(soundID, position);
         audioEmitters.add(audioEmitter);
+    }
+
+    public void getRandomTerrainPoint(Vector3 result, boolean allowLand, boolean allowWater)
+    {
+        float terrainWidth = terrain.getWidth() * GameManager.terrainCellSize;
+        float terrainHeight = terrain.getHeight() * GameManager.terrainCellSize;
+        float wy;
+        int i = 0;
+        do {
+            result.x = (float)Math.random() * terrainWidth;
+            result.z = -(float)Math.random() * terrainHeight;
+            result.y = terrain.getY(result.x, result.z);
+            wy = waterTerrain.getY(result.x, result.z);
+            i++;
+            if (i == 100) break; // fail safe
+        } while ((!allowLand && (result.y >= wy)) || (!allowWater && (result.y <= wy)));
+
     }
 
     public void clearScene()
@@ -150,6 +174,14 @@ public class SceneManager {
     public Terrain getWaterTerrain()
     {
         return waterTerrain;
+    }
+
+    public void frameUpdate(float deltaTime)
+    {
+        for (SceneObject obj : sceneObjects )
+        {
+            obj.frameUpdate(deltaTime);
+        }
     }
 
 }

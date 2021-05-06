@@ -56,6 +56,11 @@ public class ShaderManager {
 
     public int[] getNormalHandles() { return normalHandles; }
 
+    public float[] getCameraMatrix()
+    {
+        return cameraMatrix;
+    }
+
     /**
      * Set matrix and send to shader
      */

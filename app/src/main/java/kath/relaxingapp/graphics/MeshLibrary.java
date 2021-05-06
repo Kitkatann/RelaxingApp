@@ -17,6 +17,7 @@ public class MeshLibrary {
     public RenderMesh tempPrism;
     public RenderMesh tempSphere;
     public RenderMesh object1;
+    public RenderMesh object2;
     public RenderMesh[] trees = new RenderMesh[treeTypes];
 
 
@@ -52,6 +53,10 @@ public class MeshLibrary {
         object1MeshBuilder.setTranslation(1.f, 2.f, 1.f);
         AddGeometry.addSphere(1.f, 4, 4, object1MeshBuilder);
 
+        MeshBuilder object2MeshBuilder = new MeshBuilder();
+        object2MeshBuilder.setColour(1.f, 1.f, 0.f, 1.0f);
+        AddGeometry.addCube(1.f, object2MeshBuilder);
+
         float length = 1.5f;
         float startRadius = 1.f;
 
@@ -72,6 +77,7 @@ public class MeshLibrary {
         tempPrism = new RenderMesh(tempPrismMeshBuilder);
         tempSphere = new RenderMesh(tempSphereMeshBuilder);
         object1 = new RenderMesh(object1MeshBuilder);
+        object2 = new RenderMesh(object2MeshBuilder);
         for (int i = 0; i < trees.length; i++)
         {
             trees[i] = new RenderMesh(treeMeshBuilders[i]);
