@@ -89,6 +89,7 @@ public class Player {
     {
         float[] inverseCameraMatrix = new float[16];
         Matrix.invertM(inverseCameraMatrix, 0, ShaderManager.Inst().getCameraMatrix(), 0);
+        SceneObject focusedObject = null;
         for (SceneObject obj : SceneManager.Inst().getSceneObjects())
         {
             if (obj.getIsAudioObject())
@@ -99,13 +100,19 @@ public class Player {
                 Matrix.multiplyMV(result, 0, inverseCameraMatrix, 0, objPosVec4, 0);
                 float distToObj = -result[2];
                 float distFromAxis = (float)Math.sqrt(result[0] * result[0] + result[1] * result[1]);
-                //Log.v("myErrors", result[0] + " " + result[1] + " " + result[2] + " " + result[3]);
                 if (distToObj > 0 && distToObj < 50 && distFromAxis < 5)
                 {
-                    //Log.v("myErrors", "in range");
-                    AudioManager.Inst().SetFocusedSoundType(AudioManager.wind_chimes_0);
+                    focusedObject = obj;
                 }
             }
+        }
+        if (focusedObject != null)
+        {
+            AudioManager.Inst().SetFocusedSoundType(AudioManager.wind_chimes_0);
+        }
+        else
+        {
+            AudioManager.Inst().SetFocusedSoundType(-1);
         }
     }
 }

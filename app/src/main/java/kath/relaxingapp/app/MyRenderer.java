@@ -31,7 +31,7 @@ public class MyRenderer implements GLSurfaceView.Renderer{
     private MeshBuilder joystickPointerMeshBuilder;
     private MeshBuilder joystickBoxMeshBuilder;
 
-    private long lastTime;
+    private long lastTime = 0;
 
     public MyRenderer()
     {
@@ -71,6 +71,10 @@ public class MyRenderer implements GLSurfaceView.Renderer{
 
     @Override
     public void onDrawFrame(GL10 glUnused) {
+        if (lastTime == 0)
+        {
+            lastTime = System.currentTimeMillis();
+        }
         frameUpdate((float)(System.currentTimeMillis() - lastTime) / 1000.f);
         lastTime = System.currentTimeMillis();
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);

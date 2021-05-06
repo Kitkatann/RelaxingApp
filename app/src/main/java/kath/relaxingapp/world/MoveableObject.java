@@ -15,7 +15,7 @@ public class MoveableObject extends SceneObject{
     @Override
     public void frameUpdate(float deltaTime)
     {
-        rotation.x += deltaTime * 180.f;
+        rotation.y += 0.4f * deltaTime * 180.f;
 
     }
 }

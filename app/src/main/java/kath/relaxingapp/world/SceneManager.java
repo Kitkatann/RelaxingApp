@@ -146,8 +146,9 @@ public class SceneManager {
 
     public void getRandomTerrainPoint(Vector3 result, boolean allowLand, boolean allowWater)
     {
-        float terrainWidth = terrain.getWidth() * GameManager.terrainCellSize;
-        float terrainHeight = terrain.getHeight() * GameManager.terrainCellSize;
+        float cellSize = GameManager.terrainCellSize;
+        float terrainWidth = terrain.getWidth() * cellSize;
+        float terrainHeight = terrain.getHeight() * cellSize;
         float wy;
         int i = 0;
         do {
