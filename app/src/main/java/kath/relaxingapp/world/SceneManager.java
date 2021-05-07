@@ -1,6 +1,5 @@
 package kath.relaxingapp.world;
 
-import android.provider.MediaStore;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -51,54 +50,60 @@ public class SceneManager {
         MeshLibrary meshLibrary = RenderMeshManager.Inst().getMeshLibrary();
         if (meshLibrary != null)
         {
-            //TESTING
-//            Vector3 cubePos = new Vector3(3, terrain.getY(3, -3), -3);
-//            Vector3 spherePos = new Vector3(13, terrain.getY(13, -13), -13);
-//            Vector3 cuboidPos = new Vector3(23, terrain.getY(23, -23), -23);
-//            Vector3 prismPos = new Vector3(33, terrain.getY(33, -33), -33);
-//
-//            addSceneObject(cubePos, new Vector3(0, 1, 0), meshLibrary.tempCube, 100);
-//            addAudioEmitter(cubePos, AudioManager.bird_song_0);
-//            addSceneObject(spherePos, new Vector3(0, 1, 0), meshLibrary.tempSphere, 100);
-//            addAudioEmitter(spherePos, AudioManager.bird_song_0);
-//            addSceneObject(cuboidPos, new Vector3(0, 1, 0), meshLibrary.tempCuboid, 100);
-//            addAudioEmitter(cuboidPos, AudioManager.bird_song_0);
-//            addSceneObject(prismPos, new Vector3(0, 1, 0), meshLibrary.tempSphere, 100);
-//            addAudioEmitter(prismPos, AudioManager.wind_chimes_0);
-
-
-            int numObjects = 10;
-            for (int i = 0; i < numObjects; i++)
-            {
+            int numObjects = 4;
+            for (int i = 0; i < numObjects; i++) {
                 Vector3 point = new Vector3();
                 getRandomTerrainPoint(point, true, false);
-                point.y += 4;
-                MoveableObject mySceneObject = new MoveableObject(point, new Vector3(), meshLibrary.object2, true, true, 400);
+                point.y += 6;
+
+                MovableObject mySceneObject = new MovableObject(point, new Vector3(), meshLibrary.object1, true, true, 400);
                 sceneObjects.add(mySceneObject);
                 addAudioEmitter(point, AudioManager.wind_chimes_0);
             }
 
-            int numTrees = 400;
-            float treeYLimit = 40.f;
+            for (int i = 0; i < numObjects; i++) {
+                Vector3 point = new Vector3();
+                getRandomTerrainPoint(point, true, false);
+                point.y += 6;
+
+                MovableObject mySceneObject = new MovableObject(point, new Vector3(), meshLibrary.object2, true, true, 400);
+                sceneObjects.add(mySceneObject);
+                addAudioEmitter(point, AudioManager.wind_chimes_1);
+            }
+
+            for (int i = 0; i < numObjects; i++) {
+                Vector3 point = new Vector3();
+                getRandomTerrainPoint(point, true, false);
+                point.y += 6;
+
+                MovableObject mySceneObject = new MovableObject(point, new Vector3(), meshLibrary.object3, true, true, 400);
+                sceneObjects.add(mySceneObject);
+                addAudioEmitter(point, AudioManager.singing_bowls_0);
+            }
+
+
+            int numTrees = 300;
+            float treeYMax = 40.f;
+            float treeYMin = 3.f;
             float terrainWidth = terrain.getWidth() * GameManager.terrainCellSize;
             float terrainHeight = terrain.getHeight() * GameManager.terrainCellSize;
             List<Vector3> treeSpawnPoints = new ArrayList<>();
             for (int i = 0; i < numTrees; i++)
             {
-                float x = (float)Math.random() * terrainWidth;
-                float z = -(float)Math.random() * terrainHeight;
+                float x = (float)(Math.random() * 0.8 + 0.1) * terrainWidth;
+                float z = -(float)(Math.random() * 0.8 + 0.1) * terrainHeight;
                 float ty = terrain.getY(x, z);
                 float wy = waterTerrain.getY(x, z);
-                if (ty < treeYLimit && wy <= ty)
+                if (ty < treeYMax && wy <= ty && ty > treeYMin)
                 {
-                    Vector3 treePos = new Vector3(x, ty, z);
+                    Vector3 treePos = new Vector3(x, ty - 1.f, z);
                     treeSpawnPoints.add(treePos);
-                    int rand = (int)Math.floor(Math.random() * 3.f);
-                    if (rand == 1)
+                    int rand = (int)Math.floor(Math.random() * 2.99f);
+                    if (rand == 0)
                     {
                         addAudioEmitter(treePos, AudioManager.wind_0);
                     }
-                    if (rand == 2)
+                    if (rand == 1)
                     {
                         addAudioEmitter(treePos, AudioManager.bird_song_0);
                     }
@@ -124,7 +129,7 @@ public class SceneManager {
 
             addSceneObject(new Vector3(), new Vector3(), RenderMeshManager.Inst().getTerrain(), false, Float.MAX_VALUE);
             addSceneObject(new Vector3(0.f, -6.f, 0.f), new Vector3(), RenderMeshManager.Inst().getWaterTerrain(), false, Float.MAX_VALUE);
-            addSceneObject(new Vector3(GameManager.terrainCellSize * 32, -5f, GameManager.terrainCellSize * -32), new Vector3(), meshLibrary.plane, false, Float.MAX_VALUE);
+            addSceneObject(new Vector3(GameManager.terrainCellSize * 32, 0.5f, GameManager.terrainCellSize * -32), new Vector3(), meshLibrary.plane, false, Float.MAX_VALUE);
         }
         else
         {

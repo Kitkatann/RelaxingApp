@@ -1,7 +1,5 @@
 package kath.relaxingapp.graphics;
 
-import java.util.Random;
-
 import kath.relaxingapp.geometry.AddGeometry;
 import kath.relaxingapp.utilities.Vector3;
 import kath.relaxingapp.world.TreeBuilder;
@@ -18,6 +16,7 @@ public class MeshLibrary {
     public RenderMesh tempSphere;
     public RenderMesh object1;
     public RenderMesh object2;
+    public RenderMesh object3;
     public RenderMesh[] trees = new RenderMesh[treeTypes];
 
 
@@ -49,13 +48,16 @@ public class MeshLibrary {
         AddGeometry.addSphere(1.f, 32, 32, tempSphereMeshBuilder);
 
         MeshBuilder object1MeshBuilder = new MeshBuilder();
-        object1MeshBuilder.setColour(0.70f, 0.44f, 0.96f, 1.0f);
-        object1MeshBuilder.setTranslation(1.f, 2.f, 1.f);
-        AddGeometry.addSphere(1.f, 4, 4, object1MeshBuilder);
+        object1MeshBuilder.setColour(1.f, 1.f, 1.f, 1.0f);
+        AddGeometry.addCube(1.f, object1MeshBuilder);
 
         MeshBuilder object2MeshBuilder = new MeshBuilder();
-        object2MeshBuilder.setColour(1.f, 1.f, 0.f, 1.0f);
+        object2MeshBuilder.setColour(0.9f, 0.4f, 0.1f, 1.0f);
         AddGeometry.addCube(1.f, object2MeshBuilder);
+
+        MeshBuilder object3MeshBuilder = new MeshBuilder();
+        object3MeshBuilder.setColour(0.4f, 0.3f, 0.6f, 1.0f);
+        AddGeometry.addCube(1.f, object3MeshBuilder);
 
         float length = 1.5f;
         float startRadius = 1.f;
@@ -78,6 +80,7 @@ public class MeshLibrary {
         tempSphere = new RenderMesh(tempSphereMeshBuilder);
         object1 = new RenderMesh(object1MeshBuilder);
         object2 = new RenderMesh(object2MeshBuilder);
+        object3 = new RenderMesh(object3MeshBuilder);
         for (int i = 0; i < trees.length; i++)
         {
             trees[i] = new RenderMesh(treeMeshBuilders[i]);

@@ -2,8 +2,6 @@ package kath.relaxingapp.terrain;
 
 import java.util.Random;
 
-import kath.relaxingapp.utilities.MathUtil;
-
 public class HeightmapGenerator {
 
     private int numRiverSource = 50;
@@ -19,7 +17,7 @@ public class HeightmapGenerator {
         landWithRivers = new HeightMap(width, height);
         water = new HeightMap(width, height);
         generateLandWithoutRivers();
-        landWithoutRivers.constrainAtEdges();
+        landWithoutRivers.applyIslandShape();
         landWithRivers.copyFrom(landWithoutRivers);
         createRivers(numRiverSource);
         water.applyBoxBlur();
@@ -112,25 +110,5 @@ public class HeightmapGenerator {
             }
         }
     }
-
-//    public void applyRivers()
-//    {
-//        // Apply 3 by 3 box blur to river edges and apply river values to values
-//        for (int y = 1; y < gridHeight - 1; ++y)
-//        {
-//            for (int x = 1; x < gridWidth - 1; ++x)
-//            {
-//                float total = 0;
-//                for (int dy = -1; dy <= 1; dy++)
-//                {
-//                    for (int dx = -1; dx <= 1; dx++)
-//                    {
-//                        total += riverValues[(x + dx) + gridWidth * (y + dy)];
-//                    }
-//                }
-//                values[x + gridWidth * y] += total / 9;
-//            }
-//        }
-//    }
 }
 

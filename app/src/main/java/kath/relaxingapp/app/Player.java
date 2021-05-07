@@ -1,14 +1,9 @@
 package kath.relaxingapp.app;
 
 import android.opengl.Matrix;
-import android.transition.Scene;
-import android.util.Log;
-
-import kath.relaxingapp.audio.AudioEmitter;
 import kath.relaxingapp.graphics.ShaderManager;
 import kath.relaxingapp.input.InputManager;
 import kath.relaxingapp.utilities.Vector3;
-import kath.relaxingapp.world.GameManager;
 import kath.relaxingapp.world.SceneManager;
 import kath.relaxingapp.world.SceneObject;
 import kath.relaxingapp.audio.AudioManager;
@@ -76,7 +71,8 @@ public class Player {
     private void updateTerrainCollision()
     {
         float ty = SceneManager.Inst().getTerrain().getY(pos.x, pos.z);
-        pos.y = ty + collHeight / 2;
+        float wy = SceneManager.Inst().getWaterTerrain().getY(pos.x, pos.z);
+        pos.y = Math.max(ty, wy) + collHeight / 2;
 
     }
 

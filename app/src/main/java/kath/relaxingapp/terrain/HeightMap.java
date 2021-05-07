@@ -1,7 +1,5 @@
 package kath.relaxingapp.terrain;
 
-import android.util.Log;
-
 import kath.relaxingapp.utilities.MathUtil;
 
 // Greyscale image as a 2D array of float values
@@ -129,6 +127,21 @@ public class HeightMap {
         }
     }
 
+    public void applyIslandShape()
+    {
+        for (int z = 0; z < height; ++z)
+        {
+            for (int x = 0; x < width; ++x)
+            {
+                float dx = x - width / 2.f;
+                float dz = z - height / 2.f;
+                float d = (float) Math.sqrt((dx * dx) + (dz * dz));
+                d /= width / 2.f;
+                values[x + width * z] *= (float) Math.exp(-(d * d) * 3.f);
+            }
+        }
+    }
+
     public void normalizeHeightMap() {
         // Find min and max values
         float min = values[0];
@@ -183,20 +196,6 @@ public class HeightMap {
                     }
                 }
                 values[x + width * y] = total / 9;
-            }
-        }
-    }
-
-    public void constrainAtEdges()
-    {
-        for (int y = 0; y < height; ++y)
-        {
-            for (int x = 0; x < width; ++x)
-            {
-                if (x == 0 || x == width - 1 || y == 0 || y == height - 1)
-                {
-                    values[x + width * y] = -6.f;
-                }
             }
         }
     }

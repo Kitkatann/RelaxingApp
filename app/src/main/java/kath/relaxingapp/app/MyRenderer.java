@@ -11,8 +11,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 import kath.relaxingapp.R;
 import kath.relaxingapp.geometry.AddGeometry;
-import kath.relaxingapp.graphics.RenderMeshManager;
-import kath.relaxingapp.terrain.HeightMap;
 import kath.relaxingapp.utilities.Vector3;
 import kath.relaxingapp.world.GameManager;
 import kath.relaxingapp.world.SceneManager;

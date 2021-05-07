@@ -1,7 +1,5 @@
 package kath.relaxingapp.world;
 
-import android.transition.Scene;
-
 import kath.relaxingapp.app.Player;
 import kath.relaxingapp.geometry.AddGeometry;
 import kath.relaxingapp.graphics.MeshBuilder;

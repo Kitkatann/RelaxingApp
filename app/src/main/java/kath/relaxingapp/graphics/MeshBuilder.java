@@ -1,7 +1,6 @@
 package kath.relaxingapp.graphics;
 
 import android.opengl.Matrix;
-import android.util.Log;
 
 import java.util.ArrayList;
 

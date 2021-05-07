@@ -2,7 +2,6 @@ package kath.relaxingapp.audio;
 
 import android.media.AudioAttributes;
 import android.media.SoundPool;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -11,7 +10,6 @@ import kath.relaxingapp.app.GlobalsManager;
 import kath.relaxingapp.app.MainActivity;
 import kath.relaxingapp.utilities.MathUtil;
 import kath.relaxingapp.utilities.Vector3;
-import kath.relaxingapp.world.GameManager;
 import kath.relaxingapp.world.SceneManager;
 
 public class AudioManager {
@@ -21,10 +19,12 @@ public class AudioManager {
     private SoundType[] soundTypes = new SoundType[soundTypeCount];
 
     public static final int wind_chimes_0 = 0;
-    public static final int bird_song_0 = 1;
-    public static final int stream_0 = 2;
-    public static final int wind_0 = 3;
-    public static final int soundTypeCount = 4;
+    public static final int wind_chimes_1 = 1;
+    public static final int singing_bowls_0 = 2;
+    public static final int bird_song_0 = 3;
+    public static final int stream_0 = 4;
+    public static final int wind_0 = 5;
+    public static final int soundTypeCount = 6;
 
     private int focusedSoundType = -1;
 
@@ -50,6 +50,10 @@ public class AudioManager {
 
         soundTypes[wind_chimes_0].soundID = soundPool.load(MainActivity.appContext, R.raw.wind_chimes_0, 1);
         soundTypes[wind_chimes_0].soundFallOff = 0.2f;
+        soundTypes[wind_chimes_1].soundID = soundPool.load(MainActivity.appContext, R.raw.wind_chimes_1, 1);
+        soundTypes[wind_chimes_1].soundFallOff = 0.2f;
+        soundTypes[singing_bowls_0].soundID = soundPool.load(MainActivity.appContext, R.raw.singing_bowls_0, 1);
+        soundTypes[singing_bowls_0].soundFallOff = 0.2f;
         soundTypes[bird_song_0].soundID = soundPool.load(MainActivity.appContext, R.raw.bird_song_0, 1);
         soundTypes[bird_song_0].soundFallOff = 0.2f;
         soundTypes[stream_0].soundID = soundPool.load(MainActivity.appContext, R.raw.stream_1, 1);

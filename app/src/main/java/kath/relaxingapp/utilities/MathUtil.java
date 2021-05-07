@@ -2,8 +2,6 @@ package kath.relaxingapp.utilities;
 
 import android.opengl.Matrix;
 
-import kath.relaxingapp.app.GlobalsManager;
-
 public class MathUtil {
 
     public static float linearInterpolation(float a, float b, float t)
