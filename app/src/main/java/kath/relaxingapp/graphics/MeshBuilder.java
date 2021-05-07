@@ -56,6 +56,7 @@ public class MeshBuilder {
 
         computeVertexNormals(p1x, p1y, p1z, p2x, p2y, p2z, p3x, p3y, p3z);
 
+
         // X, Y, Z,
         // R, G, B, A
         // Nx, Ny, Nz
