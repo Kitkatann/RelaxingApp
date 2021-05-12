@@ -142,6 +142,20 @@ public class HeightMap {
         }
     }
 
+    public void constrainAtEdges()
+    {
+        for (int y = 0; y < height; ++y)
+        {
+            for (int x = 0; x < width; ++x)
+            {
+                if (x == 0 || x == width - 1 || y == 0 || y == height - 1)
+                {
+                    values[x + width * y] = -6.f;
+                }
+            }
+        }
+    }
+
     public void normalizeHeightMap() {
         // Find min and max values
         float min = values[0];

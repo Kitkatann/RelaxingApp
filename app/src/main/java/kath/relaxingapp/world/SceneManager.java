@@ -50,7 +50,7 @@ public class SceneManager {
         MeshLibrary meshLibrary = RenderMeshManager.Inst().getMeshLibrary();
         if (meshLibrary != null)
         {
-            int numObjects = 4;
+            int numObjects = 2;
             for (int i = 0; i < numObjects; i++) {
                 Vector3 point = new Vector3();
                 getRandomTerrainPoint(point, true, false);
@@ -110,7 +110,7 @@ public class SceneManager {
                 }
             }
 
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 300; i++)
             {
                 float x = (float)Math.random() * terrainWidth;
                 float z = -(float)Math.random() * terrainHeight;

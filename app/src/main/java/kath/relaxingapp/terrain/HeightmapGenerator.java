@@ -18,6 +18,7 @@ public class HeightmapGenerator {
         water = new HeightMap(width, height);
         generateLandWithoutRivers();
         landWithoutRivers.applyIslandShape();
+        landWithoutRivers.constrainAtEdges();
         landWithRivers.copyFrom(landWithoutRivers);
         createRivers(numRiverSource);
         water.applyBoxBlur();

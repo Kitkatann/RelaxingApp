@@ -49,17 +49,17 @@ public class AudioManager {
         }
 
         soundTypes[wind_chimes_0].soundID = soundPool.load(MainActivity.appContext, R.raw.wind_chimes_0, 1);
-        soundTypes[wind_chimes_0].soundFallOff = 0.2f;
+        soundTypes[wind_chimes_0].soundFallOff = 0.3f;
         soundTypes[wind_chimes_1].soundID = soundPool.load(MainActivity.appContext, R.raw.wind_chimes_1, 1);
-        soundTypes[wind_chimes_1].soundFallOff = 0.2f;
+        soundTypes[wind_chimes_1].soundFallOff = 0.3f;
         soundTypes[singing_bowls_0].soundID = soundPool.load(MainActivity.appContext, R.raw.singing_bowls_0, 1);
-        soundTypes[singing_bowls_0].soundFallOff = 0.2f;
+        soundTypes[singing_bowls_0].soundFallOff = 0.3f;
         soundTypes[bird_song_0].soundID = soundPool.load(MainActivity.appContext, R.raw.bird_song_0, 1);
-        soundTypes[bird_song_0].soundFallOff = 0.2f;
+        soundTypes[bird_song_0].soundFallOff = 0.3f;
         soundTypes[stream_0].soundID = soundPool.load(MainActivity.appContext, R.raw.stream_1, 1);
-        soundTypes[stream_0].soundFallOff = 0.2f;
+        soundTypes[stream_0].soundFallOff = 0.3f;
         soundTypes[wind_0].soundID = soundPool.load(MainActivity.appContext, R.raw.wind_0, 1);
-        soundTypes[wind_0].soundFallOff = 0.2f;
+        soundTypes[wind_0].soundFallOff = 0.3f;
     }
 
     public void updateAudio()
